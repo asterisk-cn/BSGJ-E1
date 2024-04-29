@@ -7,23 +7,21 @@ namespace Players
 {
     public class PlayerInputs : MonoBehaviour
     {
-        public Vector2 movePoint;
+        public Vector3 leftMoveStick;
+        public Vector3 rightMoveStick;
 
-        // Start is called before the first frame update
-        void Start()
+        void OnLeftMove(InputValue value)
         {
+            var axis = value.Get<Vector2>();
 
+            leftMoveStick = new Vector3(axis.x, 0, axis.y);
         }
 
-        // Update is called once per frame
-        void Update()
+        void OnRightMove(InputValue value)
         {
+            var axis = value.Get<Vector2>();
 
-        }
-
-        void OnMovePoint(InputValue value)
-        {
-
+            rightMoveStick = new Vector3(axis.x, 0, axis.y);
         }
     }
 }
