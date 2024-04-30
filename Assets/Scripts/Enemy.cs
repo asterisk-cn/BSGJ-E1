@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    //ˆÚ“®‘¬“x
+    //ç§»å‹•é€Ÿåº¦
     [SerializeField] float moveSpeed =0.01f;
 
-    //UŒ‚‚Ì‘¬“x(‚Ó‚è‚¨‚ë‚µ)
+    //æ”»æ’ƒã®é€Ÿåº¦(ãµã‚ŠãŠã‚ã—)
     [SerializeField] float attackSpeed = 0.1f;
 
-    //–ß‚é‘¬“x
+    //æˆ»ã‚‹é€Ÿåº¦
     [SerializeField] float upSpeed = 0.2f;
 
-    //Œ³‚Ì‚‚³
+    //å…ƒã®é«˜ã•
     [SerializeField] float defaultHeight = 10.0f;
 
-    //ƒXƒe[ƒW‚Ì‚‚³
+    //ã‚¹ãƒ†ãƒ¼ã‚¸ã®é«˜ã•
     [SerializeField] float stageHeight = 0;
 
-    //UŒ‚ŠÖ”—p‚Ìƒtƒ‰ƒO
+    //æ”»æ’ƒé–¢æ•°ç”¨ã®ãƒ•ãƒ©ã‚°
     public bool isAttack = false;
 
     public bool isUp = false;
@@ -36,33 +36,33 @@ public class Enemy : MonoBehaviour
 
     }
     /**
-     * @brief “G‚ÌˆÚ“®
-     * @author —é–ØG–¾
+     * @brief æ•µã®ç§»å‹•
+     * @author éˆ´æœ¨å®æ˜
      * @date  '24/4/28
      * 
      */
     void Move()
     {   
-        //‘O
-        if(Input.GetKey(KeyCode.W)) 
+        //å‰
+        if(Input.GetKey(KeyCode.I)) 
         {
             transform.position += moveSpeed * transform.forward;
         }
 
-        //Œã
-        if(Input.GetKey(KeyCode.S)) 
+        //å¾Œ
+        if(Input.GetKey(KeyCode.K)) 
         {
             transform.position -= moveSpeed * transform.forward;
         }
 
-        //‰E
-        if (Input.GetKey(KeyCode.D)) 
+        //å³
+        if (Input.GetKey(KeyCode.L)) 
         {
             transform.position += moveSpeed * transform.right;
         }
 
-        //¶
-        if (Input.GetKey(KeyCode.A)) 
+        //å·¦
+        if (Input.GetKey(KeyCode.H)) 
         {
             transform.position -= moveSpeed * transform.right;
         }
@@ -73,28 +73,28 @@ public class Enemy : MonoBehaviour
     {
         float halfHeight =(defaultHeight-stageHeight)/2;
 
-        //•Ší‚ğ~‚ë‚·
+        //æ­¦å™¨ã‚’é™ã‚ã™
         if(!isUp) 
         {
             transform.position -= upSpeed * transform.up;
-            //”¼•ªU‚è‰º‚ë‚·‚Æ‚³‚ç‚É‰Á‘¬
+            //åŠåˆ†æŒ¯ã‚Šä¸‹ã‚ã™ã¨ã•ã‚‰ã«åŠ é€Ÿ
             if (transform.position.y < halfHeight) { transform.position -= upSpeed * transform.up; }
         }
 
-        //UŒ‚‚ªƒXƒe[ƒW‚É“’B
+        //æ”»æ’ƒãŒã‚¹ãƒ†ãƒ¼ã‚¸ã«åˆ°é”
         if(!isUp &&transform.position.y <= stageHeight) 
         {
             isUp = true;
         }
 
-        //Œ³‚Ì‚‚³‚É–ß‚é
+        //å…ƒã®é«˜ã•ã«æˆ»ã‚‹
         if(isUp) { transform.position += upSpeed * transform.up; }
-        //Œ³‚Ì‚‚³‚É“’B
+        //å…ƒã®é«˜ã•ã«åˆ°é”
         if(isUp&&transform.position.y >= defaultHeight) 
         {
 
             transform.position = new Vector3(transform.position.x,defaultHeight,transform.position.z) ;
-            //ŠÖ”‚ÌI—¹
+            //é–¢æ•°ã®çµ‚äº†
             isUp = false;
             isAttack = false;
         }
@@ -111,7 +111,7 @@ public class Enemy : MonoBehaviour
 
         if(isAttack) { Attack(); }
 
-        //UŒ‚‚ÌÀs
+        //æ”»æ’ƒã®å®Ÿè¡Œ
         if(Input.GetKey(KeyCode.Space)&&!isAttack) 
         {
             isAttack = true;
