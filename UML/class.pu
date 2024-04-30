@@ -1,0 +1,80 @@
+@startuml Class
+skinparam classAttributeIconSize 0
+hide empty members
+
+namespace Players {
+    class CharacterParameters{
+        + float moveSpeed
+        + int health
+    }
+
+    class PlayerInputs{
+        + Vector2 LeftMove
+        + Vector2 RightMove
+
+        + void OnLeftMove(InputValue value)
+        + void OnRightMove(InputValue value)
+    }
+
+
+    class PlayerCore {
+        + bool isAlive
+        - PlayerInputs _inputs
+        - PlayerCharacter _character1
+        - PlayerCharacter _character2
+
+        - void Move()
+    }
+
+    PlayerCore *- PlayerInputs
+
+    class PlayerCharacter {
+        + bool isAlive
+        - CharacterParameters _defaultParameters
+        - CharacterParameters _currentParameters
+    
+        + void TakeDamage(int damage)
+        + void Move(Vector2 direction)
+        + void Die()
+    }
+
+    PlayerCharacter *- CharacterParameters
+    PlayerCore *- PlayerCharacter
+}
+
+class Enemy {
+    - PlayerCharacter _target
+    - float moveSpeed
+
+    - void Move()
+    - void Attack()
+    - void OnTriggerEnter(Collider other)
+}
+
+' namespace GameManagers {
+'     abstract class BaseGameManager
+'     BaseGameManager -|> Players.IGameStatusReadable
+'     BaseGameManager --u> PlayerProvider
+'     BaseGameManager --u> GameTimeManager
+'     BaseGameManager ..> Players.PlayerCore
+
+'     class MainGameManager
+'     MainGameManager --u|> BaseGameManager
+
+'     class DebugGameManager
+'     DebugGameManager --u|> BaseGameManager
+
+
+'     class PlayerProvider
+'     class GameTimeManager
+
+'     enum GameState{
+'         + Initializing
+'         + Ready
+'         + Battle
+'         + Result
+'         + Finished
+'     }
+' }
+
+@enduml
