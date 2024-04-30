@@ -1,4 +1,0 @@
-repository "BSGJ-E1@h_suzuki2302126@cloud"
-  path "/"
-    br "/main"
-    co "/main"
