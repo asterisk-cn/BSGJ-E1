@@ -21,7 +21,7 @@ namespace Players
         // Start is called before the first frame update
         void Start()
         {
-            _inputs = GetComponent<PlayerInputs>();
+            _inputs = GetComponentInParent<PlayerInputs>();
             _defaultParameters = new PlayerParameters();
             _currentParameters = new PlayerParameters();
 
@@ -30,6 +30,11 @@ namespace Players
 
         // Update is called once per frame
         void Update()
+        {
+
+        }
+
+        private void FixedUpdate()
         {
             if (this.gameObject.CompareTag("Player"))
             {
@@ -40,7 +45,6 @@ namespace Players
             {
                 RightMove();
             }
-
         }
 
         void TakeDamage(int damage)
