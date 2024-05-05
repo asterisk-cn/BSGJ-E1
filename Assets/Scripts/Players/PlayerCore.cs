@@ -4,30 +4,28 @@ using UnityEngine;
 
 namespace Players
 {
-    public class PlayerParameters
-    {
-        public float moveSpeed;
-        public int health;
-        public float powerGauge;
-    }
-
     public class PlayerCore : MonoBehaviour
     {
         public bool isAlive;
         PlayerInputs _inputs;
-        PlayerParameters _defaultParameters;
-        PlayerParameters _currentParameters;
+
+        private PlayerCharacter _character1;
+        private PlayerCharacter _character2;
+
+        CharacterParameters _defaultParameters;
+        CharacterParameters _currentParameters;
 
         // Start is called before the first frame update
         void Start()
         {
             _inputs = GetComponentInParent<PlayerInputs>();
-            _defaultParameters = new PlayerParameters();
-            _currentParameters = new PlayerParameters();
+
+            _defaultParameters = new CharacterParameters();
+            _currentParameters = new CharacterParameters();
 
             _defaultParameters.moveSpeed = 0.1f;
             _defaultParameters.health = 10;
-            _defaultParameters.powerGauge = 0;
+
         }
 
         // Update is called once per frame
@@ -49,16 +47,12 @@ namespace Players
             }
         }
 
-        void TakeDamage(int damage)
-        {
 
-
-        }
-
-        void Die()
+        void Move()
         {
 
         }
+       
 
         void LeftMove()
         {
@@ -67,7 +61,7 @@ namespace Players
 
         void RightMove()
         {
-            transform.localPosition += _inputs.rightMoveStick * _defaultParameters.moveSpeed; ;
+            transform.localPosition += _inputs.rightMoveStick * _defaultParameters.moveSpeed;
         }
     }
 }
