@@ -26,6 +26,8 @@ namespace Players
             _currentParameters = new PlayerParameters();
 
             _defaultParameters.moveSpeed = 0.1f;
+            _defaultParameters.health = 10;
+            _defaultParameters.powerGauge = 0;
         }
 
         // Update is called once per frame
