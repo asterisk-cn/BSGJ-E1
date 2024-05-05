@@ -428,12 +428,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.05
-  attackSpeed: 0.02
-  upSpeed: 0.05
+  attackSpeed: 0.1
+  upSpeed: 0.5
   defaultHeight: 10
   stageHeight: 0
+  targetObj: {fileID: 1885013322}
+  range: 2
+  attackRate: 98
+  attackMissCount: 0
+  missLimit: 150
   isAttack: 0
   isUp: 0
+  autoMove: 1
 --- !u!1 &1576905517
 GameObject:
   m_ObjectHideFlags: 0
