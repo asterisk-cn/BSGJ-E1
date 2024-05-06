@@ -63,5 +63,10 @@ namespace Players
         {
             transform.localPosition += _inputs.rightMoveStick * _defaultParameters.moveSpeed;
         }
+
+        void Attack()
+        {
+
+        }
     }
 }

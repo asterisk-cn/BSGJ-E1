@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyAttack : MonoBehaviour
 {
     //移動速度
     [SerializeField] float moveSpeed =0.01f;
