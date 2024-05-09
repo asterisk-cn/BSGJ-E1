@@ -9,23 +9,13 @@ namespace Players
         public bool isAlive;
         PlayerInputs _inputs;
 
-        private PlayerCharacter _character1;
-        private PlayerCharacter _character2;
-
-        CharacterParameters _defaultParameters;
-        CharacterParameters _currentParameters;
+        [SerializeField] private PlayerCharacter _character1;
+        [SerializeField] private PlayerCharacter _character2;
 
         // Start is called before the first frame update
         void Start()
         {
             _inputs = GetComponentInParent<PlayerInputs>();
-
-            _defaultParameters = new CharacterParameters();
-            _currentParameters = new CharacterParameters();
-
-            _defaultParameters.moveSpeed = 0.1f;
-            _defaultParameters.health = 10;
-
         }
 
         // Update is called once per frame
@@ -36,32 +26,13 @@ namespace Players
 
         private void FixedUpdate()
         {
-            if (this.gameObject.CompareTag("Player"))
-            {
-                LeftMove();
-            }
-
-            if (this.gameObject.CompareTag("Player2"))
-            {
-                RightMove();
-            }
+            Move();
         }
-
 
         void Move()
         {
-
-        }
-       
-
-        void LeftMove()
-        {
-            transform.localPosition += _inputs.leftMoveStick * _defaultParameters.moveSpeed;
-        }
-
-        void RightMove()
-        {
-            transform.localPosition += _inputs.rightMoveStick * _defaultParameters.moveSpeed;
+            _character1.Move(_inputs.leftMoveStick);
+            _character2.Move(_inputs.rightMoveStick);
         }
 
         void Attack()
