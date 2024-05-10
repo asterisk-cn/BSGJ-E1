@@ -72,9 +72,11 @@ namespace Players
             if (_inputs.attack)
             {
                 tapCount++;
-                Vector3 ScaleChange = new Vector3(sizeUpRate, sizeUpRate, sizeUpRate);
-                _character1.transform.localScale += ScaleChange;
-                _character2.transform.localScale += ScaleChange;
+                float newScale = _character1.transform.localScale.x + sizeUpRate;
+                // Vector3 newScale = new Vector3(newScale_x, newScale_x, newScale_x);
+
+                _character1.ScaleAroundFoot(newScale);
+                _character2.transform.localScale = new Vector3(newScale, newScale, newScale);
             }
         }
     }

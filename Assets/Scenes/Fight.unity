@@ -505,17 +505,21 @@ PrefabInstance:
       propertyPath: powerUpTimeLimit
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 3958227623495017593, guid: 70a63736c44e547949611b512bd3a027, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4139721341120431381, guid: 70a63736c44e547949611b512bd3a027, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.262728
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4139721341120431381, guid: 70a63736c44e547949611b512bd3a027, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.210239
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4139721341120431381, guid: 70a63736c44e547949611b512bd3a027, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.2433345
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4139721341120431381, guid: 70a63736c44e547949611b512bd3a027, type: 3}
       propertyPath: m_LocalRotation.w
@@ -552,6 +556,10 @@ PrefabInstance:
     - target: {fileID: 7290048155470244746, guid: 70a63736c44e547949611b512bd3a027, type: 3}
       propertyPath: powerUpTimeLimit
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7345547455503234483, guid: 70a63736c44e547949611b512bd3a027, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
