@@ -11,18 +11,15 @@ namespace Players
         public bool isAlive;
         PlayerInputs _inputs;
 
-        private PlayerCharacter _character1;
-        private PlayerCharacter _character2;
-
-        CharacterParameters _defaultParameters;
-        CharacterParameters _currentParameters;
+        [SerializeField] private PlayerCharacter _character1;
+        [SerializeField] private PlayerCharacter _character2;
 
         [SerializeField]
-        [Header("ƒ€ƒLƒ€ƒLƒ^ƒCƒ€‚Ì§ŒÀŠÔ")]
+        [Header("ãƒ‘ãƒ¯ãƒ¼ã‚¢ãƒƒãƒ—ã®æ™‚é–“åˆ¶é™")]
         public float powerUpTimeLimit;
 
         [SerializeField]
-        [Header("‘å‚«‚­‚È‚éŠ„‡")]
+        [Header("å·¨å¤§åŒ–ã®å€ç‡")]
         public float sizeUpRate;
 
         private enum InputPhase 
@@ -44,13 +41,6 @@ namespace Players
         void Start()
         {
             _inputs = GetComponentInParent<PlayerInputs>();
-
-            _defaultParameters = new CharacterParameters();
-            _currentParameters = new CharacterParameters();
-
-            _defaultParameters.moveSpeed = 0.1f;
-            _defaultParameters.health = 10;
-
         }
 
         // Update is called once per frame
@@ -61,39 +51,18 @@ namespace Players
 
         private void FixedUpdate()
         {
-            if (this.gameObject.CompareTag("Player"))
-            {
-                LeftMove();
-                Attack();
-            }
-
-            if (this.gameObject.CompareTag("Player2"))
-            {
-                RightMove();
-                //Attack();
-            }
+            Move();
         }
-
 
         void Move()
         {
-
-        }
-       
-
-        void LeftMove()
-        {
-            transform.localPosition += _inputs.leftMoveStick * _defaultParameters.moveSpeed;
-        }
-
-        void RightMove()
-        {
-            transform.localPosition += _inputs.rightMoveStick * _defaultParameters.moveSpeed;
+            _character1.Move(_inputs.leftMoveStick);
+            _character2.Move(_inputs.rightMoveStick);
         }
 
         void Attack()
         {
-            //ƒV[ƒ“”»’è
+            //ï¿½Vï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (MainGameManager.instance.gameState != GameState.Fight) 
             {
                 return;
@@ -104,8 +73,8 @@ namespace Players
 
                 if (powerUpTimer > powerUpTimeLimit) 
                 {
-                    Debug.Log($"ƒXƒP[ƒ‹:{transform.localScale.x}");
-                    Debug.Log($"˜A‘Å”:{tapCount}");
+                    Debug.Log($"ï¿½Xï¿½Pï¿½[ï¿½ï¿½:{transform.localScale.x}");
+                    Debug.Log($"ï¿½Aï¿½Åï¿½:{tapCount}");
                 }
                 else 
                 {
@@ -119,7 +88,7 @@ namespace Players
                         Vector3 ScaleChange = new Vector3(sizeUpRate,sizeUpRate,sizeUpRate);
                         this.transform.localScale += ScaleChange ;
                         _inputPhase = InputPhase.WaitForNextRelease;
-                        Debug.Log("ƒL[“ü—Í‡@");
+                        Debug.Log("ï¿½Lï¿½[ï¿½ï¿½ï¿½Í‡@");
                     }
 
                     if(_inputPhase ==InputPhase.WaitForNextRelease&&
@@ -128,7 +97,7 @@ namespace Players
                         /*Input.GetKeyUp(KeyCode.Space)*/) 
                     {
                         _inputPhase =InputPhase.WaitForNextPress;
-                        Debug.Log("ƒL[‚ª—£‚ê‚½");
+                        Debug.Log("ï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½");
                     }
 
                     if (_inputPhase == InputPhase.WaitForNextPress &&
@@ -139,7 +108,7 @@ namespace Players
                         Vector3 ScaleChange = new Vector3(sizeUpRate, sizeUpRate, sizeUpRate);
                         this.transform.localScale += ScaleChange; 
                         _inputPhase = InputPhase.WaitForNextRelease;
-                        Debug.Log("ƒL[“ü—Í‡A");
+                        Debug.Log("ï¿½Lï¿½[ï¿½ï¿½ï¿½Í‡A");
                     }
                 
                 }
