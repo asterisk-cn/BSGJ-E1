@@ -8,7 +8,6 @@ public class SceneFadeManager : MonoBehaviour
 {
     public bool isFadeIn;
     public bool isFadeOut;
-    public bool isFading;
 
     [SerializeField]
     private Image fadeImage;
@@ -19,6 +18,8 @@ public class SceneFadeManager : MonoBehaviour
     private float fadeTime;
 
     public static SceneFadeManager instance;
+
+    private string afterScene;
 
     void Awake()
     {
@@ -51,6 +52,16 @@ public class SceneFadeManager : MonoBehaviour
         isFadeIn = true;
     }
 
+    public void FadeOut(SceneNameClass.SceneName nextScene)
+    {
+        // フェードアウトのフラグを上げる
+        isFadeOut = true;
+
+        // 遷移先のシーン名をEnumから文字列に変換
+        afterScene = SceneNameClass.SceneNameToString[nextScene];
+    }
+
+
     void Fade()
     {
         if (isFadeIn)
@@ -66,14 +77,13 @@ public class SceneFadeManager : MonoBehaviour
 
         if (isFadeOut)
         {
-            isFading = true;
             alpha += fadeTime * Time.deltaTime;
             Alpha();
             if (alpha >= 1)
             {
                 alpha = 1;
                 isFadeOut = false;
-                isFading = false;
+                SceneManager.LoadScene("Fight");
             }
         }
     }

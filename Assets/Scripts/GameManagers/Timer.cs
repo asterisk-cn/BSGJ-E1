@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
@@ -15,6 +14,8 @@ public class Timer : MonoBehaviour
     [SerializeField]
     [Header("•b")]
     float seconds = 0;
+
+
 
     SceneFadeManager sceneFadeManager;
     // Start is called before the first frame update
@@ -44,12 +45,7 @@ public class Timer : MonoBehaviour
         {
             seconds = 0;
             minutes = 0;
-            sceneFadeManager.isFadeOut = true;
-            if(sceneFadeManager.isFading == false)
-            {
-                SceneManager.LoadScene("Fight");
-            }
-            
+            SceneFadeManager.instance.FadeOut(SceneNameClass.SceneName.Main);
         }
     }
 }
