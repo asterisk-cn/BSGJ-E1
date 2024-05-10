@@ -22,19 +22,12 @@ namespace Players
         [Header("巨大化の倍率")]
         public float sizeUpRate;
 
-        private enum InputPhase 
-        {
-            None,
-            WaitForNextPress,
-            WaitForNextRelease
-        }
-
-        private InputPhase _inputPhase=InputPhase.None;
-
         private int tapCount = 0;
 
         [SerializeField]
         private float powerUpTimer = 0;
+
+        private bool _isAttacked = false;
 
 
         // Start is called before the first frame update
@@ -52,6 +45,18 @@ namespace Players
         private void FixedUpdate()
         {
             Move();
+
+            if (MainGameManager.instance.gameState == GameState.Fight && !_isAttacked)
+            {
+                Attack();
+            }
+
+            if (powerUpTimer > powerUpTimeLimit && !_isAttacked)
+            {
+                _isAttacked = true;
+
+                Debug.Log($"サイズ:{_character1.transform.localScale.x}, 押した回数:{tapCount}");
+            }
         }
 
         void Move()
@@ -62,57 +67,14 @@ namespace Players
 
         void Attack()
         {
-            //�V�[������
-            if (MainGameManager.instance.gameState != GameState.Fight) 
+            powerUpTimer += Time.deltaTime;
+
+            if (_inputs.attack)
             {
-                return;
-            }
-            else 
-            {
-                
-
-                if (powerUpTimer > powerUpTimeLimit) 
-                {
-                    Debug.Log($"�X�P�[��:{transform.localScale.x}");
-                    Debug.Log($"�A�Ő�:{tapCount}");
-                }
-                else 
-                {
-                    powerUpTimer += Time.deltaTime;
-
-                    if (_inputPhase == InputPhase.None &&
-                        Input.GetMouseButtonDown((int)MouseButton.Left)
-                        /*Input.GetKeyDown(KeyCode.Space)*/) 
-                    {
-                        tapCount++;
-                        Vector3 ScaleChange = new Vector3(sizeUpRate,sizeUpRate,sizeUpRate);
-                        this.transform.localScale += ScaleChange ;
-                        _inputPhase = InputPhase.WaitForNextRelease;
-                        Debug.Log("�L�[���͇@");
-                    }
-
-                    if(_inputPhase ==InputPhase.WaitForNextRelease&&
-                        Input.GetMouseButtonDown((int)MouseButton.Left)==false
-                        //Input.GetKey(KeyCode.Space)==false 
-                        /*Input.GetKeyUp(KeyCode.Space)*/) 
-                    {
-                        _inputPhase =InputPhase.WaitForNextPress;
-                        Debug.Log("�L�[�����ꂽ");
-                    }
-
-                    if (_inputPhase == InputPhase.WaitForNextPress &&
-                        Input.GetMouseButtonDown((int)MouseButton.Left)
-                        /*Input.GetKeyDown(KeyCode.Space)*/)
-                    {
-                        tapCount++;
-                        Vector3 ScaleChange = new Vector3(sizeUpRate, sizeUpRate, sizeUpRate);
-                        this.transform.localScale += ScaleChange; 
-                        _inputPhase = InputPhase.WaitForNextRelease;
-                        Debug.Log("�L�[���͇A");
-                    }
-                
-                }
-
+                tapCount++;
+                Vector3 ScaleChange = new Vector3(sizeUpRate, sizeUpRate, sizeUpRate);
+                _character1.transform.localScale += ScaleChange;
+                _character2.transform.localScale += ScaleChange;
             }
         }
     }

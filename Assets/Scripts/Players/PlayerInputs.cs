@@ -9,6 +9,12 @@ namespace Players
     {
         public Vector3 leftMoveStick;
         public Vector3 rightMoveStick;
+        public bool attack;
+
+        void FixedUpdate()
+        {
+            attack = false;
+        }
 
         void OnLeftMove(InputValue value)
         {
@@ -22,6 +28,11 @@ namespace Players
             var axis = value.Get<Vector2>();
 
             rightMoveStick = new Vector3(axis.x, 0, axis.y);
+        }
+
+        void OnFire(InputValue value)
+        {
+            attack = value.isPressed;
         }
     }
 }
