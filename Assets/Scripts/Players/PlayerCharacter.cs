@@ -43,6 +43,19 @@ namespace Players
             transform.position += direction * _currentParameters.moveSpeed;
         }
 
+        public void ScaleAroundFoot(float newScale)
+        {
+            // 足元を軸に拡大縮小
+            Vector3 targetPos = transform.localPosition;
+            Vector3 diff = new Vector3(0, 1.0f * transform.localScale.y, 0);
+            Vector3 pivot = targetPos - diff;
+            float relativeScale = newScale / gameObject.transform.localScale.x;
+
+            Vector3 resultPos = pivot + diff * relativeScale;
+            gameObject.transform.localScale = new Vector3(newScale, newScale, newScale);
+            gameObject.transform.localPosition = resultPos;
+        }
+
         public void Die()
         {
 
