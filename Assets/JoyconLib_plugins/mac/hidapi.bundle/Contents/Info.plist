@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>14F27</string>
+	<string>23E224</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>hidapi</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.signal11.hidapi</string>
+	<string>asterisk-cn.hidapi</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -18,25 +18,29 @@
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>MacOSX</string>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
-	<string>6E35b</string>
+	<string></string>
+	<key>DTPlatformName</key>
+	<string>macosx</string>
 	<key>DTPlatformVersion</key>
-	<string>GM</string>
+	<string>14.4</string>
 	<key>DTSDKBuild</key>
-	<string>14D125</string>
+	<string>23E208</string>
 	<key>DTSDKName</key>
-	<string>macosx10.10</string>
+	<string>macosx14.4</string>
 	<key>DTXcode</key>
-	<string>0640</string>
+	<string>1530</string>
 	<key>DTXcodeBuild</key>
-	<string>6E35b</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2015 signal11. All rights reserved.</string>
+	<string>15E204a</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>14.4</string>
 </dict>
 </plist>

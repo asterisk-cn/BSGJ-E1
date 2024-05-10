@@ -11,9 +11,20 @@ namespace Players
         public Vector3 rightMoveStick;
         public bool attack;
 
+        [SerializeField] private bool useJoycon = false;
+
         void FixedUpdate()
         {
             attack = false;
+
+            if (useJoycon)
+            {
+                UpdateJoyconInputs();
+                if (leftAccelaration.magnitude > 0.1f)
+                {
+                    attack = true;
+                }
+            }
         }
 
         public Vector3 leftAccelaration;
@@ -47,7 +58,7 @@ namespace Players
             attack = value.isPressed;
         }
 
-        void Update()
+        void UpdateJoyconInputs()
         {
             if (_joycons.Count > 0)
             {
