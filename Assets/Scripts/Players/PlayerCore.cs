@@ -73,10 +73,9 @@ namespace Players
             {
                 tapCount++;
                 float newScale = _character1.transform.localScale.x + sizeUpRate;
-                // Vector3 newScale = new Vector3(newScale_x, newScale_x, newScale_x);
 
                 _character1.ScaleAroundFoot(newScale);
-                _character2.transform.localScale = new Vector3(newScale, newScale, newScale);
+                _character2.ScaleAroundFoot(newScale);
             }
         }
     }
