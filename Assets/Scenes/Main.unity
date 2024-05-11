@@ -462,6 +462,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1863769375982818224, guid: 910ec3cbefe90dd40a521716baf5b040, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1968009188496044359, guid: 910ec3cbefe90dd40a521716baf5b040, type: 3}
       propertyPath: m_Name
       value: SceneFadeManager

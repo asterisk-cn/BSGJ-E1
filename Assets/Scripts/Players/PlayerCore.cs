@@ -78,10 +78,5 @@ namespace Players
                 _character2.ScaleAroundFoot(newScale);
             }
         }
-
-        void Attack()
-        {
-
-        }
     }
 }
