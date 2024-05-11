@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
@@ -9,10 +10,10 @@ public class Timer : MonoBehaviour
     TextMeshProUGUI text;
 
     [SerializeField]
-    [Header("•ª")]
+    [Header("ï¿½ï¿½")]
     int minutes;
     [SerializeField]
-    [Header("•b")]
+    [Header("ï¿½b")]
     float seconds = 0;
 
 
@@ -45,6 +46,7 @@ public class Timer : MonoBehaviour
         {
             seconds = 0;
             minutes = 0;
+            MainGameManager.instance.gameState = GameManagers.GameState.Fight;
             SceneFadeManager.instance.FadeOut(SceneNameClass.SceneName.Main);
         }
     }
