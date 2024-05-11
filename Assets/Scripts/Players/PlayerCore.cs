@@ -1,5 +1,7 @@
+using GameManagers;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Players
@@ -9,23 +11,29 @@ namespace Players
         public bool isAlive;
         PlayerInputs _inputs;
 
-        private PlayerCharacter _character1;
-        private PlayerCharacter _character2;
+        [SerializeField] private PlayerCharacter _character1;
+        [SerializeField] private PlayerCharacter _character2;
 
-        CharacterParameters _defaultParameters;
-        CharacterParameters _currentParameters;
+        [SerializeField]
+        [Header("パワーアップの時間制限")]
+        public float powerUpTimeLimit;
+
+        [SerializeField]
+        [Header("巨大化の倍率")]
+        public float sizeUpRate;
+
+        private int tapCount = 0;
+
+        [SerializeField]
+        private float powerUpTimer = 0;
+
+        private bool _isAttacked = false;
+
 
         // Start is called before the first frame update
         void Start()
         {
             _inputs = GetComponentInParent<PlayerInputs>();
-
-            _defaultParameters = new CharacterParameters();
-            _currentParameters = new CharacterParameters();
-
-            _defaultParameters.moveSpeed = 0.1f;
-            _defaultParameters.health = 10;
-
         }
 
         // Update is called once per frame
@@ -36,32 +44,39 @@ namespace Players
 
         private void FixedUpdate()
         {
-            if (this.gameObject.CompareTag("Player"))
+            Move();
+
+            if (MainGameManager.instance.gameState == GameState.Fight && !_isAttacked)
             {
-                LeftMove();
+                Attack();
             }
 
-            if (this.gameObject.CompareTag("Player2"))
+            if (powerUpTimer > powerUpTimeLimit && !_isAttacked)
             {
-                RightMove();
+                _isAttacked = true;
+
+                Debug.Log($"サイズ:{_character1.transform.localScale.x}, 押した回数:{tapCount}");
             }
         }
-
 
         void Move()
         {
-
-        }
-       
-
-        void LeftMove()
-        {
-            transform.localPosition += _inputs.leftMoveStick * _defaultParameters.moveSpeed;
+            _character1.Move(_inputs.leftMoveStick);
+            _character2.Move(_inputs.rightMoveStick);
         }
 
-        void RightMove()
+        void Attack()
         {
-            transform.localPosition += _inputs.rightMoveStick * _defaultParameters.moveSpeed;
+            powerUpTimer += Time.deltaTime;
+
+            if (_inputs.attack)
+            {
+                tapCount++;
+                float newScale = _character1.transform.localScale.x + sizeUpRate;
+
+                _character1.ScaleAroundFoot(newScale);
+                _character2.ScaleAroundFoot(newScale);
+            }
         }
 
         void Attack()

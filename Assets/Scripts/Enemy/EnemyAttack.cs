@@ -1,3 +1,4 @@
+using Players;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,13 +21,15 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] float stageHeight = 0;
 
     //追跡するオブジェクト
-    [SerializeField] GameObject targetObj;
+    [SerializeField] PlayerCharacter _target;
 
     //攻撃範囲ようの距離
     [SerializeField] float range = 20;
 
     //攻撃の確率 高いほど発生しにくい  
-    [SerializeField] int attackRate = 90;
+    [SerializeField]
+    [Header("確率")]
+    int attackRate = 90;
 
     //攻撃の抽選に外れた回数
     [SerializeField] int attackMissCount = 0;
@@ -46,7 +49,7 @@ public class EnemyAttack : MonoBehaviour
     void Start()
     {
         //エラー防止用
-        if(targetObj == null) { autoMove = false; }
+        if (_target == null) { autoMove = false; }
     }
 
     // Update is called once per frame
@@ -65,16 +68,16 @@ public class EnemyAttack : MonoBehaviour
         //プレイヤーを追跡する
         if (autoMove) 
         {
-            Vector3 distance = new Vector3(targetObj.transform.position.x - this.transform.position.x, 0, targetObj.transform.position.z - this.transform.position.z);
+            Vector3 distance = new Vector3(_target.transform.position.x - this.transform.position.x, 0, _target.transform.position.z - this.transform.position.z);
             //攻撃する範囲かの判定
-            if(distance.magnitude <range) 
+            if (distance.magnitude <=range) 
             {
                 //上限を超えたとき攻撃
                 if(attackMissCount >missLimit) { isAttack = true; attackMissCount = 0; };
                 //ランダムに攻撃
                 //確率で攻撃
                 int buff =(int)Random.Range(0,100.0f);
-                if(buff > attackRate) { isAttack = true; attackMissCount = 0; }
+                if(buff < attackRate) { isAttack = true; attackMissCount = 0; }
                 else {attackMissCount++;}
             }
             //抽選回数のリセット
@@ -86,11 +89,16 @@ public class EnemyAttack : MonoBehaviour
             if(!isAttack)
             {
                 //攻撃しない場合、移動する
-                distance = distance.normalized;
-                //
-                distance.Scale(new Vector3(moveSpeed,0,moveSpeed));
-                //
-                this.transform.position += distance;
+                if (distance.magnitude > moveSpeed) 
+                {
+                    distance = distance.normalized;
+                    //
+                    distance.Scale(new Vector3(moveSpeed,0,moveSpeed));
+                    //
+                    this.transform.position += distance;
+                
+                }
+
                 
             
             }
