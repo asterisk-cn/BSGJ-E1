@@ -29,13 +29,13 @@ namespace Players {
         - void Attack()
     }
 
-    PlayerCore *-- PlayerInputs
+    PlayerCore --> PlayerInputs
 
     class PlayerCharacter {
         + bool isAlive
         - CharacterParameters _defaultParameters
         - CharacterParameters _currentParameters
-    
+
         + void TakeDamage(int damage)
         + void Move(Vector2 direction)
         + void Die()
@@ -50,12 +50,15 @@ namespace Enemy {
         + bool isAlive
         + int health
         - int _currentHealth
-        
+        - List<EnemyAttack> _attackPrefabs
+
         + void TakeDamage(int damage)
         + void Die()
+        - void GenerateAttack()
     }
 
     class EnemyAttack {
+        + bool isActive
         - PlayerCharacter _target
         - float moveSpeed
 
@@ -63,27 +66,22 @@ namespace Enemy {
         - void Attack()
         - void OnTriggerEnter(Collider other)
     }
+
+    EnemyCore *-- EnemyAttack
+
+    class Knife
+    class Pot
+    Class Rod
+
+    EnemyAttack <|-- Knife
+    EnemyAttack <|-- Pot
+    EnemyAttack <|-- Rod
 }
 
 namespace GameManagers {
-'     abstract class BaseGameManager
-'     BaseGameManager -|> Players.IGameStatusReadable
-'     BaseGameManager --u> PlayerProvider
-'     BaseGameManager --u> GameTimeManager
-'     BaseGameManager ..> Players.PlayerCore
-
-'     class MainGameManager
-'     MainGameManager --u|> BaseGameManager
-
-'     class DebugGameManager
-'     DebugGameManager --u|> BaseGameManager
-
-
-'     class PlayerProvider
-'     class GameTimeManager
-
     class MainGameManager {
         + GameState state
+        - GameTimeManager _timeManager
     }
 
     enum GameState{
@@ -94,6 +92,10 @@ namespace GameManagers {
         + Result
         + Finished
     }
+
+    class GameTimeManager
+
+    MainGameManager --> GameTimeManager
 }
 
 @enduml
