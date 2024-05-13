@@ -21,8 +21,6 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] float stageHeight = 0;
 
     //追跡するオブジェクト
-    [SerializeField] GameObject targetObj;
-
     [SerializeField] PlayerCharacter _target;
 
     //攻撃範囲ようの距離
@@ -51,7 +49,7 @@ public class EnemyAttack : MonoBehaviour
     void Start()
     {
         //エラー防止用
-        if(targetObj == null) { autoMove = false; }
+        if (_target == null) { autoMove = false; }
     }
 
     // Update is called once per frame
@@ -70,9 +68,9 @@ public class EnemyAttack : MonoBehaviour
         //プレイヤーを追跡する
         if (autoMove) 
         {
-            Vector3 distance = new Vector3(targetObj.transform.position.x - this.transform.position.x, 0, targetObj.transform.position.z - this.transform.position.z);
+            Vector3 distance = new Vector3(_target.transform.position.x - this.transform.position.x, 0, _target.transform.position.z - this.transform.position.z);
             //攻撃する範囲かの判定
-            if(distance.magnitude <=range) 
+            if (distance.magnitude <=range) 
             {
                 //上限を超えたとき攻撃
                 if(attackMissCount >missLimit) { isAttack = true; attackMissCount = 0; };

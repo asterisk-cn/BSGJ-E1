@@ -118,12 +118,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 533a3b7d58e4d4d4cb8fad59fc98bdfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.2
-  attackSpeed: 0.1
+  moveSpeed: 0.3
+  attackSpeed: 0.4
   upSpeed: 0.2
   defaultHeight: 10
   stageHeight: 0
-  targetObj: {fileID: 0}
+  _target: {fileID: 0}
   range: 0.5
   attackRate: 90
   attackMissCount: 0

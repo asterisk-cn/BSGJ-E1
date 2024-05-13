@@ -8,13 +8,19 @@ public class EnemyCore : MonoBehaviour
     public int health;
 
     private int _currentHealth;
+    [SerializeField] private List<EnemyAttack> _attackPrefabs;
 
-    void TakeDamage(int damage)
+    void GenerateAttack()
     {
 
     }
 
-    void Die()
+    public void TakeDamage(int damage)
+    {
+
+    }
+
+    public void Die()
     {
 
     }
