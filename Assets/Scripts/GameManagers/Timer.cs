@@ -10,10 +10,10 @@ public class Timer : MonoBehaviour
     TextMeshProUGUI text;
 
     [SerializeField]
-    [Header("��")]
+    [Header("分")]
     int minutes;
     [SerializeField]
-    [Header("�b")]
+    [Header("秒")]
     float seconds = 0;
 
 
