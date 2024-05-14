@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17276824, g: 0.2158923, b: 0.2978262, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589246, b: 0.2978263, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -846,13 +846,33 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4388407203577213341, guid: 1fcffe1f8baae4cdbbfbabe182b9e90d, type: 3}
+      propertyPath: stop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4388407203577213341, guid: 1fcffe1f8baae4cdbbfbabe182b9e90d, type: 3}
       propertyPath: _target
       value: 
       objectReference: {fileID: 1885013323}
     - target: {fileID: 4388407203577213341, guid: 1fcffe1f8baae4cdbbfbabe182b9e90d, type: 3}
+      propertyPath: autoMove
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4388407203577213341, guid: 1fcffe1f8baae4cdbbfbabe182b9e90d, type: 3}
+      propertyPath: Rigidbody
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4388407203577213341, guid: 1fcffe1f8baae4cdbbfbabe182b9e90d, type: 3}
       propertyPath: targetObj
       value: 
       objectReference: {fileID: 1885013322}
+    - target: {fileID: 4388407203577213341, guid: 1fcffe1f8baae4cdbbfbabe182b9e90d, type: 3}
+      propertyPath: stageHeight
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6094162408915902608, guid: 1fcffe1f8baae4cdbbfbabe182b9e90d, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7455717685954533642, guid: 1fcffe1f8baae4cdbbfbabe182b9e90d, type: 3}
       propertyPath: m_Name
       value: Enemy

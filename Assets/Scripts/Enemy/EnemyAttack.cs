@@ -1,6 +1,7 @@
 using Players;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
@@ -41,15 +42,28 @@ public class EnemyAttack : MonoBehaviour
     public bool isAttack = false;
 
     public bool isUp = false;
+    [HideInInspector]
+    public bool isActive ;
 
-    //移動の自動化フラグ
+    [Header("移動の自動化フラグ")]
     public bool autoMove = true;
+
+    [SerializeField]
+    [Header("障害物になるフラグ")]
+    private bool stop;
+
+    [SerializeField]
+    [Header("留まる秒数")]
+    private float waitSecond = 3.0f;
+
+    
 
     // Start is called before the first frame update
     void Start()
     {
         //エラー防止用
         if (_target == null) { autoMove = false; }
+        isActive = true;
     }
 
     // Update is called once per frame
@@ -61,7 +75,7 @@ public class EnemyAttack : MonoBehaviour
      * @brief 敵の移動
      * @author 鈴木宏明
      * @date  '24/4/28
-     * 
+     * @History 手動操作のキー入力を変更
      */
     void Move()
     {   
@@ -129,7 +143,7 @@ public class EnemyAttack : MonoBehaviour
             }
 
             //左
-            if (Input.GetKey(KeyCode.H)) 
+            if (Input.GetKey(KeyCode.J)) 
             {
                 transform.position -= moveSpeed * transform.right;
             }
@@ -141,6 +155,7 @@ public class EnemyAttack : MonoBehaviour
     void Attack()
     {
         float halfHeight =(defaultHeight-stageHeight)/2;
+        if(!isAttack) { return; }
 
         //武器を降ろす
         if(!isUp) 
@@ -153,7 +168,15 @@ public class EnemyAttack : MonoBehaviour
         //攻撃がステージに到達
         if(!isUp &&transform.position.y <= stageHeight) 
         {
-            isUp = true;
+            if (!stop) { isUp = true; }
+            else
+            {
+                isAttack = false;
+                StartCoroutine("Stop");
+            }
+            //ステージに埋まらないようにする
+            float buff = transform.localScale.y / 2;
+            transform.position = new Vector3(transform.position.x, stageHeight+buff, transform.position.z);
         }
 
         //元の高さに戻る
@@ -169,6 +192,22 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
+    IEnumerator Stop()
+    {
+        Rigidbody rb = this.gameObject.AddComponent<Rigidbody>();
+        rb.useGravity = true;
+        rb.constraints = RigidbodyConstraints.FreezePosition;
+
+        BoxCollider collider = this.GetComponent<BoxCollider>();
+        //攻撃を無効
+        collider.isTrigger = false;
+
+        isActive = false;
+
+        yield return new WaitForSeconds(waitSecond);
+        Destroy(this.gameObject);
+    }
+
     void OnTriggerEnter(Collider other)
     {
 
@@ -176,17 +215,21 @@ public class EnemyAttack : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isAttack) { Move(); }
+        if(!isActive) { return; }
+        else
+        {
+            if (!isAttack) { Move(); }
 
-        if(isAttack) { Attack(); }
+            if(isAttack) { Attack(); }
 
-        //自動操縦の間は攻撃しない
-        if (!autoMove)
-        {   
-            //攻撃の実行
-            if (Input.GetKey(KeyCode.Space)&&!isAttack) 
+            //自動操縦の間は攻撃しない
+            if (!autoMove)
             {
-                isAttack = true;
+                //攻撃の実行
+                if (Input.GetKey(KeyCode.Space)&&!isAttack) 
+                {
+                    isAttack = true;
+                }
             }
         }
     }
