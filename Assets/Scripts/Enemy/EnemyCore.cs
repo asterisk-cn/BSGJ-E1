@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyCore : MonoBehaviour
@@ -8,11 +9,18 @@ public class EnemyCore : MonoBehaviour
     public int health;
 
     private int _currentHealth;
+
     [SerializeField] private List<EnemyAttack> _attackPrefabs;
+
+    [SerializeField] public static readonly List<EnemyAttack> _attackView = new List<EnemyAttack>();
 
     void GenerateAttack()
     {
-
+        if (_attackView.Count >= 2) return;
+        int index = Random.Range(0, _attackPrefabs.Count);
+        var generate = Instantiate(_attackPrefabs[index], new Vector3(0, 10, 0), Quaternion.identity);
+        var comp = generate.GetComponent<EnemyAttack>();
+        _attackView.Add(comp);
     }
 
     public void TakeDamage(int damage)
