@@ -11,6 +11,7 @@ public class MainGameManager : MonoBehaviour
     public GameState gameState;
 
     [SerializeField] private float _mainTime = 60;
+    [SerializeField] private float _fightTime = 10;
 
     // Start is called before the first frame update
     void Awake()
@@ -56,7 +57,6 @@ public class MainGameManager : MonoBehaviour
 
     void OnRunLoaded()
     {
-        Debug.Log("Run Loaded");
         gameState = GameState.Main;
         GameTimeManager.instance.AddListenerOnTimeUp(() => SceneFadeManager.instance.FadeOut(GameState.Fight));
         GameTimeManager.instance.StartTimer(_mainTime, true);
@@ -65,5 +65,6 @@ public class MainGameManager : MonoBehaviour
     void OnFightLoaded()
     {
         gameState = GameState.Fight;
+        GameTimeManager.instance.StartTimer(_fightTime, true);
     }
 }

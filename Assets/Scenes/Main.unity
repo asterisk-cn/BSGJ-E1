@@ -322,6 +322,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
+      propertyPath: _mainTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
       propertyPath: gameState
       value: 2
       objectReference: {fileID: 0}
@@ -686,6 +690,7 @@ GameObject:
   - component: {fileID: 7038787610154428374}
   - component: {fileID: 1443306519133914280}
   - component: {fileID: 5857637260102674951}
+  - component: {fileID: 7038787610154428375}
   m_Layer: 5
   m_Name: Timer
   m_TagString: Untagged
@@ -969,6 +974,18 @@ RectTransform:
   m_AnchoredPosition: {x: -800, y: 450}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7038787610154428375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3157000309202832854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a30a8127c339c4252a1d838ca660368e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7481470558253612685
 RectTransform:
   m_ObjectHideFlags: 0

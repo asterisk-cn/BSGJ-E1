@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
 namespace GameManagers
@@ -104,6 +102,16 @@ namespace GameManagers
         public int GetTimeSeconds()
         {
             return IsWorking ? Mathf.FloorToInt(_time) : 0;
+        }
+
+        public float GetTimeLeft()
+        {
+            return IsWorking ? _duration - _time : 0f;
+        }
+
+        public int GetTimeSecondsLeft()
+        {
+            return IsWorking ? Mathf.CeilToInt(_duration - _time) : 0;
         }
     }
 }
