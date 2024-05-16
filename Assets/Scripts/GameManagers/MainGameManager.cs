@@ -55,6 +55,9 @@ public class MainGameManager : MonoBehaviour
         }
     }
 
+    /**
+     * @brief メインシーンがロードされた時の処理
+     */
     void OnRunLoaded()
     {
         gameState = GameState.Main;
@@ -62,6 +65,9 @@ public class MainGameManager : MonoBehaviour
         GameTimeManager.instance.StartTimer(_mainTime, true);
     }
 
+    /**
+     * @brief ファイトシーンがロードされた時の処理
+     */
     void OnFightLoaded()
     {
         gameState = GameState.Fight;

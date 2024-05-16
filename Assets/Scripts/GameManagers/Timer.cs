@@ -89,26 +89,46 @@ namespace GameManagers
             _onTimeUp = new UnityEvent();
         }
 
+        /**
+         * @brief タイマーが終了したときに実行する処理を登録する
+         * @param action 実行する処理
+         */
         public void AddListenerOnTimeUp(UnityAction action)
         {
             _onTimeUp.AddListener(action);
         }
 
+        /**
+         * @brief 経過時間を取得する
+         * @return 経過時間
+        */
         public float GetTime()
         {
             return IsWorking ? _time : 0f;
         }
 
+        /**
+         * @brief 経過時間を秒単位で取得する
+         * @return 経過時間(秒)
+        */
         public int GetTimeSeconds()
         {
             return IsWorking ? Mathf.FloorToInt(_time) : 0;
         }
 
+        /**
+         * @brief 残り時間を取得する
+         * @return 残り時間
+        */
         public float GetTimeLeft()
         {
             return IsWorking ? _duration - _time : 0f;
         }
 
+        /**
+         * @brief 残り時間を秒単位で取得する
+         * @return 残り時間(秒)
+        */
         public int GetTimeSecondsLeft()
         {
             return IsWorking ? Mathf.CeilToInt(_duration - _time) : 0;
