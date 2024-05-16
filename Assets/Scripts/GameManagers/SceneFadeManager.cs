@@ -52,6 +52,10 @@ public class SceneFadeManager : MonoBehaviour
         isFadeIn = true;
     }
 
+    /**
+     * @brief フェードアウトして、次のシーンに遷移する
+     * @param nextScene 遷移先のシーン名
+     */
     public void FadeOut(GameManagers.GameState nextScene)
     {
         // フェードアウトのフラグを上げる
