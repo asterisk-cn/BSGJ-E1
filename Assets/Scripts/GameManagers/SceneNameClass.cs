@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneNameClass : MonoBehaviour
+namespace GameManagers
 {
     public enum SceneName
     {
@@ -10,12 +10,4 @@ public class SceneNameClass : MonoBehaviour
         Main,
         Fight
     }
-
-    public static Dictionary<SceneName, string> SceneNameToString
-        = new Dictionary<SceneName, string>()
-    {
-        {SceneName.Title, "Title" },
-        {SceneName.Main, "Main" },
-        {SceneName.Fight, "Fight" }
-    };
 }
