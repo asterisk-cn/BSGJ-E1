@@ -1,53 +1,117 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
-public class Timer : MonoBehaviour
+namespace GameManagers
 {
-    [SerializeField]
-    TextMeshProUGUI text;
-
-    [SerializeField]
-    [Header("分")]
-    int minutes;
-    [SerializeField]
-    [Header("秒")]
-    float seconds = 0;
-
-
-
-    SceneFadeManager sceneFadeManager;
-    // Start is called before the first frame update
-    void Start()
+    public class GameTimeManager : MonoBehaviour
     {
-        text = GetComponent<TextMeshProUGUI>();
-        sceneFadeManager = SceneFadeManager.instance.GetComponent<SceneFadeManager>();
-    }
+        public static GameTimeManager instance;
+        public UnityEvent _onTimeUp = new UnityEvent();
+        float _startTime;
+        float _time;
+        float _duration;
+        bool _isInterrupted = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        CountTime();
-    }
+        public bool IsWorking { get { return _duration > 0; } }
 
-    void CountTime()
-    {
-        if (seconds < 0)
+
+        private void Awake()
         {
-            minutes--;
-            seconds = 60;
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
+            DontDestroyOnLoad(this.gameObject);
         }
-        seconds -= Time.deltaTime;
-        text.text = minutes.ToString() + ":" + seconds.ToString("00");
 
-        if (seconds <= 0 && minutes <= 0)
+        // Start is called before the first frame update
+        void Start()
         {
-            seconds = 0;
-            minutes = 0;
-            MainGameManager.instance.gameState = GameManagers.GameState.Fight;
-            SceneFadeManager.instance.FadeOut(SceneNameClass.SceneName.Main);
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (_isInterrupted)
+            {
+                _startTime += Time.deltaTime;
+                return;
+            }
+
+            if (IsWorking)
+            {
+                _time = Time.time - _startTime;
+
+                if (_time >= _duration)
+                {
+                    Debug.Log(_onTimeUp);
+                    _onTimeUp?.Invoke();
+                    ResetTimer();
+                }
+            }
+        }
+
+        public bool StartTimer(float duration, bool force = false)
+        {
+            if (IsWorking && !force)
+            {
+                return false;
+            }
+
+            _startTime = Time.time;
+            _duration = duration;
+            return true;
+        }
+
+        public void StopTimer()
+        {
+            _isInterrupted = true;
+        }
+
+        public void ResumeTimer()
+        {
+            _isInterrupted = false;
+        }
+
+        void ResetTimer()
+        {
+            _time = 0;
+            _duration = 0;
+            _startTime = 0;
+            _isInterrupted = false;
+            _onTimeUp = new UnityEvent();
+        }
+
+        public void AddListenerOnTimeUp(UnityAction action)
+        {
+            _onTimeUp.AddListener(action);
+        }
+
+        public float GetTime()
+        {
+            return IsWorking ? _time : 0f;
+        }
+
+        public int GetTimeSeconds()
+        {
+            return IsWorking ? Mathf.FloorToInt(_time) : 0;
+        }
+
+        public float GetTimeLeft()
+        {
+            return IsWorking ? _duration - _time : 0f;
+        }
+
+        public int GetTimeSecondsLeft()
+        {
+            return IsWorking ? Mathf.CeilToInt(_duration - _time) : 0;
         }
     }
 }

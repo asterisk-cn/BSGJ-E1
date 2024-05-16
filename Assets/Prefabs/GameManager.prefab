@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1375568432692862430}
   - component: {fileID: 348265188698559393}
   - component: {fileID: 7970872963823517348}
+  - component: {fileID: 4308786854474834289}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameState: 0
+  _runTime: 60
 --- !u!114 &7970872963823517348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,3 +62,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnableIMU: 1
   EnableLocalize: 1
+--- !u!114 &4308786854474834289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8645832911766535399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a7beb3e7a139a44699b0e09fd434010, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onTimeUp:
+    m_PersistentCalls:
+      m_Calls: []

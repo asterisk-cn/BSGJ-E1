@@ -8,7 +8,7 @@ namespace GameManagers
     {
         Initializing,
         Ready,
-        Run,
+        Main,
         Fight,
         Result,
         Finished
