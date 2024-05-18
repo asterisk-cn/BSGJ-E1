@@ -52,13 +52,17 @@ public class SceneFadeManager : MonoBehaviour
         isFadeIn = true;
     }
 
-    public void FadeOut(SceneNameClass.SceneName nextScene)
+    /**
+     * @brief フェードアウトして、次のシーンに遷移する
+     * @param nextScene 遷移先のシーン名
+     */
+    public void FadeOut(GameManagers.GameState nextScene)
     {
         // フェードアウトのフラグを上げる
         isFadeOut = true;
 
         // 遷移先のシーン名をEnumから文字列に変換
-        afterScene = SceneNameClass.SceneNameToString[nextScene];
+        afterScene = nextScene.ToString();
     }
 
 
@@ -83,7 +87,7 @@ public class SceneFadeManager : MonoBehaviour
             {
                 alpha = 1;
                 isFadeOut = false;
-                SceneManager.LoadScene("Fight");
+                SceneManager.LoadScene(afterScene);
             }
         }
     }
