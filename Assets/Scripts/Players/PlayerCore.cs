@@ -22,12 +22,16 @@ namespace Players
         [Header("巨大化の倍率")]
         public float sizeUpRate;
 
-        private int tapCount = 0;
+        private int leftTapCount = 0;
+        private int rightTapCount = 0;
 
         [SerializeField]
         private float powerUpTimer = 0;
 
         private bool _isAttacked = false;
+
+        [SerializeField]
+        EnemyCore enemyCore;
 
 
         // Start is called before the first frame update
@@ -55,7 +59,8 @@ namespace Players
             {
                 _isAttacked = true;
 
-                Debug.Log($"サイズ:{_character1.transform.localScale.x}, 押した回数:{tapCount}");
+                Debug.Log($"サイズ:{_character1.transform.localScale.x}, 押した回数:{leftTapCount}");
+                Debug.Log($"サイズ:{_character2.transform.localScale.x}, 押した回数:{rightTapCount}");
             }
         }
 
@@ -69,13 +74,33 @@ namespace Players
         {
             powerUpTimer += Time.deltaTime;
 
-            if (_inputs.attack)
+            if (_inputs.leftAttack)
             {
-                tapCount++;
+                leftTapCount++;
                 float newScale = _character1.transform.localScale.x + sizeUpRate;
 
                 _character1.ScaleAroundFoot(newScale);
+
+                // アニメーションの再生
+
+                enemyCore.health--;
+
+                _inputs.leftAttack = false;
+
+            }
+
+            if (_inputs.rightAttack)
+            {
+                rightTapCount++;
+                float newScale = _character2.transform.localScale.x + sizeUpRate;
+
                 _character2.ScaleAroundFoot(newScale);
+
+                // アニメーションの再生
+
+                enemyCore.health--;
+
+                _inputs.rightAttack = false;
             }
         }
     }

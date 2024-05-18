@@ -1,3 +1,4 @@
+using GameManagers;
 using Players;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,9 +31,20 @@ public class EnemyCore : MonoBehaviour
 
     private void Start()
     {
-        character1 = GameObject.Find("Player1").GetComponent<PlayerCharacter>();
-        character2 = GameObject.Find("Player2").GetComponent<PlayerCharacter>();
-        InvokeRepeating("GenerateAttack", 1, 2);
+        if(MainGameManager.instance.gameState == GameState.Main)
+        {
+            character1 = GameObject.Find("Player1").GetComponent<PlayerCharacter>();
+            character2 = GameObject.Find("Player2").GetComponent<PlayerCharacter>();
+            InvokeRepeating("GenerateAttack", 1, 2);
+        }
+    }
+
+    private void Update()
+    {
+        if(MainGameManager.instance.gameState == GameState.Fight)
+        {
+            Die();
+        }
     }
 
     public void TakeDamage(int damage)
@@ -42,6 +54,10 @@ public class EnemyCore : MonoBehaviour
 
     public void Die()
     {
-
+        if(health <= 0)
+        {
+            Debug.Log("ゲームクリア");
+            GameTimeManager.instance.StopTimer();
+        }
     }
 }
