@@ -44,6 +44,11 @@ public class MainGameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (scene.name == "Title")
+        {
+            OnTitleLoaded();
+        }
+
         if (scene.name == "Main")
         {
             OnRunLoaded();
@@ -53,6 +58,16 @@ public class MainGameManager : MonoBehaviour
         {
             OnFightLoaded();
         }
+
+        if (scene.name == "Result")
+        {
+            OnResultLoaded();
+        }
+    }
+
+    void OnTitleLoaded()
+    {
+        gameState = GameState.Title;
     }
 
     /**
@@ -72,5 +87,10 @@ public class MainGameManager : MonoBehaviour
     {
         gameState = GameState.Fight;
         GameTimeManager.instance.StartTimer(_fightTime, true);
+    }
+
+    void OnResultLoaded()
+    {
+        gameState = GameState.Result;
     }
 }
