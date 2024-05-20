@@ -57,11 +57,19 @@ namespace Enemy {
         - void GenerateAttack()
     }
 
+    class AttackParameters {
+        + float moveSpeed
+        + float chaseTime
+        + float remainTime
+    }
+
     class EnemyAttack {
         + bool isActive
+        - AttackParameters _parameters
         - PlayerCharacter _target
         - float moveSpeed
 
+        + void SetTarget(PlayerCharacter target)
         - void Move()
         - void Attack()
         - void OnTriggerEnter(Collider other)
@@ -85,12 +93,10 @@ namespace GameManagers {
     }
 
     enum GameState{
-        + Initializing
-        + Ready
+        + Title
         + Run
         + Fight
         + Result
-        + Finished
     }
 
     class GameTimeManager
