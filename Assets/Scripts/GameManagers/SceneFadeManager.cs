@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class SceneFadeManager : MonoBehaviour
 {
-    public bool isFadeIn;
-    public bool isFadeOut;
+    bool isFadeIn;
+    bool isFadeOut;
 
     [SerializeField]
     private Image fadeImage;
@@ -31,7 +31,6 @@ public class SceneFadeManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        DontDestroyOnLoad(this.gameObject);
     }
 
     // Start is called before the first frame update
@@ -56,13 +55,12 @@ public class SceneFadeManager : MonoBehaviour
      * @brief フェードアウトして、次のシーンに遷移する
      * @param nextScene 遷移先のシーン名
      */
-    public void FadeOut(GameManagers.GameState nextScene)
+    public void FadeOut(string nextScene)
     {
         // フェードアウトのフラグを上げる
         isFadeOut = true;
 
-        // 遷移先のシーン名をEnumから文字列に変換
-        afterScene = nextScene.ToString();
+        afterScene = nextScene;
     }
 
 
