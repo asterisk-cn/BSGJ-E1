@@ -255,7 +255,7 @@ public partial class @BSGJE1: IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""e456bf9d-6c29-4e04-96f6-e3c1395a0e85"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
+                    ""processors"": ""StickDeadzone"",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
