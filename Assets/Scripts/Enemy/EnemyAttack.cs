@@ -45,6 +45,14 @@ public class EnemyAttack : MonoBehaviour
     //移動の自動化フラグ
     public bool autoMove = true;
 
+    private EnemyCore _enemyCore;
+
+    private void Awake()
+    {
+        _enemyCore = GetComponentInParent<EnemyCore>();
+        _target = _enemyCore.character1;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
