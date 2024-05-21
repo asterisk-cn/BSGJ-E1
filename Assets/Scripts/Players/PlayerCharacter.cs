@@ -20,10 +20,14 @@ namespace Players
         [SerializeField] private CharacterParameters _defaultParameters;
         private CharacterParameters _currentParameters;
 
+        //追加 05/21
+        private CharacterController _characterController;
+
         // Start is called before the first frame update
         void Start()
         {
             _currentParameters = _defaultParameters;
+            _characterController = gameObject.AddComponent<CharacterController>();
         }
 
         // Update is called once per frame
@@ -40,7 +44,7 @@ namespace Players
 
         public void Move(Vector3 direction)
         {
-            transform.position += direction * _currentParameters.moveSpeed;
+            _characterController.Move(direction*_currentParameters.moveSpeed);
         }
 
         public void ScaleAroundFoot(float newScale)
