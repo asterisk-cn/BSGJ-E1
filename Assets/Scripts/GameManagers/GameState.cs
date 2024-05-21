@@ -6,10 +6,11 @@ namespace GameManagers
 {
     public enum GameState
     {
-        Title,
+        Initializing,
         Ready,
         Main,
         Fight,
-        Result
+        Result,
+        Finished
     }
 }

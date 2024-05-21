@@ -255,7 +255,7 @@ public partial class @BSGJE1: IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""e456bf9d-6c29-4e04-96f6-e3c1395a0e85"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": ""StickDeadzone"",
+                    ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
@@ -263,7 +263,7 @@ public partial class @BSGJE1: IInputActionCollection2, IDisposable
                     ""name"": ""Submit"",
                     ""type"": ""Button"",
                     ""id"": ""e40b09b8-ca31-43a8-94ba-f9c4469d5fe4"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
