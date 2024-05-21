@@ -56,13 +56,12 @@ public class SceneFadeManager : MonoBehaviour
      * @brief フェードアウトして、次のシーンに遷移する
      * @param nextScene 遷移先のシーン名
      */
-    public void FadeOut(GameManagers.GameState nextScene)
+    public void FadeOut(string nextScene)
     {
         // フェードアウトのフラグを上げる
         isFadeOut = true;
 
-        // 遷移先のシーン名をEnumから文字列に変換
-        afterScene = nextScene.ToString();
+        afterScene = nextScene;
     }
 
 
