@@ -44,11 +44,6 @@ public class MainGameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Title")
-        {
-            OnTitleLoaded();
-        }
-
         if (scene.name == "Main")
         {
             OnRunLoaded();
@@ -58,16 +53,6 @@ public class MainGameManager : MonoBehaviour
         {
             OnFightLoaded();
         }
-
-        if (scene.name == "Result")
-        {
-            OnResultLoaded();
-        }
-    }
-
-    void OnTitleLoaded()
-    {
-        gameState = GameState.Title;
     }
 
     /**
@@ -76,7 +61,7 @@ public class MainGameManager : MonoBehaviour
     void OnRunLoaded()
     {
         gameState = GameState.Main;
-        GameTimeManager.instance.AddListenerOnTimeUp(() => instance.LoadScene("Fight"));
+        GameTimeManager.instance.AddListenerOnTimeUp(() => SceneFadeManager.instance.FadeOut(GameState.Fight));
         GameTimeManager.instance.StartTimer(_mainTime, true);
     }
 
@@ -86,24 +71,6 @@ public class MainGameManager : MonoBehaviour
     void OnFightLoaded()
     {
         gameState = GameState.Fight;
-        GameTimeManager.instance.AddListenerOnTimeUp(() => instance.LoadScene("Result"));
         GameTimeManager.instance.StartTimer(_fightTime, true);
-    }
-
-    void OnResultLoaded()
-    {
-        gameState = GameState.Result;
-    }
-
-    public void LoadScene(string sceneName, bool isFade = true)
-    {
-        if (isFade)
-        {
-            SceneFadeManager.instance.FadeOut(sceneName);
-        }
-        else
-        {
-            SceneManager.LoadScene(sceneName);
-        }
     }
 }
