@@ -51,7 +51,6 @@ namespace GameManagers
 
                 if (_time >= _duration)
                 {
-                    Debug.Log(_onTimeUp);
                     _onTimeUp?.Invoke();
                     ResetTimer();
                 }
