@@ -8,7 +8,7 @@ namespace GameManagers
     public class GameTimeManager : MonoBehaviour
     {
         public static GameTimeManager instance;
-        public UnityEvent _onTimeUp = new UnityEvent();
+        private UnityEvent _onTimeUp = new UnityEvent();
         float _startTime;
         float _time;
         float _duration;

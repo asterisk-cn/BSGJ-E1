@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class SceneFadeManager : MonoBehaviour
 {
-    public bool isFadeIn;
-    public bool isFadeOut;
+    bool isFadeIn;
+    bool isFadeOut;
 
     [SerializeField]
     private Image fadeImage;
@@ -31,7 +31,6 @@ public class SceneFadeManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        DontDestroyOnLoad(this.gameObject);
     }
 
     // Start is called before the first frame update
