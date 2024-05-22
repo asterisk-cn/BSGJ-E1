@@ -108,11 +108,22 @@ namespace Enemy {
     EnemyAttack <|-- Knife
     EnemyAttack <|-- Pot
     EnemyAttack <|-- Rod
+
+    EnemyCore *-- EnemyAttack
+
+    class Knife
+    class Pot
+    Class Rod
+
+    EnemyAttack <|-- Knife
+    EnemyAttack <|-- Pot
+    EnemyAttack <|-- Rod
 }
 
 namespace GameManagers {
     class MainGameManager {
         + GameState state
+        - GameTimeManager _timeManager
         - GameTimeManager _timeManager
     }
 
@@ -122,6 +133,10 @@ namespace GameManagers {
         + Fight
         + Result
     }
+
+    class GameTimeManager
+
+    MainGameManager --> GameTimeManager
 
     class GameTimeManager
 
