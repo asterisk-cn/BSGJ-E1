@@ -15,9 +15,7 @@ public class EnemyCore : MonoBehaviour
 
     [SerializeField] public static readonly List<EnemyAttack> _attackView = new List<EnemyAttack>();
 
-    // EnemyAttackにアタッチするためのpublic
-    public  PlayerCharacter character1;
-    public　PlayerCharacter character2;
+    [SerializeField] public PlayerCore _player;
 
     void GenerateAttack()
     {
@@ -30,8 +28,6 @@ public class EnemyCore : MonoBehaviour
 
     private void Start()
     {
-        character1 = GameObject.Find("Player1").GetComponent<PlayerCharacter>();
-        character2 = GameObject.Find("Player2").GetComponent<PlayerCharacter>();
         InvokeRepeating("GenerateAttack", 1, 2);
     }
 
