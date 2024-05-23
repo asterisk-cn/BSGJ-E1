@@ -15,7 +15,7 @@ public class EnemyCore : MonoBehaviour
 
     [SerializeField] public static readonly List<EnemyAttack> _attackView = new List<EnemyAttack>();
 
-    [SerializeField] public PlayerCore _player;
+    [SerializeField] private PlayerCore _player;
 
     void GenerateAttack()
     {
@@ -23,6 +23,8 @@ public class EnemyCore : MonoBehaviour
         int index = Random.Range(0, _attackPrefabs.Count);
         var generate = Instantiate(_attackPrefabs[index], new Vector3(0, 10, 0), Quaternion.identity, gameObject.transform);
         var comp = generate.GetComponent<EnemyAttack>();
+        // TODO: ターゲットの選択
+        comp.SetTarget(_player.character.transform);
         _attackView.Add(comp);
     }
 

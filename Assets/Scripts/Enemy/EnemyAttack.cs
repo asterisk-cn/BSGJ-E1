@@ -21,7 +21,7 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] float stageHeight = 0;
 
     //追跡するオブジェクト
-    [SerializeField] PlayerCharacter _target;
+    [SerializeField] Transform _targetTransform;
 
     //攻撃範囲ようの距離
     [SerializeField] float range = 20;
@@ -45,19 +45,11 @@ public class EnemyAttack : MonoBehaviour
     //移動の自動化フラグ
     public bool autoMove = true;
 
-    private EnemyCore _enemyCore;
-
-    private void Awake()
-    {
-        _enemyCore = GetComponentInParent<EnemyCore>();
-        _target = _enemyCore._player.character;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
         //エラー防止用
-        if (_target == null) { autoMove = false; }
+        if (_targetTransform == null) { autoMove = false; }
     }
 
     // Update is called once per frame
@@ -76,7 +68,7 @@ public class EnemyAttack : MonoBehaviour
         //プレイヤーを追跡する
         if (autoMove) 
         {
-            Vector3 distance = new Vector3(_target.transform.position.x - this.transform.position.x, 0, _target.transform.position.z - this.transform.position.z);
+            Vector3 distance = new Vector3(_targetTransform.position.x - this.transform.position.x, 0, _targetTransform.position.z - this.transform.position.z);
             //攻撃する範囲かの判定
             if (distance.magnitude <=range) 
             {
@@ -175,6 +167,11 @@ public class EnemyAttack : MonoBehaviour
             isUp = false;
             isAttack = false;
         }
+    }
+
+    public void SetTarget(Transform target)
+    {
+        _targetTransform = target;
     }
 
     void OnTriggerEnter(Collider other)
