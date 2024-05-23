@@ -130,4 +130,7 @@ MonoBehaviour:
   missLimit: 150
   isAttack: 0
   isUp: 0
+  isActive: 0
   autoMove: 1
+  stop: 1
+  waitSecond: 3

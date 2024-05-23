@@ -42,10 +42,21 @@ public class EnemyAttack : MonoBehaviour
 
     public bool isUp = false;
 
+    [HideInInspector]
+    public bool isActive;
+
     //移動の自動化フラグ
     public bool autoMove = true;
 
     private EnemyCore _enemyCore;
+
+    [SerializeField]
+    [Header("障害物になるフラグ")]
+    private bool stop;
+
+    [SerializeField]
+    [Header("留まる秒数")]
+    private float waitSecond = 3.0f;
 
     private void Awake()
     {
@@ -58,6 +69,7 @@ public class EnemyAttack : MonoBehaviour
     {
         //エラー防止用
         if (_target == null) { autoMove = false; }
+        isActive = true;
     }
 
     // Update is called once per frame
@@ -106,14 +118,7 @@ public class EnemyAttack : MonoBehaviour
                     this.transform.position += distance;
                 
                 }
-
-                
-            
             }
-            
-
-
-
         }
         //以前のバージョン
         else 
@@ -161,7 +166,15 @@ public class EnemyAttack : MonoBehaviour
         //攻撃がステージに到達
         if(!isUp &&transform.position.y <= stageHeight) 
         {
-            isUp = true;
+            if (!stop) { isUp = true; }
+            else
+            {
+                isAttack = false;
+                StartCoroutine("Stop");
+            }
+            //ステージに埋まらないようにする
+            float buff = transform.localScale.y / 2;
+            transform.position = new Vector3(transform.position.x, stageHeight + buff, transform.position.z);
         }
 
         //元の高さに戻る
@@ -175,6 +188,22 @@ public class EnemyAttack : MonoBehaviour
             isUp = false;
             isAttack = false;
         }
+    }
+
+    IEnumerator Stop()
+    {
+        Rigidbody rb = this.gameObject.AddComponent<Rigidbody>();
+        rb.useGravity = true;
+        rb.constraints = RigidbodyConstraints.FreezePosition;
+
+        BoxCollider collider = this.GetComponent<BoxCollider>();
+        //攻撃を無効
+        collider.isTrigger = false;
+
+        isActive = false;
+
+        yield return new WaitForSeconds(waitSecond);
+        Destroy(this.gameObject);
     }
 
     void OnTriggerEnter(Collider other)
