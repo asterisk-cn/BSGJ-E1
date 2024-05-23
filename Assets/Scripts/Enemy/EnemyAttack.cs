@@ -50,7 +50,7 @@ public class EnemyAttack : MonoBehaviour
     private void Awake()
     {
         _enemyCore = GetComponentInParent<EnemyCore>();
-        _target = _enemyCore.character1;
+        _target = _enemyCore._player.character;
     }
 
     // Start is called before the first frame update

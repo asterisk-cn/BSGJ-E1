@@ -20,9 +20,13 @@ namespace Players
         [SerializeField] private CharacterParameters _defaultParameters;
         private CharacterParameters _currentParameters;
 
+        private PlayerCore _core;
+
         // Start is called before the first frame update
         void Start()
         {
+            _core = GetComponentInParent<PlayerCore>();
+
             _currentParameters = _defaultParameters;
         }
 
@@ -59,6 +63,11 @@ namespace Players
         public void Die()
         {
 
+        }
+
+        public void UnitePartial(PlayerPartial playerPartial)
+        {
+            _core.UnitePartial();
         }
     }
 }

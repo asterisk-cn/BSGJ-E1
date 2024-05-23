@@ -6,13 +6,27 @@ using UnityEngine;
 
 namespace Players
 {
+    [System.Serializable]
+    class PlayerParameters
+    {
+        public int health;
+        public int unionCount;
+    }
+
     public class PlayerCore : MonoBehaviour
     {
         public bool isAlive;
         PlayerInputs _inputs;
 
-        [SerializeField] private PlayerCharacter _character1;
-        [SerializeField] private PlayerCharacter _character2;
+        [SerializeField] private PlayerParameters _defaultParameters;
+        private PlayerParameters _currentParameters;
+
+        public PlayerCharacter character;
+        [HideInInspector] public PlayerPartial partial;
+
+        [SerializeField] List<PlayerPartial> _partialPrefabs = new List<PlayerPartial>();
+        private int _partialIndex = 0;
+        [SerializeField] private GameObject _generatePosition;
 
         [SerializeField]
         [Header("パワーアップの時間制限")]
@@ -29,11 +43,17 @@ namespace Players
 
         private bool _isAttacked = false;
 
+        void Awake()
+        {
+            _inputs = GetComponentInParent<PlayerInputs>();
+
+            _currentParameters = _defaultParameters;
+        }
 
         // Start is called before the first frame update
         void Start()
         {
-            _inputs = GetComponentInParent<PlayerInputs>();
+            GeneratePartial();
         }
 
         // Update is called once per frame
@@ -55,14 +75,17 @@ namespace Players
             {
                 _isAttacked = true;
 
-                Debug.Log($"サイズ:{_character1.transform.localScale.x}, 押した回数:{tapCount}");
+                Debug.Log($"サイズ:{character.transform.localScale.x}, 押した回数:{tapCount}");
             }
         }
 
         void Move()
         {
-            _character1.Move(_inputs.leftMoveStick);
-            _character2.Move(_inputs.rightMoveStick);
+            character.Move(_inputs.leftMoveStick);
+            if (partial != null)
+            {
+                partial?.Move(_inputs.rightMoveStick);
+            }
         }
 
         void Attack()
@@ -72,10 +95,31 @@ namespace Players
             if (_inputs.attack)
             {
                 tapCount++;
-                float newScale = _character1.transform.localScale.x + sizeUpRate;
+                float newScale = character.transform.localScale.x + sizeUpRate;
 
-                _character1.ScaleAroundFoot(newScale);
-                _character2.ScaleAroundFoot(newScale);
+                character.ScaleAroundFoot(newScale);
+            }
+        }
+
+        public void UnitePartial()
+        {
+            _currentParameters.unionCount++;
+            GeneratePartial();
+        }
+
+        void GeneratePartial()
+        {
+            if (_partialIndex < _partialPrefabs.Count)
+            {
+                partial = Instantiate(_partialPrefabs[_partialIndex], _generatePosition.transform.position, Quaternion.identity);
+                partial.transform.parent = transform;
+
+                _partialIndex++;
+            }
+            else
+            {
+                // TODO: RunManagerを呼び出してゲーム終了処理を行う
+                MainGameManager.instance.LoadScene("Fight");
             }
         }
     }
