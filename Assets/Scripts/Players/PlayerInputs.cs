@@ -19,11 +19,11 @@ namespace Players
             if (useJoycon)
             {
                 UpdateJoyconInputs();
-                if (leftAccelaration.magnitude > 0.1f)
+                if (leftAccelaration.magnitude > 5f)
                 {
                     leftAttack = true;
                 }
-                if (rightAccelaration.magnitude > 0.1f)
+                if (rightAccelaration.magnitude > 5f)
                 {
                     rightAttack = true;
                 }

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1375568432692862430}
   - component: {fileID: 348265188698559393}
-  - component: {fileID: 7970872963823517348}
   - component: {fileID: 4308786854474834289}
   m_Layer: 0
   m_Name: GameManager
@@ -50,20 +49,7 @@ MonoBehaviour:
   gameState: 0
   _mainTime: 60
   _fightTime: 10
---- !u!114 &7970872963823517348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8645832911766535399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 405bad29b2b998c408059182c189d9e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnableIMU: 1
-  EnableLocalize: 1
+  isClear: 0
 --- !u!114 &4308786854474834289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,9 +62,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a7beb3e7a139a44699b0e09fd434010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onTimeUp:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &241601600632657052
 PrefabInstance:
   m_ObjectHideFlags: 0

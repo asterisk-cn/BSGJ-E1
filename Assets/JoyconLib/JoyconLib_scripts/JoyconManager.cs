@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using UnityEngine.SceneManagement;
 
 using UnityEngine;
 using System;
@@ -26,10 +27,9 @@ public class JoyconManager: MonoBehaviour
     }
 
     void Awake()
-    {
-        if (instance != null) Destroy(gameObject);
-        instance = this;
-		DontDestroyOnLoad(gameObject);
+	{
+		if (instance != null) Destroy(gameObject);
+		instance = this;
 
 		int i = 0;
 
@@ -76,6 +76,7 @@ public class JoyconManager: MonoBehaviour
 
     void Start()
     {
+		SceneManager.sceneUnloaded += OnSceneUnloaded;
 		for (int i = 0; i < j.Count; ++i)
 		{
 			Debug.Log (i);
@@ -95,8 +96,17 @@ public class JoyconManager: MonoBehaviour
 		}
     }
 
-    void OnApplicationQuit()
-    {
+	void OnSceneUnloaded(Scene current)
+	{
+		for (int i = 0; i < j.Count; ++i)
+		{
+			j[i].Detach();
+		}
+
+	}
+
+	void OnApplicationQuit()
+	{
 		for (int i = 0; i < j.Count; ++i)
 		{
 			j[i].Detach ();

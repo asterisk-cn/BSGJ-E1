@@ -10,7 +10,7 @@ public class MainGameManager : MonoBehaviour
     public static MainGameManager instance;
     public GameState gameState;
 
-    [SerializeField] private float _mainTime = 60;
+    // [SerializeField] private float _mainTime = 60;
     [SerializeField] private float _fightTime = 10;
 
     public bool isClear = false;
@@ -78,8 +78,6 @@ public class MainGameManager : MonoBehaviour
     void OnRunLoaded()
     {
         gameState = GameState.Main;
-        GameTimeManager.instance.AddListenerOnTimeUp(() => instance.LoadScene("Fight"));
-        GameTimeManager.instance.StartTimer(_mainTime, true);
     }
 
     /**
