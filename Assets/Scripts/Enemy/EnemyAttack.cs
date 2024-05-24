@@ -21,7 +21,7 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] float stageHeight = 0;
 
     //追跡するオブジェクト
-    [SerializeField] PlayerCharacter _target;
+    [SerializeField] Transform _targetTransform;
 
     //攻撃範囲ようの距離
     [SerializeField] float range = 20;
@@ -73,7 +73,7 @@ public class EnemyAttack : MonoBehaviour
     void Start()
     {
         //エラー防止用
-        if (_target == null) { autoMove = false; }
+        if (_targetTransform == null) { autoMove = false; }
         isActive = true;
     }
 
@@ -194,6 +194,11 @@ public class EnemyAttack : MonoBehaviour
             isUp = false;
             isAttacking = false;
         }
+    }
+
+    public void SetTarget(Transform target)
+    {
+        _targetTransform = target;
     }
 
     void Activate()
