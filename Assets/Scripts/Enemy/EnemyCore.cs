@@ -75,5 +75,10 @@ namespace Enemy
             isAlive = false;
             FightManager.ToResult(true);
         }
+
+        public int GetCurrentHealth()
+        {
+            return _currentHealth;
+        }
     }
 }
