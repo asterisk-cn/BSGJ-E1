@@ -192,9 +192,9 @@ public class EnemyAttack : MonoBehaviour
 
     IEnumerator Stop()
     {
-        Rigidbody rb = this.gameObject.AddComponent<Rigidbody>();
-        rb.useGravity = true;
-        rb.constraints = RigidbodyConstraints.FreezePosition;
+        //Rigidbody rb = this.gameObject.AddComponent<Rigidbody>();
+        //rb.useGravity = true;
+        //rb.constraints = RigidbodyConstraints.FreezePosition;
 
         BoxCollider collider = this.GetComponent<BoxCollider>();
         //攻撃を無効
@@ -213,6 +213,7 @@ public class EnemyAttack : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!isActive) return; 
         if (!isAttack) { Move(); }
 
         if(isAttack) { Attack(); }
