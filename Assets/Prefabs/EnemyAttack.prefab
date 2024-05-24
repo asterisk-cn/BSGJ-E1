@@ -122,14 +122,14 @@ MonoBehaviour:
   _defaultParameters:
     moveSpeed: 0.3
     attackSpeed: 0.5
-    chaseTime: 3
-    attackTime: 0.3
+    chaseTime: 1
+    attackTime: 0.1
     remainTime: 3
     isChase: 1
     isStay: 1
   upSpeed: 0.2
   _targetTransform: {fileID: 0}
-  isAttacking: 0
+  isActive: 1
 --- !u!54 &3086937301494972951
 Rigidbody:
   m_ObjectHideFlags: 0
