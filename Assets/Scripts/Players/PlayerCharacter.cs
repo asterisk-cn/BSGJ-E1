@@ -22,6 +22,13 @@ namespace Players
 
         private PlayerCore _core;
 
+        private CharacterController _characterController;
+
+        void Awake()
+        {
+            _characterController = GetComponent<CharacterController>();
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -44,7 +51,7 @@ namespace Players
 
         public void Move(Vector3 direction)
         {
-            transform.position += direction * _currentParameters.moveSpeed;
+            _characterController.Move(direction*_currentParameters.moveSpeed);
         }
 
         public void ScaleAroundFoot(float newScale)
