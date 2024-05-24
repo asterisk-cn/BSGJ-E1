@@ -45,7 +45,7 @@ namespace Players
 
         void Awake()
         {
-            _inputs = GetComponentInParent<PlayerInputs>();
+            _inputs = GetComponent<PlayerInputs>();
 
             _currentParameters = _defaultParameters;
         }
@@ -53,23 +53,24 @@ namespace Players
         // Start is called before the first frame update
         void Start()
         {
-            GeneratePartial();
+            if (MainGameManager.instance.gameState == GameState.Main)
+            {
+                GeneratePartial();
+            }
         }
 
         // Update is called once per frame
         void Update()
         {
-
+            if (MainGameManager.instance.gameState == GameState.Fight && !_isAttacked)
+            {
+                Attack();
+            }
         }
 
         private void FixedUpdate()
         {
             Move();
-
-            if (MainGameManager.instance.gameState == GameState.Fight && !_isAttacked)
-            {
-                Attack();
-            }
 
             if (powerUpTimer > powerUpTimeLimit && !_isAttacked)
             {
@@ -92,13 +93,22 @@ namespace Players
         {
             powerUpTimer += Time.deltaTime;
 
-            if (_inputs.attack)
+            if (_inputs.leftAttack)
             {
-                tapCount++;
-                float newScale = character.transform.localScale.x + sizeUpRate;
-
-                character.ScaleAroundFoot(newScale);
+                PowerUp();
             }
+            if (_inputs.rightAttack)
+            {
+                PowerUp();
+            }
+        }
+
+        void PowerUp()
+        {
+            tapCount++;
+            float newScale = character.transform.localScale.x + sizeUpRate;
+
+            character.ScaleAroundFoot(newScale);
         }
 
         public void UnitePartial()

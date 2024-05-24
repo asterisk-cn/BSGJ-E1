@@ -9,22 +9,31 @@ namespace Players
     {
         public Vector3 leftMoveStick;
         public Vector3 rightMoveStick;
-        public bool attack;
+        public bool leftAttack;
+        public bool rightAttack;
 
         [SerializeField] private bool useJoycon = false;
 
         void FixedUpdate()
         {
-            attack = false;
-
             if (useJoycon)
             {
                 UpdateJoyconInputs();
                 if (leftAccelaration.magnitude > 0.1f)
                 {
-                    attack = true;
+                    leftAttack = true;
+                }
+                if (rightAccelaration.magnitude > 0.1f)
+                {
+                    rightAttack = true;
                 }
             }
+        }
+
+        void LateUpdate()
+        {
+            leftAttack = false;
+            rightAttack = false;
         }
 
         public Vector3 leftAccelaration;
@@ -53,9 +62,14 @@ namespace Players
             rightMoveStick = new Vector3(axis.x, 0, axis.y);
         }
 
-        void OnFire(InputValue value)
+        void OnFireLeft(InputValue value)
         {
-            attack = value.isPressed;
+            leftAttack = value.isPressed;
+        }
+
+        void OnFireRight(InputValue value)
+        {
+            rightAttack = value.isPressed;
         }
 
         void UpdateJoyconInputs()
