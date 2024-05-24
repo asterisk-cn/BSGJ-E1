@@ -27,7 +27,6 @@ namespace Players
         void Start()
         {
             _currentParameters = _defaultParameters;
-            _characterController = gameObject.GetComponent<CharacterController>();
         }
 
         // Update is called once per frame
