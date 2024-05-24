@@ -38,6 +38,8 @@ namespace Players
 
         private bool _isAttacked = false;
 
+        
+
         void Awake()
         {
             _inputs = GetComponent<PlayerInputs>();
@@ -109,6 +111,30 @@ namespace Players
                 // TODO: RunManagerを呼び出してゲーム終了処理を行う
                 MainGameManager.instance.LoadScene("Fight");
             }
+        }
+
+        //5/25追加 Suzuki H
+        //ダメージ処理用の呼び出し関数
+        public void TakeDamage(int damage)
+        {
+            _currentParameters.health -= damage;
+            //ゲームオーバー処理？　リザルト処理に遷移
+            if (_currentParameters.health <= 0)
+            {
+                Die();
+            }
+        }
+
+        void Die()
+        {
+            isAlive = false;
+            MainGameManager.instance.isClear = false;
+            SceneFadeManager.instance.FadeOut("Result");
+        }
+
+        public int GetCurrentHealth()
+        {
+            return _currentParameters.health;
         }
     }
 }
