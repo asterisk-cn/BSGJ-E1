@@ -176,7 +176,6 @@ namespace Enemy
         {
             if (other.gameObject.tag == "Player" && isAttacking)
             {
-                Debug.Log("Hit");
                 Destroy(gameObject);
             }
         }

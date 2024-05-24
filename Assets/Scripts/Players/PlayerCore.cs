@@ -1,3 +1,4 @@
+using Enemy;
 using GameManagers;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,23 +30,17 @@ namespace Players
         [SerializeField] private GameObject _generatePosition;
 
         [SerializeField]
-        [Header("パワーアップの時間制限")]
-        public float powerUpTimeLimit;
-
-        [SerializeField]
         [Header("巨大化の倍率")]
         public float sizeUpRate;
 
-        private int tapCount = 0;
-
         [SerializeField]
-        private float powerUpTimer = 0;
+        private EnemyCore _enemy;
 
         private bool _isAttacked = false;
 
         void Awake()
         {
-            _inputs = GetComponentInParent<PlayerInputs>();
+            _inputs = GetComponent<PlayerInputs>();
 
             _currentParameters = _defaultParameters;
         }
@@ -53,30 +48,24 @@ namespace Players
         // Start is called before the first frame update
         void Start()
         {
-            GeneratePartial();
+            if (MainGameManager.instance.gameState == GameState.Main)
+            {
+                GeneratePartial();
+            }
         }
 
         // Update is called once per frame
         void Update()
         {
-
+            if (MainGameManager.instance.gameState == GameState.Fight && !_isAttacked)
+            {
+                Attack();
+            }
         }
 
         private void FixedUpdate()
         {
             Move();
-
-            if (MainGameManager.instance.gameState == GameState.Fight && !_isAttacked)
-            {
-                Attack();
-            }
-
-            if (powerUpTimer > powerUpTimeLimit && !_isAttacked)
-            {
-                _isAttacked = true;
-
-                Debug.Log($"サイズ:{character.transform.localScale.x}, 押した回数:{tapCount}");
-            }
         }
 
         void Move()
@@ -90,14 +79,13 @@ namespace Players
 
         void Attack()
         {
-            powerUpTimer += Time.deltaTime;
-
-            if (_inputs.attack)
+            if (_inputs.leftAttack)
             {
-                tapCount++;
-                float newScale = character.transform.localScale.x + sizeUpRate;
-
-                character.ScaleAroundFoot(newScale);
+                _enemy.TakeDamage(1);
+            }
+            if (_inputs.rightAttack)
+            {
+                _enemy.TakeDamage(1);
             }
         }
 

@@ -13,6 +13,8 @@ public class MainGameManager : MonoBehaviour
     [SerializeField] private float _mainTime = 60;
     [SerializeField] private float _fightTime = 10;
 
+    public bool isClear = false;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -88,6 +90,8 @@ public class MainGameManager : MonoBehaviour
         gameState = GameState.Fight;
         GameTimeManager.instance.AddListenerOnTimeUp(() => instance.LoadScene("Result"));
         GameTimeManager.instance.StartTimer(_fightTime, true);
+
+        Reset();
     }
 
     void OnResultLoaded()
@@ -105,5 +109,10 @@ public class MainGameManager : MonoBehaviour
         {
             SceneManager.LoadScene(sceneName);
         }
+    }
+
+    void Reset()
+    {
+        isClear = false;
     }
 }

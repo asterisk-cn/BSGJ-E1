@@ -47,12 +47,21 @@ public partial class @BSGJE1: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Fire"",
+                    ""name"": ""FireLeft"",
                     ""type"": ""Button"",
                     ""id"": ""2cf2cc75-2422-4589-b40d-4f01ddcf38a0"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FireRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""4cdecca1-d4d9-4da1-a717-8442179c42b3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -192,11 +201,11 @@ public partial class @BSGJE1: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""143bb1cd-cc10-4eca-a2f0-a3664166fe91"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Fire"",
+                    ""action"": ""FireLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -207,40 +216,29 @@ public partial class @BSGJE1: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Fire"",
+                    ""action"": ""FireLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""886e731e-7071-4ae4-95c0-e61739dad6fd"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
+                    ""id"": ""0afda92c-f075-4f4d-9e6c-0aef51837dba"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Touch"",
-                    ""action"": ""Fire"",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""FireRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ee3d0cd2-254e-47a7-a8cb-bc94d9658c54"",
-                    ""path"": ""<Joystick>/trigger"",
+                    ""id"": ""71b4cee9-aeb3-462d-a369-33f8df75aa35"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8255d333-5683-4943-a58a-ccb207ff1dce"",
-                    ""path"": ""<XRController>/{PrimaryAction}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR"",
-                    ""action"": ""Fire"",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""FireRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -830,7 +828,8 @@ public partial class @BSGJE1: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_LeftMove = m_Player.FindAction("LeftMove", throwIfNotFound: true);
         m_Player_RightMove = m_Player.FindAction("RightMove", throwIfNotFound: true);
-        m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+        m_Player_FireLeft = m_Player.FindAction("FireLeft", throwIfNotFound: true);
+        m_Player_FireRight = m_Player.FindAction("FireRight", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -912,14 +911,16 @@ public partial class @BSGJE1: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_LeftMove;
     private readonly InputAction m_Player_RightMove;
-    private readonly InputAction m_Player_Fire;
+    private readonly InputAction m_Player_FireLeft;
+    private readonly InputAction m_Player_FireRight;
     public struct PlayerActions
     {
         private @BSGJE1 m_Wrapper;
         public PlayerActions(@BSGJE1 wrapper) { m_Wrapper = wrapper; }
         public InputAction @LeftMove => m_Wrapper.m_Player_LeftMove;
         public InputAction @RightMove => m_Wrapper.m_Player_RightMove;
-        public InputAction @Fire => m_Wrapper.m_Player_Fire;
+        public InputAction @FireLeft => m_Wrapper.m_Player_FireLeft;
+        public InputAction @FireRight => m_Wrapper.m_Player_FireRight;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -935,9 +936,12 @@ public partial class @BSGJE1: IInputActionCollection2, IDisposable
             @RightMove.started += instance.OnRightMove;
             @RightMove.performed += instance.OnRightMove;
             @RightMove.canceled += instance.OnRightMove;
-            @Fire.started += instance.OnFire;
-            @Fire.performed += instance.OnFire;
-            @Fire.canceled += instance.OnFire;
+            @FireLeft.started += instance.OnFireLeft;
+            @FireLeft.performed += instance.OnFireLeft;
+            @FireLeft.canceled += instance.OnFireLeft;
+            @FireRight.started += instance.OnFireRight;
+            @FireRight.performed += instance.OnFireRight;
+            @FireRight.canceled += instance.OnFireRight;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -948,9 +952,12 @@ public partial class @BSGJE1: IInputActionCollection2, IDisposable
             @RightMove.started -= instance.OnRightMove;
             @RightMove.performed -= instance.OnRightMove;
             @RightMove.canceled -= instance.OnRightMove;
-            @Fire.started -= instance.OnFire;
-            @Fire.performed -= instance.OnFire;
-            @Fire.canceled -= instance.OnFire;
+            @FireLeft.started -= instance.OnFireLeft;
+            @FireLeft.performed -= instance.OnFireLeft;
+            @FireLeft.canceled -= instance.OnFireLeft;
+            @FireRight.started -= instance.OnFireRight;
+            @FireRight.performed -= instance.OnFireRight;
+            @FireRight.canceled -= instance.OnFireRight;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1135,7 +1142,8 @@ public partial class @BSGJE1: IInputActionCollection2, IDisposable
     {
         void OnLeftMove(InputAction.CallbackContext context);
         void OnRightMove(InputAction.CallbackContext context);
-        void OnFire(InputAction.CallbackContext context);
+        void OnFireLeft(InputAction.CallbackContext context);
+        void OnFireRight(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

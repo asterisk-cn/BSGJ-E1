@@ -30,7 +30,15 @@ namespace Enemy
             var generate = Instantiate(_attackPrefabs[index], new Vector3(0, 10, 0), Quaternion.identity, gameObject.transform);
             var comp = generate.GetComponent<EnemyAttack>();
             // ターゲットの選択
-            Transform target = Random.value < 0.5 ? _player.character.transform : _player.partial.transform;
+            Transform target = null;
+            if (_player.partial == null)
+            {
+                target = _player.character.transform;
+            }
+            else
+            {
+                target = Random.value < 0.5 ? _player.character.transform : _player.partial.transform;
+            }
             comp.Initialize(_attackStartHeight, _stageHeight, target);
             _attackView.Add(comp);
         }
@@ -42,22 +50,30 @@ namespace Enemy
 
         void Start()
         {
-
+            _currentHealth = health;
         }
 
         void Update()
         {
-            GenerateAttack();
+            if (MainGameManager.instance.gameState == GameManagers.GameState.Main)
+            {
+                GenerateAttack();
+            }
         }
 
         public void TakeDamage(int damage)
         {
-
+            _currentHealth -= damage;
+            if (_currentHealth <= 0)
+            {
+                Die();
+            }
         }
 
         public void Die()
         {
-
+            isAlive = false;
+            FightManager.ToResult(true);
         }
     }
 }
