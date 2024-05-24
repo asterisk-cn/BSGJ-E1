@@ -23,6 +23,11 @@ namespace Players
         //追加 05/21
         private CharacterController _characterController;
 
+        void Awake()
+        {
+            _characterController = GetComponent<CharacterController>();
+        }
+
         // Start is called before the first frame update
         void Start()
         {

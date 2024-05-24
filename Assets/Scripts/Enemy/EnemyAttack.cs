@@ -38,7 +38,7 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] int missLimit = 150;
 
     //攻撃関数用のフラグ
-    public bool isAttack = false;
+    public bool isAttacking = false;
 
     public bool isUp = false;
 
@@ -58,9 +58,14 @@ public class EnemyAttack : MonoBehaviour
     [Header("留まる秒数")]
     private float waitSecond = 3.0f;
 
+    private Collider _collider;
+    private Rigidbody _rigidbody;
+
     private void Awake()
     {
         _enemyCore = GetComponentInParent<EnemyCore>();
+        _collider = GetComponent<Collider>();
+        _rigidbody = GetComponent<Rigidbody>();
         _target = _enemyCore.character1;
     }
 
@@ -84,40 +89,20 @@ public class EnemyAttack : MonoBehaviour
      * 
      */
     void Move()
-    {   
+    {
         //プレイヤーを追跡する
-        if (autoMove) 
+        if (autoMove)
         {
             Vector3 distance = new Vector3(_target.transform.position.x - this.transform.position.x, 0, _target.transform.position.z - this.transform.position.z);
-            //攻撃する範囲かの判定
-            if (distance.magnitude <=range) 
+            if (distance.magnitude > moveSpeed)
             {
-                //上限を超えたとき攻撃
-                if(attackMissCount >missLimit) { isAttack = true; attackMissCount = 0; };
-                //ランダムに攻撃
-                //確率で攻撃
-                int buff =(int)Random.Range(0,100.0f);
-                if(buff < attackRate) { isAttack = true; attackMissCount = 0; }
-                else {attackMissCount++;}
+                distance = distance.normalized;
+                distance.Scale(new Vector3(moveSpeed, 0, moveSpeed));
+                this.transform.position += distance;
             }
-            //抽選回数のリセット
-            else 
+            else
             {
-                attackMissCount = 0;
-            }
-            
-            if(!isAttack)
-            {
-                //攻撃しない場合、移動する
-                if (distance.magnitude > moveSpeed) 
-                {
-                    distance = distance.normalized;
-                    //
-                    distance.Scale(new Vector3(moveSpeed,0,moveSpeed));
-                    //
-                    this.transform.position += distance;
-                
-                }
+                this.transform.position = _target.transform.position;
             }
         }
         //以前のバージョン
@@ -153,10 +138,31 @@ public class EnemyAttack : MonoBehaviour
 
     void Attack()
     {
-        float halfHeight =(defaultHeight-stageHeight)/2;
+        Vector3 distance = new Vector3(_target.transform.position.x - this.transform.position.x, 0, _target.transform.position.z - this.transform.position.z);
+        //攻撃する範囲かの判定
+        if (distance.magnitude <= range)
+        {
+            //上限を超えたとき攻撃
+            if (attackMissCount > missLimit) { isAttacking = true; attackMissCount = 0; };
+            //ランダムに攻撃
+            //確率で攻撃
+            int buff = (int)Random.Range(0, 100.0f);
+            if (buff < attackRate) { isAttacking = true; attackMissCount = 0; }
+            else { attackMissCount++; }
+        }
+        //抽選回数のリセット
+        else
+        {
+            attackMissCount = 0;
+        }
+    }
+
+    void AttackMove()
+    {
+        float halfHeight = (defaultHeight - stageHeight) / 2;
 
         //武器を降ろす
-        if(!isUp) 
+        if (isAttacking)
         {
             transform.position -= attackSpeed * transform.up;
             //半分振り下ろすとさらに加速
@@ -164,13 +170,13 @@ public class EnemyAttack : MonoBehaviour
         }
 
         //攻撃がステージに到達
-        if(!isUp &&transform.position.y <= stageHeight) 
+        if (isAttacking && transform.position.y <= stageHeight)
         {
             if (!stop) { isUp = true; }
             else
             {
-                isAttack = false;
-                StartCoroutine("Stop");
+                Deactivate();
+                StartCoroutine(DelayCoroutine(waitSecond, () => { Destroy(gameObject); }));
             }
             //ステージに埋まらないようにする
             float buff = transform.localScale.y / 2;
@@ -182,48 +188,61 @@ public class EnemyAttack : MonoBehaviour
         //元の高さに到達
         if(isUp&&transform.position.y >= defaultHeight) 
         {
-
+            Activate();
             transform.position = new Vector3(transform.position.x,defaultHeight,transform.position.z) ;
             //関数の終了
             isUp = false;
-            isAttack = false;
+            isAttacking = false;
         }
     }
 
-    IEnumerator Stop()
+    void Activate()
     {
-        Rigidbody rb = this.gameObject.AddComponent<Rigidbody>();
-        rb.useGravity = true;
-        rb.constraints = RigidbodyConstraints.FreezePosition;
-
-        BoxCollider collider = this.GetComponent<BoxCollider>();
-        //攻撃を無効
-        collider.isTrigger = false;
-
-        isActive = false;
-
-        yield return new WaitForSeconds(waitSecond);
-        Destroy(this.gameObject);
+        isActive = true;
+        _collider.isTrigger = true;
+        _rigidbody.isKinematic = false;
     }
 
-    void OnTriggerEnter(Collider other)
+    void Deactivate()
     {
+        isActive = false;
+        _collider.isTrigger = false;
+        _rigidbody.isKinematic = true;
+    }
 
+    IEnumerator DelayCoroutine(float waitTime, System.Action action)
+    {
+        yield return new WaitForSeconds(waitTime);
+        action?.Invoke();
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void FixedUpdate()
     {
-        if (!isAttack) { Move(); }
-
-        if(isAttack) { Attack(); }
+        Attack();
+        if (isAttacking)
+        {
+            AttackMove();
+        }
+        else
+        {
+            Move();
+        }
 
         //自動操縦の間は攻撃しない
         if (!autoMove)
-        {   
+        {
             //攻撃の実行
-            if (Input.GetKey(KeyCode.Space)&&!isAttack) 
+            if (Input.GetKey(KeyCode.Space) && !isAttacking)
             {
-                isAttack = true;
+                isAttacking = true;
             }
         }
     }
