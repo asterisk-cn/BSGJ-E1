@@ -74,9 +74,9 @@ namespace Players
 
         void UpdateJoyconInputs()
         {
-            if (_joycons.Count > 0)
+            for (int i = 0; i < _joycons.Count; i++)
             {
-                Joycon joycon = _joycons[0];
+                Joycon joycon = _joycons[i];
 
                 Vector2 _tmp = new Vector2(joycon.GetStick()[0], joycon.GetStick()[1]);
                 if (_tmp.magnitude < _minDeadZone)
@@ -87,30 +87,18 @@ namespace Players
                 {
                     _tmp.Normalize();
                 }
-                leftMoveStick = new Vector3(_tmp.x, 0, _tmp.y);
 
-                leftAccelaration = joycon.GetAccel();
-
-            }
-
-            if (_joycons.Count > 1)
-            {
-                Joycon joycon = _joycons[1];
-
-                Vector2 _tmp = new Vector2(joycon.GetStick()[0], joycon.GetStick()[1]);
-                if (_tmp.magnitude < _minDeadZone)
+                if (joycon.isLeft)
                 {
-                    _tmp = Vector2.zero;
+                    leftMoveStick = new Vector3(_tmp.x, 0, _tmp.y);
+                    leftAccelaration = joycon.GetAccel();
                 }
-                else if (_tmp.magnitude > _maxDeadZone)
+                else
                 {
-                    _tmp.Normalize();
+                    rightMoveStick = new Vector3(_tmp.x, 0, _tmp.y);
+                    rightAccelaration = joycon.GetAccel();
                 }
-                rightMoveStick = new Vector3(_tmp.x, 0, _tmp.y);
-
-                rightAccelaration = joycon.GetAccel();
             }
         }
-
     }
 }

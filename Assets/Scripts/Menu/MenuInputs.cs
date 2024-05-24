@@ -62,6 +62,10 @@ namespace Menu
 
                     navigate = _tmp;
                 }
+                else
+                {
+                    press = joycon.GetButtonDown(Joycon.Button.DPAD_RIGHT);
+                }
             }
         }
     }

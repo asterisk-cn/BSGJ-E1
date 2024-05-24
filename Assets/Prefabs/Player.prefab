@@ -66,9 +66,8 @@ MonoBehaviour:
   - {fileID: 9203997197074302471, guid: d887a3ff42dfe449789f1376ff2bffd5, type: 3}
   - {fileID: 9203997197074302471, guid: d887a3ff42dfe449789f1376ff2bffd5, type: 3}
   _generatePosition: {fileID: 3436933869804705205}
-  powerUpTimeLimit: 0
   sizeUpRate: 0
-  powerUpTimer: 0
+  _enemy: {fileID: 0}
 --- !u!114 &6701200829780284100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,8 +112,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftMoveStick: {x: 0, y: 0, z: 0}
   rightMoveStick: {x: 0, y: 0, z: 0}
-  attack: 0
-  useJoycon: 0
+  leftAttack: 0
+  rightAttack: 0
+  useJoycon: 1
   leftAccelaration: {x: 0, y: 0, z: 0}
   rightAccelaration: {x: 0, y: 0, z: 0}
 --- !u!1 &3436933869804705205
