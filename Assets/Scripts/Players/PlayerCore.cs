@@ -94,6 +94,10 @@ namespace Players
         public void UnitePartial()
         {
             _currentParameters.unionCount++;
+            if (_currentParameters.unionCount >= 6)
+            {
+                SceneFadeManager.instance.FadeOut("Fight");
+            }
             GeneratePartial();
         }
 

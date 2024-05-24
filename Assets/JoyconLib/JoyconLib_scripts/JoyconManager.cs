@@ -27,13 +27,9 @@ public class JoyconManager: MonoBehaviour
     }
 
     void Awake()
-    {
-		Debug.Log("JoyconManager.Awake");
+	{
 		if (instance != null) Destroy(gameObject);
 		instance = this;
-		// DontDestroyOnLoad(gameObject);
-
-		Debug.Log("JoyconManager.Awake: HIDapi.hid_init()");
 
 		int i = 0;
 

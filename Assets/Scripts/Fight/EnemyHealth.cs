@@ -5,12 +5,12 @@ using TMPro;
 
 public class EnemyHealth : MonoBehaviour
 {
-    private TextMeshPro _text;
+    private TextMeshProUGUI _text;
     [SerializeField] private Enemy.EnemyCore _enemyCore;
     // Start is called before the first frame update
     void Start()
     {
-        _text = GetComponent<TextMeshPro>();
+        _text = GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
