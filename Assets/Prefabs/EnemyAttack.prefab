@@ -101,7 +101,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -119,22 +119,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 533a3b7d58e4d4d4cb8fad59fc98bdfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.3
-  attackSpeed: 0.4
+  _defaultParameters:
+    moveSpeed: 0.3
+    attackSpeed: 0.5
+    chaseTime: 3
+    attackTime: 0.3
+    remainTime: 3
+    isChase: 1
+    isStay: 1
   upSpeed: 0.2
-  defaultHeight: 10
-  stageHeight: 0
-  _target: {fileID: 0}
-  range: 0.5
-  attackRate: 90
-  attackMissCount: 0
-  missLimit: 150
+  _targetTransform: {fileID: 0}
   isAttacking: 0
-  isUp: 0
-  isActive: 0
-  autoMove: 1
-  stop: 1
-  waitSecond: 3
 --- !u!54 &3086937301494972951
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -157,8 +152,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0

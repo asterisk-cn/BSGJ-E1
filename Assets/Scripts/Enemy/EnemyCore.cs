@@ -4,48 +4,60 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemyCore : MonoBehaviour
+namespace Enemy
 {
-    public bool isAlive;
-    public int health;
-
-    private int _currentHealth;
-
-    [SerializeField] private List<EnemyAttack> _attackPrefabs;
-
-    [SerializeField] public static readonly List<EnemyAttack> _attackView = new List<EnemyAttack>();
-
-    [SerializeField] private PlayerCore _player;
-
-    void GenerateAttack()
+    public class EnemyCore : MonoBehaviour
     {
-        CheckAttack();
-        if (_attackView.Count >= 2) return;
-        int index = Random.Range(0, _attackPrefabs.Count);
-        var generate = Instantiate(_attackPrefabs[index], new Vector3(0, 10, 0), Quaternion.identity, gameObject.transform);
-        var comp = generate.GetComponent<EnemyAttack>();
-        // TODO: ターゲットの選択
-        comp.SetTarget(_player.character.transform);
-        _attackView.Add(comp);
-    }
+        public bool isAlive;
+        public int health;
 
-    void CheckAttack()
-    {
-        _attackView.RemoveAll(x => (x == null || !x.isAttacking));
-    }
+        private int _currentHealth;
 
-    private void Start()
-    {
-        InvokeRepeating("GenerateAttack", 1, 2);
-    }
+        [SerializeField] private List<EnemyAttack> _attackPrefabs;
 
-    public void TakeDamage(int damage)
-    {
+        [SerializeField] public static readonly List<EnemyAttack> _attackView = new List<EnemyAttack>();
 
-    }
+        [SerializeField] private PlayerCore _player;
 
-    public void Die()
-    {
+        [SerializeField] private float _attackStartHeight = 10.0f;
+        [SerializeField] private float _stageHeight = 0;
 
+        void GenerateAttack()
+        {
+            CheckAttack();
+            if (_attackView.Count >= 2) return;
+            int index = Random.Range(0, _attackPrefabs.Count);
+            var generate = Instantiate(_attackPrefabs[index], new Vector3(0, 10, 0), Quaternion.identity, gameObject.transform);
+            var comp = generate.GetComponent<EnemyAttack>();
+            // ターゲットの選択
+            Transform target = Random.value < 0.5 ? _player.character.transform : _player.partial.transform;
+            comp.Initialize(_attackStartHeight, _stageHeight, target);
+            _attackView.Add(comp);
+        }
+
+        void CheckAttack()
+        {
+            _attackView.RemoveAll(x => x == null || !x.isActive);
+        }
+
+        void Start()
+        {
+
+        }
+
+        void Update()
+        {
+            GenerateAttack();
+        }
+
+        public void TakeDamage(int damage)
+        {
+
+        }
+
+        public void Die()
+        {
+
+        }
     }
 }
