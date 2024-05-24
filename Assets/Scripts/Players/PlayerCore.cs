@@ -1,3 +1,4 @@
+using Enemy;
 using GameManagers;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,17 +30,11 @@ namespace Players
         [SerializeField] private GameObject _generatePosition;
 
         [SerializeField]
-        [Header("パワーアップの時間制限")]
-        public float powerUpTimeLimit;
-
-        [SerializeField]
         [Header("巨大化の倍率")]
         public float sizeUpRate;
 
-        private int tapCount = 0;
-
         [SerializeField]
-        private float powerUpTimer = 0;
+        private EnemyCore _enemy;
 
         private bool _isAttacked = false;
 
@@ -71,13 +66,6 @@ namespace Players
         private void FixedUpdate()
         {
             Move();
-
-            if (powerUpTimer > powerUpTimeLimit && !_isAttacked)
-            {
-                _isAttacked = true;
-
-                Debug.Log($"サイズ:{character.transform.localScale.x}, 押した回数:{tapCount}");
-            }
         }
 
         void Move()
@@ -91,24 +79,14 @@ namespace Players
 
         void Attack()
         {
-            powerUpTimer += Time.deltaTime;
-
             if (_inputs.leftAttack)
             {
-                PowerUp();
+                _enemy.TakeDamage(1);
             }
             if (_inputs.rightAttack)
             {
-                PowerUp();
+                _enemy.TakeDamage(1);
             }
-        }
-
-        void PowerUp()
-        {
-            tapCount++;
-            float newScale = character.transform.localScale.x + sizeUpRate;
-
-            character.ScaleAroundFoot(newScale);
         }
 
         public void UnitePartial()

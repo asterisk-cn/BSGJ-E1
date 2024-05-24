@@ -42,22 +42,30 @@ namespace Enemy
 
         void Start()
         {
-
+            _currentHealth = health;
         }
 
         void Update()
         {
-            GenerateAttack();
+            if (MainGameManager.instance.gameState == GameManagers.GameState.Main)
+            {
+                GenerateAttack();
+            }
         }
 
         public void TakeDamage(int damage)
         {
-
+            _currentHealth -= damage;
+            if (_currentHealth <= 0)
+            {
+                Die();
+            }
         }
 
         public void Die()
         {
-
+            isAlive = false;
+            FightManager.ToResult(true);
         }
     }
 }
