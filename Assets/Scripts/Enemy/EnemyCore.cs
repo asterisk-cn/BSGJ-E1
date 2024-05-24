@@ -19,6 +19,7 @@ public class EnemyCore : MonoBehaviour
 
     void GenerateAttack()
     {
+        CheckAttack();
         if (_attackView.Count >= 2) return;
         int index = Random.Range(0, _attackPrefabs.Count);
         var generate = Instantiate(_attackPrefabs[index], new Vector3(0, 10, 0), Quaternion.identity, gameObject.transform);
@@ -26,6 +27,11 @@ public class EnemyCore : MonoBehaviour
         // TODO: ターゲットの選択
         comp.SetTarget(_player.character.transform);
         _attackView.Add(comp);
+    }
+
+    void CheckAttack()
+    {
+        _attackView.RemoveAll(x => (x == null || !x.isAttacking));
     }
 
     private void Start()

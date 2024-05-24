@@ -66,7 +66,6 @@ public class EnemyAttack : MonoBehaviour
         _enemyCore = GetComponentInParent<EnemyCore>();
         _collider = GetComponent<Collider>();
         _rigidbody = GetComponent<Rigidbody>();
-        _target = _enemyCore.character1;
     }
 
     // Start is called before the first frame update
@@ -93,7 +92,7 @@ public class EnemyAttack : MonoBehaviour
         //プレイヤーを追跡する
         if (autoMove)
         {
-            Vector3 distance = new Vector3(_target.transform.position.x - this.transform.position.x, 0, _target.transform.position.z - this.transform.position.z);
+            Vector3 distance = new Vector3(_targetTransform.position.x - this.transform.position.x, 0, _targetTransform.position.z - this.transform.position.z);
             if (distance.magnitude > moveSpeed)
             {
                 distance = distance.normalized;
@@ -102,7 +101,7 @@ public class EnemyAttack : MonoBehaviour
             }
             else
             {
-                this.transform.position = _target.transform.position;
+                this.transform.position = _targetTransform.position;
             }
         }
         //以前のバージョン
@@ -138,7 +137,7 @@ public class EnemyAttack : MonoBehaviour
 
     void Attack()
     {
-        Vector3 distance = new Vector3(_target.transform.position.x - this.transform.position.x, 0, _target.transform.position.z - this.transform.position.z);
+        Vector3 distance = new Vector3(_targetTransform.position.x - this.transform.position.x, 0, _targetTransform.position.z - this.transform.position.z);
         //攻撃する範囲かの判定
         if (distance.magnitude <= range)
         {
