@@ -115,11 +115,26 @@ namespace Players
 
         //5/25追加 Suzuki H
         //ダメージ処理用の呼び出し関数
-        public void HealthDecrease()
+        public void TakeDamage(int damage)
         {
-            _currentParameters.health--;
+            _currentParameters.health -= damage;
             //ゲームオーバー処理？　リザルト処理に遷移
-            if(_currentParameters.health <=0 ) { MainGameManager.instance.gameState = GameState.Result; }
+            if (_currentParameters.health <= 0)
+            {
+                Die();
+            }
+        }
+
+        void Die()
+        {
+            isAlive = false;
+            MainGameManager.instance.isClear = false;
+            SceneFadeManager.instance.FadeOut("Result");
+        }
+
+        public int GetCurrentHealth()
+        {
+            return _currentParameters.health;
         }
     }
 }

@@ -45,8 +45,7 @@ namespace Players
 
         public void TakeDamage(int damage)
         {
-
-
+            _core.TakeDamage(damage);
         }
 
         public void Move(Vector3 direction)

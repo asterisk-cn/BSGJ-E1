@@ -176,6 +176,12 @@ namespace Enemy
         {
             if (other.gameObject.tag == "Player" && isAttacking)
             {
+                isAttacking = false;
+                if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
+                {
+                    Debug.Log("Player Hit");
+                    player.TakeDamage(1);
+                }
                 Destroy(gameObject);
             }
         }
