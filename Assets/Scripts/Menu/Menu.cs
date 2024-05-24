@@ -51,6 +51,11 @@ namespace Menu
             {
                 _prevStickState = StickState.None;
             }
+
+            if (_menuInputs.press)
+            {
+                _buttons[_selectedButtonIndex].onClick.Invoke();
+            }
         }
     }
 }

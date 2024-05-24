@@ -51,6 +51,7 @@ namespace Players
 
         public void Move(Vector3 direction)
         {
+            direction.y = direction.y + (Physics.gravity.y * Time.deltaTime);
             _characterController.Move(direction*_currentParameters.moveSpeed);
         }
 
