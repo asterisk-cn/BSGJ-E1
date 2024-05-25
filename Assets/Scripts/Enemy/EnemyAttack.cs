@@ -3,190 +3,198 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttack : MonoBehaviour
+namespace Enemy
 {
-    //移動速度
-    [SerializeField] float moveSpeed =0.01f;
-
-    //攻撃の速度(ふりおろし)
-    [SerializeField] float attackSpeed = 0.1f;
-
-    //戻る速度
-    [SerializeField] float upSpeed = 0.2f;
-
-    //元の高さ
-    [SerializeField] float defaultHeight = 10.0f;
-
-    //ステージの高さ
-    [SerializeField] float stageHeight = 0;
-
-    //追跡するオブジェクト
-    [SerializeField] PlayerCharacter _target;
-
-    //攻撃範囲ようの距離
-    [SerializeField] float range = 20;
-
-    //攻撃の確率 高いほど発生しにくい  
-    [SerializeField]
-    [Header("確率")]
-    int attackRate = 90;
-
-    //攻撃の抽選に外れた回数
-    [SerializeField] int attackMissCount = 0;
-
-    //ミスの上限値
-    [SerializeField] int missLimit = 150;
-
-    //攻撃関数用のフラグ
-    public bool isAttack = false;
-
-    public bool isUp = false;
-
-    //移動の自動化フラグ
-    public bool autoMove = true;
-
-    // Start is called before the first frame update
-    void Start()
+    [System.Serializable]
+    public class AttackParameters
     {
-        //エラー防止用
-        if (_target == null) { autoMove = false; }
+        [Tooltip("移動速度")] public float moveSpeed;
+        [Tooltip("攻撃速度")] public float attackSpeed;
+        [Tooltip("追尾時間")] public float chaseTime;
+        [Tooltip("攻撃猶予時間")] public float attackTime;
+        [Tooltip("残存時間")] public float remainTime;
+        [Tooltip("追尾するか")] public bool isChase;
+        [Tooltip("攻撃が地面に残るか")] public bool isStay;
     }
 
-    // Update is called once per frame
-    void Update()
+    public class EnemyAttack : MonoBehaviour
     {
+        [SerializeField] private AttackParameters _defaultParameters;
+        private AttackParameters _currentParameters;
 
-    }
-    /**
-     * @brief 敵の移動
-     * @author 鈴木宏明
-     * @date  '24/4/28
-     * 
-     */
-    void Move()
-    {   
-        //プレイヤーを追跡する
-        if (autoMove) 
+        //戻る速度
+        [SerializeField] float upSpeed = 0.2f;
+
+        //元の高さ
+        float _defaultHeight = 10.0f;
+
+        //ステージの高さ
+        float _stageHeight = 0;
+
+        //追跡するオブジェクト
+        [SerializeField] Transform _targetTransform;
+
+        //攻撃関数用のフラグ
+        private bool isAttacking = false;
+
+        [HideInInspector] public bool isActive = true;
+
+        private bool _isMoving = true;
+
+        private bool _isUp = false;
+
+        private Collider _collider;
+        private Rigidbody _rigidbody;
+
+        private void Awake()
         {
-            Vector3 distance = new Vector3(_target.transform.position.x - this.transform.position.x, 0, _target.transform.position.z - this.transform.position.z);
-            //攻撃する範囲かの判定
-            if (distance.magnitude <=range) 
+            _collider = GetComponent<Collider>();
+            _rigidbody = GetComponent<Rigidbody>();
+
+            _currentParameters = _defaultParameters;
+        }
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            if (_targetTransform == null)
             {
-                //上限を超えたとき攻撃
-                if(attackMissCount >missLimit) { isAttack = true; attackMissCount = 0; };
-                //ランダムに攻撃
-                //確率で攻撃
-                int buff =(int)Random.Range(0,100.0f);
-                if(buff < attackRate) { isAttack = true; attackMissCount = 0; }
-                else {attackMissCount++;}
+                _currentParameters.isChase = false;
             }
-            //抽選回数のリセット
-            else 
+
+            StartCoroutine(DelayCoroutine(_currentParameters.chaseTime, () => { Attack(); }));
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+        /**
+         * @brief 敵の移動
+         * 
+         */
+        void Move()
+        {
+            if (_targetTransform == null) return;
+            //プレイヤーを追跡する
+            if (_currentParameters.isChase)
             {
-                attackMissCount = 0;
-            }
-            
-            if(!isAttack)
-            {
-                //攻撃しない場合、移動する
-                if (distance.magnitude > moveSpeed) 
+                Vector3 distance = new Vector3(_targetTransform.position.x - this.transform.position.x, 0, _targetTransform.position.z - this.transform.position.z);
+                if (distance.magnitude > _currentParameters.moveSpeed)
                 {
                     distance = distance.normalized;
-                    //
-                    distance.Scale(new Vector3(moveSpeed,0,moveSpeed));
-                    //
+                    distance.Scale(new Vector3(_currentParameters.moveSpeed, 0, _currentParameters.moveSpeed));
                     this.transform.position += distance;
-                
                 }
-
-                
-            
+                else
+                {
+                    // this.transform.position = new Vector3(_targetTransform.position.x, this.transform.position.y, _targetTransform.position.z);
+                    this.transform.localPosition += distance;
+                }
             }
-            
-
-
-
         }
-        //以前のバージョン
-        else 
+
+        void Attack()
         {
-            //前
-            if(Input.GetKey(KeyCode.I)) 
-            {
-                transform.position += moveSpeed * transform.forward;
-            }
-
-            //後
-            if(Input.GetKey(KeyCode.K)) 
-            {
-                transform.position -= moveSpeed * transform.forward;
-            }
-
-            //右
-            if (Input.GetKey(KeyCode.L)) 
-            {
-                transform.position += moveSpeed * transform.right;
-            }
-
-            //左
-            if (Input.GetKey(KeyCode.H)) 
-            {
-                transform.position -= moveSpeed * transform.right;
-            }
-
+            _isMoving = false;
+            StartCoroutine(DelayCoroutine(_currentParameters.attackTime, () => { isAttacking = true; }));
         }
 
-    }
-
-    void Attack()
-    {
-        float halfHeight =(defaultHeight-stageHeight)/2;
-
-        //武器を降ろす
-        if(!isUp) 
+        void AttackMove()
         {
-            transform.position -= attackSpeed * transform.up;
-            //半分振り下ろすとさらに加速
-            if (transform.position.y < halfHeight) { transform.position -= attackSpeed * transform.up; }
-        }
-
-        //攻撃がステージに到達
-        if(!isUp &&transform.position.y <= stageHeight) 
-        {
-            isUp = true;
-        }
-
-        //元の高さに戻る
-        if(isUp) { transform.position += upSpeed * transform.up; }
-        //元の高さに到達
-        if(isUp&&transform.position.y >= defaultHeight) 
-        {
-
-            transform.position = new Vector3(transform.position.x,defaultHeight,transform.position.z) ;
-            //関数の終了
-            isUp = false;
-            isAttack = false;
-        }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-
-    }
-
-    private void FixedUpdate()
-    {
-        if (!isAttack) { Move(); }
-
-        if(isAttack) { Attack(); }
-
-        //自動操縦の間は攻撃しない
-        if (!autoMove)
-        {   
-            //攻撃の実行
-            if (Input.GetKey(KeyCode.Space)&&!isAttack) 
+            //武器を降ろす
+            if (isAttacking)
             {
-                isAttack = true;
+                // transform.position -= _currentParameters.attackSpeed * transform.up;
+                transform.localPosition -= _currentParameters.attackSpeed * transform.up;
+            }
+
+            //攻撃がステージに到達
+            if (isAttacking && transform.position.y - transform.localScale.y / 2 <= _stageHeight)
+            {
+                if (_currentParameters.isStay)
+                {
+                    Deactivate();
+                    StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { Destroy(gameObject); }));
+                    isAttacking = false;
+                }
+                else
+                {
+                    _isUp = true;
+                }
+                //ステージに埋まらないようにする
+                float buff = transform.localScale.y / 2;
+                transform.position = new Vector3(transform.position.x, _stageHeight + buff, transform.position.z);
+            }
+
+            //元の高さに戻る
+            if (_isUp) { transform.position += upSpeed * transform.up; }
+            //元の高さに到達
+            if (_isUp && transform.position.y >= _defaultHeight)
+            {
+                Activate();
+                transform.position = new Vector3(transform.position.x, _defaultHeight, transform.position.z);
+                //関数の終了
+                _isUp = false;
+                isAttacking = false;
+            }
+        }
+
+        public void SetTarget(Transform target)
+        {
+            _targetTransform = target;
+        }
+
+        public void Initialize(float startHeight, float stageHeight, Transform target)
+        {
+            _defaultHeight = startHeight;
+            _stageHeight = stageHeight;
+            _targetTransform = target;
+            transform.localPosition = new Vector3(_targetTransform.position.x, _defaultHeight, _targetTransform.position.z);
+        }
+
+        void Activate()
+        {
+            _collider.isTrigger = true;
+            isActive = true;
+        }
+
+        void Deactivate()
+        {
+            _collider.isTrigger = false;
+            isActive = false;
+        }
+
+        IEnumerator DelayCoroutine(float waitTime, System.Action action)
+        {
+            yield return new WaitForSeconds(waitTime);
+            action?.Invoke();
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == "Player" && isAttacking)
+            {
+                isAttacking = false;
+                if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
+                {
+                    Debug.Log("Player Hit");
+                    player.TakeDamage(1);
+                }
+                Destroy(gameObject);
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            if (isAttacking)
+            {
+                AttackMove();
+            }
+            else if (_isMoving)
+            {
+                Move();
             }
         }
     }

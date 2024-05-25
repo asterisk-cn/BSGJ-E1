@@ -20,9 +20,20 @@ namespace Players
         [SerializeField] private CharacterParameters _defaultParameters;
         private CharacterParameters _currentParameters;
 
+        private PlayerCore _core;
+
+        private CharacterController _characterController;
+
+        void Awake()
+        {
+            _characterController = GetComponent<CharacterController>();
+        }
+
         // Start is called before the first frame update
         void Start()
         {
+            _core = GetComponentInParent<PlayerCore>();
+
             _currentParameters = _defaultParameters;
         }
 
@@ -34,13 +45,13 @@ namespace Players
 
         public void TakeDamage(int damage)
         {
-
-
+            _core.TakeDamage(damage);
         }
 
         public void Move(Vector3 direction)
         {
-            transform.position += direction * _currentParameters.moveSpeed;
+            direction.y = direction.y + (Physics.gravity.y * Time.deltaTime);
+            _characterController.Move(direction*_currentParameters.moveSpeed);
         }
 
         public void ScaleAroundFoot(float newScale)
@@ -59,6 +70,11 @@ namespace Players
         public void Die()
         {
 
+        }
+
+        public void UnitePartial(PlayerPartial playerPartial)
+        {
+            _core.UnitePartial();
         }
     }
 }
