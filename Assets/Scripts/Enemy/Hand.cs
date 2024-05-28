@@ -4,15 +4,5 @@ using UnityEngine;
 
 public class Hand : Enemy.EnemyAttack
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //ゆらゆら移動用の関数が必要？
 }

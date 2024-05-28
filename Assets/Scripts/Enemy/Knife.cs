@@ -5,15 +5,5 @@ using UnityEngine;
 
 public class Knife : EnemyAttack
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //派手に落ちる部分だけ実装が必要？
 }
