@@ -121,6 +121,7 @@ namespace Enemy
                 }
                 else
                 {
+                    Destroy(gameObject);
                     _isUp = true;
                 }
                 //ステージに埋まらないようにする
