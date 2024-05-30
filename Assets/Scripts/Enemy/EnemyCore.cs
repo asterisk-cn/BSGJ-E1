@@ -22,6 +22,17 @@ namespace Enemy
         [SerializeField] private float _attackStartHeight = 10.0f;
         [SerializeField] private float _stageHeight = 0;
 
+        [SerializeField] private float _stageLimit_x;
+        [SerializeField] private float _stageLimit_z;
+
+        enum _enemyAttack
+        {
+            EnemyAttack,
+            Hand,
+            Knife,
+            Pot
+        }
+
         void GenerateAttack()
         {
             CheckAttack();
@@ -40,6 +51,13 @@ namespace Enemy
                 target = Random.value < 0.5 ? _player.character.transform : _player.partial.transform;
             }
             comp.Initialize(_attackStartHeight, _stageHeight, target);
+
+            if (index == (int)_enemyAttack.Hand)
+            {
+                float buff_x = Random.Range(-_stageLimit_x, _stageLimit_x);
+                float buff_z = Random.Range(-_stageLimit_z, _stageLimit_z);
+                generate.transform.position = new Vector3(buff_x, 10, buff_z);
+            }
             _attackView.Add(comp);
         }
 
