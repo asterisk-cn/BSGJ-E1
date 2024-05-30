@@ -24,6 +24,17 @@ namespace Players
 
         private CharacterController _characterController;
 
+        [SerializeField]
+        [Tooltip("加速度")] private float acceleration;
+
+        [SerializeField]
+        [Tooltip("減速度")] private float deceleration;
+
+        [SerializeField]
+        [Tooltip("最大速度")] private float maxSpeed;
+
+        private Vector3 velocity = Vector3.zero;
+
         void Awake()
         {
             _characterController = GetComponent<CharacterController>();
@@ -50,8 +61,25 @@ namespace Players
 
         public void Move(Vector3 direction)
         {
-            direction.y = direction.y + (Physics.gravity.y * Time.deltaTime);
-            _characterController.Move(direction*_currentParameters.moveSpeed);
+            if(direction.magnitude > 0)
+            {
+                velocity += direction * acceleration * Time.deltaTime;
+                if(velocity.magnitude > maxSpeed)
+                {
+                    velocity = velocity.normalized * maxSpeed;
+                }
+            }
+            else
+            {
+                if(velocity.magnitude > 0)
+                {
+                    velocity -= velocity.normalized * deceleration * Time.deltaTime;
+                    if(velocity.magnitude < 0.1f) { velocity = Vector3.zero; }
+                }
+            }
+
+            velocity.y = velocity.y + (Physics.gravity.y * Time.deltaTime);
+            _characterController.Move(velocity*_currentParameters.moveSpeed);
         }
 
         public void ScaleAroundFoot(float newScale)
