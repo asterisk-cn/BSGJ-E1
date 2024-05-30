@@ -104,7 +104,7 @@ namespace Enemy
         void AttackMove()
         {
             //武器を降ろす
-            if (isAttacking)
+            if (isAttacking&&!_isUp)
             {
                 // transform.position -= _currentParameters.attackSpeed * transform.up;
                 transform.localPosition -= _currentParameters.attackSpeed * transform.up;
@@ -121,7 +121,6 @@ namespace Enemy
                 }
                 else
                 {
-                    Destroy(gameObject);
                     _isUp = true;
                 }
                 //ステージに埋まらないようにする
