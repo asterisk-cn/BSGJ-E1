@@ -28,8 +28,16 @@ public class JoyconManager: MonoBehaviour
 
     void Awake()
 	{
-		if (instance != null) Destroy(gameObject);
-		instance = this;
+		if (instance == null)
+		{
+			instance = this;
+		}
+		else
+		{
+			Destroy(this.gameObject);
+			return;
+		}
+		DontDestroyOnLoad(this.gameObject);
 
 		int i = 0;
 
@@ -75,8 +83,7 @@ public class JoyconManager: MonoBehaviour
     }
 
     void Start()
-    {
-		SceneManager.sceneUnloaded += OnSceneUnloaded;
+	{
 		for (int i = 0; i < j.Count; ++i)
 		{
 			Debug.Log (i);
@@ -96,13 +103,12 @@ public class JoyconManager: MonoBehaviour
 		}
     }
 
-	void OnSceneUnloaded(Scene current)
+	void DetachAll()
 	{
 		for (int i = 0; i < j.Count; ++i)
 		{
 			j[i].Detach();
 		}
-
 	}
 
 	void OnApplicationQuit()
