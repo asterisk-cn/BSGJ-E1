@@ -104,12 +104,10 @@ namespace Players
 
         void GeneratePartial()
         {
-            if (_partialIndex < _partialPrefabs.Count)
+            // 生成位置を決定
+            var generatePositionTransform = _generatePositions[0].transform;
+            foreach (var position in _generatePositions)
             {
-                // 生成位置を決定
-                var generatePositionTransform = _generatePositions[0].transform;
-                foreach (var position in _generatePositions)
-                {
                     var currentDistance = Vector3.Distance(generatePositionTransform.position, character.transform.position);
                     var newDistance = Vector3.Distance(position.transform.position, character.transform.position);
                     if (currentDistance < newDistance)
@@ -120,11 +118,9 @@ namespace Players
                 partial = Instantiate(_partialPrefabs[_partialIndex], generatePositionTransform.position, Quaternion.identity);
 
                 _partialIndex++;
-            }
-            else
+            if (_partialIndex >= _partialPrefabs.Count)
             {
-                // TODO: RunManagerを呼び出してゲーム終了処理を行う
-                MainGameManager.instance.LoadScene("Fight");
+                _partialIndex = 0;
             }
         }
 
