@@ -9,8 +9,11 @@ namespace Players
     [System.Serializable]
     public class CharacterParameters
     {
-        public float moveSpeed;
-        public int health;
+        // [SerializeField] [Tooltip("移動速度")] public float moveSpeed;
+        [SerializeField][Tooltip("最大速度")] public float maxSpeed;
+        [SerializeField][Tooltip("加速度")] public float acceleration;
+        [SerializeField][Tooltip("減速度")] public float deceleration;
+        [SerializeField][Tooltip("体力")] public int health;
     }
 
     public class PlayerCharacter : MonoBehaviour
@@ -23,6 +26,8 @@ namespace Players
         private PlayerCore _core;
 
         private CharacterController _characterController;
+
+        private Vector3 _velocity = Vector3.zero;
 
         void Awake()
         {
@@ -50,8 +55,33 @@ namespace Players
 
         public void Move(Vector3 direction)
         {
-            direction.y = direction.y + (Physics.gravity.y * Time.deltaTime);
-            _characterController.Move(direction*_currentParameters.moveSpeed);
+            var maxSpeed = _currentParameters.maxSpeed;
+            var acceleration = _currentParameters.acceleration;
+            var deceleration = _currentParameters.deceleration;
+
+            if (direction.magnitude > 0)
+            {
+                _velocity += direction * acceleration * Time.deltaTime;
+                if (_velocity.magnitude > maxSpeed)
+                {
+                    _velocity = _velocity.normalized * maxSpeed;
+                }
+            }
+            else
+            {
+                if (_velocity.magnitude > 0)
+                {
+                    _velocity -= _velocity.normalized * deceleration * Time.deltaTime;
+                    if (_velocity.magnitude < 0.001f) { _velocity = Vector3.zero; }
+                }
+            }
+
+            // direction.y = direction.y + (Physics.gravity.y * Time.deltaTime);
+            // _characterController.Move(direction * _currentParameters.moveSpeed);
+
+            var gravity = Physics.gravity.y * Time.deltaTime;
+            Vector3 velocity = _velocity + new Vector3(0, gravity, 0);
+            _characterController.Move(velocity);
         }
 
         public void ScaleAroundFoot(float newScale)

@@ -46,10 +46,14 @@ namespace Enemy
         private Collider _collider;
         private Rigidbody _rigidbody;
 
+        private MeshRenderer[] _meshRenderers;
+
         private void Awake()
         {
             _collider = GetComponent<Collider>();
             _rigidbody = GetComponent<Rigidbody>();
+
+            _meshRenderers = GetComponentsInChildren<MeshRenderer>();
 
             _currentParameters = _defaultParameters;
         }
@@ -104,7 +108,7 @@ namespace Enemy
         void AttackMove()
         {
             //武器を降ろす
-            if (isAttacking)
+            if (isAttacking&&!_isUp)
             {
                 // transform.position -= _currentParameters.attackSpeed * transform.up;
                 transform.localPosition -= _currentParameters.attackSpeed * transform.up;
@@ -116,7 +120,7 @@ namespace Enemy
                 if (_currentParameters.isStay)
                 {
                     Deactivate();
-                    StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { Destroy(gameObject); }));
+                    StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { DestroyWithFade(); }));
                     isAttacking = false;
                 }
                 else
@@ -166,6 +170,31 @@ namespace Enemy
             isActive = false;
         }
 
+        IEnumerator FadeOut(float fadeTime)
+        {
+            float alpha = 1.0f;
+            float interval = 0.1f;
+            while (alpha > 0.0f)
+            {
+                alpha -= interval / fadeTime;
+                Debug.Log(alpha);
+                foreach (var meshRenderer in _meshRenderers)
+                {
+                    var color = meshRenderer.material.color;
+                    color.a = alpha;
+                    meshRenderer.material.color = color;
+                }
+                yield return new WaitForSeconds(interval);
+            }
+
+            Destroy(gameObject);
+        }
+
+        void DestroyWithFade()
+        {
+            StartCoroutine(FadeOut(1.0f));
+        }
+
         IEnumerator DelayCoroutine(float waitTime, System.Action action)
         {
             yield return new WaitForSeconds(waitTime);
@@ -179,8 +208,11 @@ namespace Enemy
                 isAttacking = false;
                 if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
                 {
-                    Debug.Log("Player Hit");
                     player.TakeDamage(1);
+                }
+                if (other.gameObject.TryGetComponent<PlayerPartial>(out var partial))
+                {
+                    partial.TakeDamage(1);
                 }
                 Destroy(gameObject);
             }
