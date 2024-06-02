@@ -27,7 +27,8 @@ namespace Players
 
         [SerializeField] List<PlayerPartial> _partialPrefabs = new List<PlayerPartial>();
         private int _partialIndex = 0;
-        [SerializeField] private GameObject _generatePosition;
+        // [SerializeField] private GameObject _generatePosition;
+        [SerializeField] private List<GameObject> _generatePositions = new List<GameObject>();
 
         [SerializeField]
         [Header("巨大化の倍率")]
@@ -105,8 +106,18 @@ namespace Players
         {
             if (_partialIndex < _partialPrefabs.Count)
             {
-                partial = Instantiate(_partialPrefabs[_partialIndex], _generatePosition.transform.position, Quaternion.identity);
-                partial.transform.parent = transform;
+                // 生成位置を決定
+                var generatePositionTransform = _generatePositions[0].transform;
+                foreach (var position in _generatePositions)
+                {
+                    var currentDistance = Vector3.Distance(generatePositionTransform.position, character.transform.position);
+                    var newDistance = Vector3.Distance(position.transform.position, character.transform.position);
+                    if (currentDistance < newDistance)
+                    {
+                        generatePositionTransform = position.transform;
+                    }
+                }
+                partial = Instantiate(_partialPrefabs[_partialIndex], generatePositionTransform.position, Quaternion.identity);
 
                 _partialIndex++;
             }
