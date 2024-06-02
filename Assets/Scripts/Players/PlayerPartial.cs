@@ -13,6 +13,8 @@ namespace Players
         [SerializeField] private CharacterParameters _defaultParameters;
         private CharacterParameters _currentParameters;
 
+        private PlayerCore _core;
+
         private CharacterController _characterController;
 
         void Awake()
@@ -38,27 +40,19 @@ namespace Players
             _characterController.Move(direction * _currentParameters.moveSpeed);
         }
 
+        public void TakeDamage(int damage)
+        {
+            _core.TakePartialDamage(damage);
+        }
+
+        public void SetCore(PlayerCore core)
+        {
+            _core = core;
+        }
+
         void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent<PlayerCharacter>(out var player))
-            {
-                player.UnitePartial(this);
-                Destroy(gameObject);
-            }
-        }
-
-        void OnCollisionEnter(Collision collision)
-        {
-            if (collision.gameObject.TryGetComponent<PlayerCharacter>(out var player))
-            {
-                player.UnitePartial(this);
-                Destroy(gameObject);
-            }
-        }
-
-        void OnControllerColliderHit(ControllerColliderHit hit)
-        {
-            if (hit.collider.TryGetComponent<PlayerCharacter>(out var player))
             {
                 player.UnitePartial(this);
                 Destroy(gameObject);

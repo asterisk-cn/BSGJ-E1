@@ -179,8 +179,11 @@ namespace Enemy
                 isAttacking = false;
                 if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
                 {
-                    Debug.Log("Player Hit");
                     player.TakeDamage(1);
+                }
+                if (other.gameObject.TryGetComponent<PlayerPartial>(out var partial))
+                {
+                    partial.TakeDamage(1);
                 }
                 Destroy(gameObject);
             }
