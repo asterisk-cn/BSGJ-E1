@@ -15,6 +15,8 @@ namespace Players
 
         private CharacterController _characterController;
 
+        private Vector3 _velocity = Vector3.zero;
+
         void Awake()
         {
             _currentParameters = _defaultParameters;
@@ -34,8 +36,33 @@ namespace Players
 
         public void Move(Vector3 direction)
         {
-            direction.y = direction.y + (Physics.gravity.y * Time.deltaTime);
-            _characterController.Move(direction * _currentParameters.moveSpeed);
+            var maxSpeed = _currentParameters.maxSpeed;
+            var acceleration = _currentParameters.acceleration;
+            var deceleration = _currentParameters.deceleration;
+
+            if (direction.magnitude > 0)
+            {
+                _velocity += direction * acceleration * Time.deltaTime;
+                if (_velocity.magnitude > maxSpeed)
+                {
+                    _velocity = _velocity.normalized * maxSpeed;
+                }
+            }
+            else
+            {
+                if (_velocity.magnitude > 0)
+                {
+                    _velocity -= _velocity.normalized * deceleration * Time.deltaTime;
+                    if (_velocity.magnitude < 0.001f) { _velocity = Vector3.zero; }
+                }
+            }
+
+            // direction.y = direction.y + (Physics.gravity.y * Time.deltaTime);
+            // _characterController.Move(direction * _currentParameters.moveSpeed);
+
+            var gravity = Physics.gravity.y * Time.deltaTime;
+            Vector3 velocity = _velocity + new Vector3(0, gravity, 0);
+            _characterController.Move(velocity);
         }
 
         void OnTriggerEnter(Collider other)
