@@ -12,6 +12,7 @@ namespace Players
     {
         public int health;
         public int unionCount;
+        public int partialHitCount;
     }
 
     public class PlayerCore : MonoBehaviour
@@ -39,7 +40,7 @@ namespace Players
 
         private bool _isAttacked = false;
 
-        
+
 
         void Awake()
         {
@@ -108,16 +109,17 @@ namespace Players
             var generatePositionTransform = _generatePositions[0].transform;
             foreach (var position in _generatePositions)
             {
-                    var currentDistance = Vector3.Distance(generatePositionTransform.position, character.transform.position);
-                    var newDistance = Vector3.Distance(position.transform.position, character.transform.position);
-                    if (currentDistance < newDistance)
-                    {
-                        generatePositionTransform = position.transform;
-                    }
+                var currentDistance = Vector3.Distance(generatePositionTransform.position, character.transform.position);
+                var newDistance = Vector3.Distance(position.transform.position, character.transform.position);
+                if (currentDistance < newDistance)
+                {
+                    generatePositionTransform = position.transform;
                 }
-                partial = Instantiate(_partialPrefabs[_partialIndex], generatePositionTransform.position, Quaternion.identity);
+            }
+            partial = Instantiate(_partialPrefabs[_partialIndex], generatePositionTransform.position, Quaternion.identity);
+            partial.SetCore(this);
 
-                _partialIndex++;
+            _partialIndex++;
             if (_partialIndex >= _partialPrefabs.Count)
             {
                 _partialIndex = 0;
@@ -134,6 +136,11 @@ namespace Players
             {
                 Die();
             }
+        }
+
+        public void TakePartialDamage(int damage)
+        {
+            _currentParameters.partialHitCount++;
         }
 
         void Die()
