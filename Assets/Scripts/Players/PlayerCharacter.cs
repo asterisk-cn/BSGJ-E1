@@ -72,7 +72,7 @@ namespace Players
                 if (_velocity.magnitude > 0)
                 {
                     _velocity -= _velocity.normalized * deceleration * Time.deltaTime;
-                    if (_velocity.magnitude < 0.001f) { _velocity = Vector3.zero; }
+                    if (_velocity.magnitude <= 0.01f) { _velocity = Vector3.zero; }
                 }
             }
 
