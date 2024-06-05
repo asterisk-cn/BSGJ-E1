@@ -478,6 +478,8 @@ MonoBehaviour:
   _player: {fileID: 0}
   _attackStartHeight: 10
   _stageHeight: 0
+  _stageLimit_x: 0
+  _stageLimit_z: 0
 --- !u!1001 &177349806
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -500,7 +502,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 954978635959313622, guid: 55878cd838f990d4a9dcc9e8993bf1ad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 174.6
+      value: -79
       objectReference: {fileID: 0}
     - target: {fileID: 954978635959313622, guid: 55878cd838f990d4a9dcc9e8993bf1ad, type: 3}
       propertyPath: m_LocalPosition.y

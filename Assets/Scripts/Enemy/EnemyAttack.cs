@@ -133,6 +133,7 @@ namespace Enemy
             //元の高さに到達
             if (_isUp && transform.position.y >= _defaultHeight)
             {
+                Destroy(gameObject);
                 Activate();
                 transform.position = new Vector3(transform.position.x, _defaultHeight, transform.position.z);
                 //関数の終了
