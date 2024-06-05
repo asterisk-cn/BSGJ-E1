@@ -205,16 +205,17 @@ namespace Enemy
         {
             if (other.gameObject.tag == "Player" && isAttacking)
             {
-                isAttacking = false;
                 if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
                 {
+                    isAttacking = false;
                     player.TakeDamage(1);
+                    Destroy(gameObject);
                 }
                 if (other.gameObject.TryGetComponent<PlayerPartial>(out var partial))
                 {
                     partial.TakeDamage(1);
                 }
-                Destroy(gameObject);
+                
             }
         }
 

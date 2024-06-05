@@ -11,7 +11,7 @@ namespace Players
     class PlayerParameters
     {
         public int health;
-        public int unionCount;
+        public float unionCount;
         public int partialHitCount;
     }
 
@@ -39,6 +39,10 @@ namespace Players
         private EnemyCore _enemy;
 
         private bool _isAttacked = false;
+
+        [SerializeField][Tooltip("増加量")] private float increaseUnionCount;
+
+        [SerializeField][Tooltip("減少量")] private float decreaseUnionCount;
 
 
 
@@ -95,7 +99,7 @@ namespace Players
 
         public void UnitePartial()
         {
-            _currentParameters.unionCount++;
+            _currentParameters.unionCount += increaseUnionCount;
             if (_currentParameters.unionCount >= 6)
             {
                 SceneFadeManager.instance.FadeOut("Fight");
@@ -141,6 +145,7 @@ namespace Players
         public void TakePartialDamage(int damage)
         {
             _currentParameters.partialHitCount++;
+            _currentParameters.unionCount -= decreaseUnionCount;
         }
 
         void Die()

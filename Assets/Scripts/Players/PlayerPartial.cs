@@ -82,6 +82,7 @@ namespace Players
             if (other.TryGetComponent<PlayerCharacter>(out var player))
             {
                 player.UnitePartial(this);
+                
                 Destroy(gameObject);
             }
         }
