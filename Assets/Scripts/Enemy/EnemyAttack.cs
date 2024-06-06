@@ -48,7 +48,7 @@ namespace Enemy
 
         private void Awake()
         {
-            _collider = GetComponent<Collider>();
+            _collider = GetComponentInChildren<Collider>();
             _rigidbody = GetComponent<Rigidbody>();
 
             _currentParameters = _defaultParameters;
