@@ -53,7 +53,7 @@ namespace Enemy
             if (_attackView.Count >= 2) return;
             ResetAttackPrefabs();
             int index = Random.Range(0, _attackPrefabs.Count);
-            var generate = Instantiate(_attackPrefabs[index], new Vector3(0, 10, 0), Quaternion.identity, gameObject.transform);
+            var generate = Instantiate(_attackPrefabs[index], new Vector3(0, _attackStartHeight, 0), Quaternion.identity, gameObject.transform);
             var comp = generate.GetComponent<EnemyAttack>();
             // ターゲットの選択
             Transform target = null;
