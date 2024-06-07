@@ -115,22 +115,22 @@ namespace Enemy
             }
 
             //攻撃がステージに到達
-            if (isAttacking && transform.position.y - transform.localScale.y / 2 <= _stageHeight)
-            {
-                if (_currentParameters.isStay)
-                {
-                    Deactivate();
-                    StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { DestroyWithFade(); }));
-                    isAttacking = false;
-                }
-                else
-                {
-                    _isUp = true;
-                }
-                //ステージに埋まらないようにする
-                float buff = transform.localScale.y / 2;
-                transform.position = new Vector3(transform.position.x, _stageHeight + buff, transform.position.z);
-            }
+            // if (isAttacking && transform.position.y - transform.localScale.y / 2 <= _stageHeight)
+            // {
+            //     if (_currentParameters.isStay)
+            //     {
+            //         Deactivate();
+            //         StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { DestroyWithFade(); }));
+            //         isAttacking = false;
+            //     }
+            //     else
+            //     {
+            //         _isUp = true;
+            //     }
+            //     //ステージに埋まらないようにする
+            //     float buff = transform.localScale.y / 2;
+            //     transform.position = new Vector3(transform.position.x, _stageHeight + buff, transform.position.z);
+            // }
 
             //元の高さに戻る
             if (_isUp) { transform.position += upSpeed * transform.up; }
@@ -138,11 +138,6 @@ namespace Enemy
             if (_isUp && transform.position.y >= _defaultHeight)
             {
                 Destroy(gameObject);
-                Activate();
-                transform.position = new Vector3(transform.position.x, _defaultHeight, transform.position.z);
-                //関数の終了
-                _isUp = false;
-                isAttacking = false;
             }
         }
 
@@ -178,7 +173,6 @@ namespace Enemy
             while (alpha > 0.0f)
             {
                 alpha -= interval / fadeTime;
-                Debug.Log(alpha);
                 foreach (var meshRenderer in _meshRenderers)
                 {
                     var color = meshRenderer.material.color;
@@ -206,16 +200,29 @@ namespace Enemy
         {
             if (other.gameObject.tag == "Player" && isAttacking)
             {
-                isAttacking = false;
                 if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
                 {
+                    isAttacking = false;
                     player.TakeDamage(1);
+                    Destroy(gameObject);
                 }
                 if (other.gameObject.TryGetComponent<PlayerPartial>(out var partial))
                 {
                     partial.TakeDamage(1);
                 }
-                Destroy(gameObject);
+            }
+            else if (other.gameObject.tag == "Stage" && isAttacking)
+            {
+                if (_currentParameters.isStay)
+                {
+                    Deactivate();
+                    StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { DestroyWithFade(); }));
+                    isAttacking = false;
+                }
+                else
+                {
+                    _isUp = true;
+                }
             }
         }
 

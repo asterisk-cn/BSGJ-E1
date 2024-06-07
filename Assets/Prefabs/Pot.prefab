@@ -164,11 +164,11 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -1770246916188686563, guid: 4a2b7d5fb9ab6304a953e35f12bf92f2, type: 3}
 --- !u!4 &9162575999521790036 stripped
