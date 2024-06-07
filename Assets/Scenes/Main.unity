@@ -314,6 +314,10 @@ PrefabInstance:
       propertyPath: useJoycon
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3235770156551337717, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3383404070274153911, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: m_Name
       value: 'Player  '
@@ -321,6 +325,10 @@ PrefabInstance:
     - target: {fileID: 3383404070274153911, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3481623930667808617, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: m_Radius
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 4197585412059082882, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -421,6 +429,10 @@ PrefabInstance:
     - target: {fileID: 7405087276429021460, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7776293132783349348, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: m_Radius
+      value: 0.06
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
