@@ -12,6 +12,7 @@ namespace Players
     {
         public int health;
         public int unionCount;
+        public int partialHitCount;
     }
 
     public class PlayerCore : MonoBehaviour
@@ -27,7 +28,8 @@ namespace Players
 
         [SerializeField] List<PlayerPartial> _partialPrefabs = new List<PlayerPartial>();
         private int _partialIndex = 0;
-        [SerializeField] private GameObject _generatePosition;
+        // [SerializeField] private GameObject _generatePosition;
+        [SerializeField] private List<GameObject> _generatePositions = new List<GameObject>();
 
         [SerializeField]
         [Header("巨大化の倍率")]
@@ -38,7 +40,7 @@ namespace Players
 
         private bool _isAttacked = false;
 
-        
+
 
         void Awake()
         {
@@ -103,17 +105,24 @@ namespace Players
 
         void GeneratePartial()
         {
-            if (_partialIndex < _partialPrefabs.Count)
+            // 生成位置を決定
+            var generatePositionTransform = _generatePositions[0].transform;
+            foreach (var position in _generatePositions)
             {
-                partial = Instantiate(_partialPrefabs[_partialIndex], _generatePosition.transform.position, Quaternion.identity);
-                partial.transform.parent = transform;
-
-                _partialIndex++;
+                var currentDistance = Vector3.Distance(generatePositionTransform.position, character.transform.position);
+                var newDistance = Vector3.Distance(position.transform.position, character.transform.position);
+                if (currentDistance < newDistance)
+                {
+                    generatePositionTransform = position.transform;
+                }
             }
-            else
+            partial = Instantiate(_partialPrefabs[_partialIndex], generatePositionTransform.position, Quaternion.identity);
+            partial.SetCore(this);
+
+            _partialIndex++;
+            if (_partialIndex >= _partialPrefabs.Count)
             {
-                // TODO: RunManagerを呼び出してゲーム終了処理を行う
-                MainGameManager.instance.LoadScene("Fight");
+                _partialIndex = 0;
             }
         }
 
@@ -127,6 +136,11 @@ namespace Players
             {
                 Die();
             }
+        }
+
+        public void TakePartialDamage(int damage)
+        {
+            _currentParameters.partialHitCount++;
         }
 
         void Die()

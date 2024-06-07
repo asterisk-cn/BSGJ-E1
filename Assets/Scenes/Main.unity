@@ -524,6 +524,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _generatePositions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _partialPrefabs.Array.data[0]
       value: 
       objectReference: {fileID: 8980861420735901802, guid: f5cb237c4707c448cab610462708f075, type: 3}
@@ -546,6 +550,42 @@ PrefabInstance:
     - target: {fileID: 7776293132783349348, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: m_Radius
       value: 0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 7979767631172426761, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 7979767631172426761, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7979767631172426761, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680923808288926441, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680923808288926441, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680923808288926441, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8975287190688732822, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8975287190688732822, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8975287190688732822, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1437,6 +1477,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
+      propertyPath: _mainTime
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
       propertyPath: gameState
       value: 1
       objectReference: {fileID: 0}
@@ -1629,10 +1673,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAlive: 0
   health: 0
-  _attackPrefabs:
-  - {fileID: 2271366039845924913, guid: 7ae10fbf9f039cb498f3eb33fe4e5099, type: 3}
-  - {fileID: 8056262493575415640, guid: d77e73267df637446b9037d94f2ae776, type: 3}
-  - {fileID: 665740549187784687, guid: e61ab85f408f527479cefcc38fa4839d, type: 3}
+  _hand: {fileID: 2271366039845924913, guid: 7ae10fbf9f039cb498f3eb33fe4e5099, type: 3}
+  _knife: {fileID: 8056262493575415640, guid: d77e73267df637446b9037d94f2ae776, type: 3}
+  _pot: {fileID: 665740549187784687, guid: e61ab85f408f527479cefcc38fa4839d, type: 3}
+  _setHand: 1
+  _setKnife: 1
+  _setPot: 1
   _player: {fileID: 1643978364}
   _attackStartHeight: 4
   _stageHeight: 0
@@ -2315,12 +2361,12 @@ SceneRoots:
   - {fileID: 747613024}
   - {fileID: 567794176}
   - {fileID: 7481470558253612685}
-  - {fileID: 1559395936}
-  - {fileID: 266165460}
   - {fileID: 1416238023}
+  - {fileID: 266165460}
+  - {fileID: 1559395936}
+  - {fileID: 2024345208}
   - {fileID: 998232471}
   - {fileID: 75489266}
-  - {fileID: 2024345208}
   - {fileID: 1430572398}
   - {fileID: 360727716}
   - {fileID: 1684051499}

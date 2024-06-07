@@ -13,7 +13,13 @@ namespace Enemy
 
         private int _currentHealth;
 
-        [SerializeField] private List<EnemyAttack> _attackPrefabs;
+        private List<EnemyAttack> _attackPrefabs;
+        [SerializeField] private EnemyAttack _hand;
+        [SerializeField] private EnemyAttack _knife;
+        [SerializeField] private EnemyAttack _pot;
+        [SerializeField] private bool _setHand = true;
+        [SerializeField] private bool _setKnife = true;
+        [SerializeField] private bool _setPot = true;
 
         [SerializeField] public static readonly List<EnemyAttack> _attackView = new List<EnemyAttack>();
 
@@ -33,10 +39,19 @@ namespace Enemy
             Pot
         }
 
+        void ResetAttackPrefabs()
+        {
+            _attackPrefabs = new List<EnemyAttack>();
+            if (_setHand) _attackPrefabs.Add(_hand);
+            if (_setKnife) _attackPrefabs.Add(_knife);
+            if (_setPot) _attackPrefabs.Add(_pot);
+        }
+
         void GenerateAttack()
         {
             CheckAttack();
             if (_attackView.Count >= 2) return;
+            ResetAttackPrefabs();
             int index = Random.Range(0, _attackPrefabs.Count);
             var generate = Instantiate(_attackPrefabs[index], new Vector3(0, _attackStartHeight, 0), Quaternion.identity, gameObject.transform);
             var comp = generate.GetComponent<EnemyAttack>();
