@@ -28,8 +28,8 @@ namespace Players
 
         [SerializeField] List<PlayerPartial> _partialPrefabs = new List<PlayerPartial>();
         private int _partialIndex = 0;
-        // [SerializeField] private GameObject _generatePosition;
-        [SerializeField] private List<GameObject> _generatePositions = new List<GameObject>();
+
+        [SerializeField] private List<GeneratePosition> _generatePositions;
 
         [SerializeField]
         [Header("巨大化の倍率")]
@@ -68,6 +68,10 @@ namespace Players
             if (MainGameManager.instance.gameState == GameState.Fight && !_isAttacked)
             {
                 Attack();
+                if (partial == null)
+                {
+                    GeneratePartial();
+                }
             }
         }
 
@@ -104,15 +108,31 @@ namespace Players
             {
                 SceneFadeManager.instance.FadeOut("Fight");
             }
+            DestroyPartial();
             GeneratePartial();
         }
 
         void GeneratePartial()
         {
+            if (partial != null)
+            {
+                return;
+            }
             // 生成位置を決定
-            var generatePositionTransform = _generatePositions[0].transform;
+            Transform generatePositionTransform = null;
             foreach (var position in _generatePositions)
             {
+                if (position.isCollide)
+                {
+                    continue;
+                }
+
+                if (generatePositionTransform == null)
+                {
+                    generatePositionTransform = position.transform;
+                    continue;
+                }
+
                 var currentDistance = Vector3.Distance(generatePositionTransform.position, character.transform.position);
                 var newDistance = Vector3.Distance(position.transform.position, character.transform.position);
                 if (currentDistance < newDistance)
@@ -146,6 +166,22 @@ namespace Players
         {
             _currentParameters.partialHitCount++;
             _currentParameters.unionCount -= decreaseUnionCount;
+            if (_currentParameters.unionCount < 0)
+            {
+                _currentParameters.unionCount = 0;
+            }
+
+            DestroyPartial();
+            GeneratePartial();
+        }
+
+        void DestroyPartial()
+        {
+            if (partial != null)
+            {
+                Destroy(partial.gameObject);
+            }
+            partial = null;
         }
 
         void Die()
