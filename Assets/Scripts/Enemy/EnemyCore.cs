@@ -58,11 +58,15 @@ namespace Enemy
         {
             if (_player.GetCurrentUnionCount() == 0)
             {
-                return;
+                _setHand = false;
+                _setKnife = false;
+                _setPot = false;
             }
-            else if(_player.GetCurrentUnionCount() >= 1)
+            else
             {
-                GenerateAttack();
+                _setHand = true;
+                _setKnife = true;
+                _setPot = true;
             }
         }
 
@@ -126,6 +130,7 @@ namespace Enemy
             if (MainGameManager.instance.gameState == GameManagers.GameState.Main)
             {
                 LevelAdjustment();
+                GenerateAttack();
             }
         }
 
