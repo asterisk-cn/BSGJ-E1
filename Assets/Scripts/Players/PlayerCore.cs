@@ -44,8 +44,6 @@ namespace Players
 
         [SerializeField][Tooltip("減少量")] private float decreaseUnionCount;
 
-
-
         void Awake()
         {
             _inputs = GetComponent<PlayerInputs>();
@@ -77,6 +75,7 @@ namespace Players
 
         private void FixedUpdate()
         {
+            if (SceneFadeManager.instance.isFadeIn || SceneFadeManager.instance.isFadeOut) return;
             Move();
         }
 
@@ -195,5 +194,6 @@ namespace Players
         {
             return _currentParameters.health;
         }
+
     }
 }
