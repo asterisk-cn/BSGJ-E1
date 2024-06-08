@@ -1832,6 +1832,10 @@ PrefabInstance:
       value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _enemy
+      value: 
+      objectReference: {fileID: 1416238022}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: character
       value: 
       objectReference: {fileID: 5625115824647577521}

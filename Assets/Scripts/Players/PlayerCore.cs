@@ -90,6 +90,7 @@ namespace Players
 
         void Attack()
         {
+            if (MainGameManager.instance.gameState != GameState.Fight) return;
             if (_inputs.leftAttack)
             {
                 _enemy.TakeDamage((int)_inputs.leftAttackValue);

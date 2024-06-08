@@ -43,6 +43,12 @@ namespace Enemy
 
         private bool _isUp = false;
 
+        [SerializeField] private float frequency = 20.0f;
+
+        [SerializeField] private float amplitude = 0.02f;
+
+        private Vector3 originalPosition;
+
         private Collider _collider;
         private Rigidbody _rigidbody;
 
@@ -102,11 +108,35 @@ namespace Enemy
         void Attack()
         {
             _isMoving = false;
-            StartCoroutine(DelayCoroutine(_currentParameters.attackTime, () => { isAttacking = true; }));
+            //StartCoroutine(DelayCoroutine(_currentParameters.attackTime, () => { isAttacking = true; }));
+            //isShake = true;
+            originalPosition = transform.position;
+            StartCoroutine(Shake());
+        }
+
+        IEnumerator Shake()
+        {
+            float remainingTime = 1.5f;
+
+            
+            while (remainingTime >0)
+            {
+                float shake = Mathf.Sin(remainingTime* frequency *(Mathf.PI)) * amplitude;
+
+                transform.position = new Vector3(originalPosition.x + shake, originalPosition.y, originalPosition.z);
+
+                remainingTime -= Time.deltaTime;
+                yield return null;
+            }
+
+            transform.position = originalPosition;
+            //isShake = false;
+            isAttacking = true;
         }
 
         void AttackMove()
         {
+            if (!isAttacking) return; 
             //武器を降ろす
             if (isAttacking&&!_isUp)
             {

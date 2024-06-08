@@ -79,6 +79,9 @@ MonoBehaviour:
   upSpeed: 0
   _targetTransform: {fileID: 0}
   isActive: 1
+  isShake: 0
+  frequency: 20
+  amplitude: 0.02
 --- !u!54 &803242760398491114
 Rigidbody:
   m_ObjectHideFlags: 0
