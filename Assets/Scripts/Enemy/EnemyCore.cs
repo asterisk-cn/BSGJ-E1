@@ -92,10 +92,13 @@ namespace Enemy
         {
             _currentHealth = health;
 
-            _stageLimit_left = _stageLimit_top_left.position.x > _stageLimit_bottom_right.position.x ? _stageLimit_bottom_right.position.x : _stageLimit_top_left.position.x;
-            _stageLimit_right = _stageLimit_top_left.position.x < _stageLimit_bottom_right.position.x ? _stageLimit_bottom_right.position.x : _stageLimit_top_left.position.x;
-            _stageLimit_front = _stageLimit_top_left.position.z > _stageLimit_bottom_right.position.z ? _stageLimit_bottom_right.position.z : _stageLimit_top_left.position.z;
-            _stageLimit_back = _stageLimit_top_left.position.z < _stageLimit_bottom_right.position.z ? _stageLimit_bottom_right.position.z : _stageLimit_top_left.position.z;
+            if (MainGameManager.instance.gameState == GameManagers.GameState.Main)
+            {
+                _stageLimit_left = _stageLimit_top_left.position.x > _stageLimit_bottom_right.position.x ? _stageLimit_bottom_right.position.x : _stageLimit_top_left.position.x;
+                _stageLimit_right = _stageLimit_top_left.position.x < _stageLimit_bottom_right.position.x ? _stageLimit_bottom_right.position.x : _stageLimit_top_left.position.x;
+                _stageLimit_front = _stageLimit_top_left.position.z > _stageLimit_bottom_right.position.z ? _stageLimit_bottom_right.position.z : _stageLimit_top_left.position.z;
+                _stageLimit_back = _stageLimit_top_left.position.z < _stageLimit_bottom_right.position.z ? _stageLimit_bottom_right.position.z : _stageLimit_top_left.position.z;
+            }
         }
 
         void Update()
@@ -111,6 +114,7 @@ namespace Enemy
             _currentHealth -= damage;
             if (_currentHealth <= 0)
             {
+                _currentHealth = 0;
                 Die();
             }
         }
