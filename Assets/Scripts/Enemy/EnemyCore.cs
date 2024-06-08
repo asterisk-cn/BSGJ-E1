@@ -56,13 +56,35 @@ namespace Enemy
 
         void LevelAdjustment()
         {
-            if (_player.GetCurrentUnionCount() == 0)
+            var ratio = _player.GetCurrentUnionCount() / _player.GetTargetUnionCount();
+
+            switch (ratio)
             {
-                return;
-            }
-            else if(_player.GetCurrentUnionCount() >= 1)
-            {
-                GenerateAttack();
+                case 0:
+                    _setHand = false;
+                    _setKnife = false;
+                    _setPot = false;
+                    break;
+                case { } n when (ratio >= 0.2 && ratio < 0.4):
+                    _setHand = false;
+                    _setKnife = true;
+                    _setPot = false;
+                    break;
+                case { } n when (ratio >= 0.4 && ratio < 0.6):
+                    _setHand = false;
+                    _setKnife = true;
+                    _setPot = false;
+                    break;
+                case { } n when (ratio >= 0.6 && ratio < 0.8):
+                    _setHand = false;
+                    _setKnife = true;
+                    _setPot = true;
+                    break;
+                case { } n when (ratio >= 0.8):
+                    _setHand = true;
+                    _setKnife = true;
+                    _setPot = true;
+                    break;
             }
         }
 
@@ -126,6 +148,7 @@ namespace Enemy
             if (MainGameManager.instance.gameState == GameManagers.GameState.Main)
             {
                 LevelAdjustment();
+                GenerateAttack();
             }
         }
 
