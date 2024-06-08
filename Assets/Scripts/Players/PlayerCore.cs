@@ -45,8 +45,6 @@ namespace Players
         [SerializeField][Tooltip("減少量")] private float decreaseUnionCount;
         [SerializeField][Tooltip("目標値")] private float _targetUnionCount = 10;
 
-
-
         void Awake()
         {
             _inputs = GetComponent<PlayerInputs>();
