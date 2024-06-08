@@ -1,3 +1,4 @@
+using Enemy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,23 +22,16 @@ namespace Players
         void Update()
         {
             _colliders.RemoveAll(collider => collider == null);
+            isCollide = _colliders.Count > 0;
         }
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.TryGetComponent(out Enemy.EnemyAttack enemyAttack))
+            var comp = other.GetComponentInParent<Enemy.EnemyAttack>();
+            if (comp)
             {
                 isCollide = true;
                 _colliders.Add(other);
-            }
-        }
-
-        void OnTriggerExit(Collider other)
-        {
-            if (other.gameObject.TryGetComponent(out Enemy.EnemyAttack enemyAttack))
-            {
-                isCollide = false;
-                _colliders.Remove(other);
             }
         }
     }
