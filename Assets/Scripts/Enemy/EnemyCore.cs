@@ -54,6 +54,18 @@ namespace Enemy
             Pot
         }
 
+        void LevelAdjustment()
+        {
+            if (_player.GetCurrentUnionCount() == 0)
+            {
+                return;
+            }
+            else if(_player.GetCurrentUnionCount() >= 1)
+            {
+                GenerateAttack();
+            }
+        }
+
         void ResetAttackPrefabs()
         {
             _attackPrefabs = new List<EnemyAttack>();
@@ -113,7 +125,7 @@ namespace Enemy
         {
             if (MainGameManager.instance.gameState == GameManagers.GameState.Main)
             {
-                GenerateAttack();
+                LevelAdjustment();
             }
         }
 
