@@ -93,11 +93,11 @@ namespace Players
         {
             if (_inputs.leftAttack)
             {
-                _enemy.TakeDamage(1);
+                _enemy.TakeDamage((int)_inputs.leftAttackValue);
             }
             if (_inputs.rightAttack)
             {
-                _enemy.TakeDamage(1);
+                _enemy.TakeDamage((int)_inputs.rightAttackValue);
             }
         }
 
