@@ -48,9 +48,6 @@ namespace Players
 
         private bool _isAttacked = false;
 
-
-
-
         void Awake()
         {
             _inputs = GetComponent<PlayerInputs>();
@@ -82,6 +79,7 @@ namespace Players
 
         private void FixedUpdate()
         {
+            if (SceneFadeManager.instance.isFadeIn || SceneFadeManager.instance.isFadeOut) return;
             Move();
         }
 
