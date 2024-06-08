@@ -10,17 +10,29 @@ namespace Players
     [System.Serializable]
     class PlayerParameters
     {
-        public int health;
-        public float unionCount;
-        public int partialHitCount;
+        [Tooltip("体力")] public int health;
+        [HideInInspector] public float unionCount;
+        [HideInInspector] public int partialHitCount;
     }
 
     public class PlayerCore : MonoBehaviour
     {
+
+        [Header("調整用パラメータ")]
+
+        [Header("プレイヤーパラメータ")]
+        [SerializeField] private PlayerParameters _defaultParameters;
+
+        [Header("合体パラメータ")]
+        [SerializeField][Tooltip("増加量")] private float increaseUnionCount;
+        [SerializeField][Tooltip("減少量")] private float decreaseUnionCount;
+        [SerializeField][Tooltip("目標値")] private float _targetUnionCount = 10;
+
+        [Header("-----------------------------")]
+        [Space(10)]
+
         public bool isAlive;
         PlayerInputs _inputs;
-
-        [SerializeField] private PlayerParameters _defaultParameters;
         private PlayerParameters _currentParameters;
 
         public PlayerCharacter character;
@@ -32,20 +44,9 @@ namespace Players
         [SerializeField] private List<GeneratePosition> _generatePositions;
 
         [SerializeField]
-        [Header("巨大化の倍率")]
-        public float sizeUpRate;
-
-        [SerializeField]
         private EnemyCore _enemy;
 
         private bool _isAttacked = false;
-
-        [SerializeField][Tooltip("増加量")] private float increaseUnionCount;
-
-        [SerializeField][Tooltip("減少量")] private float decreaseUnionCount;
-        [SerializeField][Tooltip("目標値")] private float _targetUnionCount = 10;
-
-
 
         void Awake()
         {
@@ -78,6 +79,7 @@ namespace Players
 
         private void FixedUpdate()
         {
+            if (SceneFadeManager.instance.isFadeIn || SceneFadeManager.instance.isFadeOut) return;
             Move();
         }
 

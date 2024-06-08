@@ -532,6 +532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 253a462db8c164e3794cde55d36ea1b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _core: {fileID: 0}
 --- !u!4 &751812662
 Transform:
   m_ObjectHideFlags: 0
@@ -684,6 +685,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 764192eda4a1d42c3921dc79afebddb6, type: 3}
+--- !u!114 &1489252942 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6701200829780284100, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+  m_PrefabInstance: {fileID: 2106303189}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1549009609
 GameObject:
   m_ObjectHideFlags: 0
@@ -1102,8 +1114,32 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
+      propertyPath: _input
+      value: 
+      objectReference: {fileID: 1489252942}
+    - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
       propertyPath: gameState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
+      propertyPath: _move.m_Name
+      value: Move
+      objectReference: {fileID: 0}
+    - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
+      propertyPath: _action.m_Name
+      value: Action
+      objectReference: {fileID: 0}
+    - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
+      propertyPath: _action.m_SingletonActionBindings.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
+      propertyPath: _action.m_SingletonActionBindings.Array.data[0].m_Id
+      value: dd9ea100-d872-4815-8309-a669a914dba7
+      objectReference: {fileID: 0}
+    - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
+      propertyPath: _action.m_SingletonActionBindings.Array.data[0].m_Action
+      value: Action
       objectReference: {fileID: 0}
     - target: {fileID: 1375568432692862430, guid: d3a35c132e896487eaee6369faa12165, type: 3}
       propertyPath: m_LocalPosition.x
