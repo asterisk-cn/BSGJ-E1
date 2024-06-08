@@ -46,6 +46,8 @@ namespace Enemy
         private float _stageLimit_front;
         private float _stageLimit_back;
 
+        float maxUnionCount;
+
         enum _enemyAttack
         {
             EnemyAttack,
@@ -56,17 +58,31 @@ namespace Enemy
 
         void LevelAdjustment()
         {
-            if (_player.GetCurrentUnionCount() == 0)
+            maxUnionCount = System.Math.Max(maxUnionCount, _player.GetCurrentUnionCount());
+            var ratio = maxUnionCount / _player.GetTargetUnionCount();
+
+            switch (ratio)
             {
-                _setHand = false;
-                _setKnife = false;
-                _setPot = false;
-            }
-            else
-            {
-                _setHand = true;
-                _setKnife = true;
-                _setPot = true;
+                case 0:
+                    _setHand = false;
+                    _setKnife = true;
+                    _setPot = false;
+                    break;
+                case { } n when (ratio < 0.25):
+                    _setHand = false;
+                    _setKnife = true;
+                    _setPot = false;
+                    break;
+                case { } n when (ratio < 0.5):
+                    _setHand = false;
+                    _setKnife = true;
+                    _setPot = true;
+                    break;
+                case { } n when (ratio < 0.75):
+                    _setHand = true;
+                    _setKnife = true;
+                    _setPot = true;
+                    break;
             }
         }
 
