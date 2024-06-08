@@ -176,5 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultParameters:
-    moveSpeed: 0.1
+    maxSpeed: 0.15
+    acceleration: 0.3
+    deceleration: 0.8
     health: 0
