@@ -19,17 +19,24 @@ namespace Enemy
 
     public class EnemyAttack : MonoBehaviour
     {
+        [Header("調整用パラメータ")]
+        [Header("敵のパラメータ")]
         [SerializeField] private AttackParameters _defaultParameters;
-        private AttackParameters _currentParameters;
-
         //戻る速度
-        [SerializeField] float upSpeed = 0.2f;
+        [SerializeField][Tooltip("上に上がる速度")] float upSpeed = 0.2f;
 
         //元の高さ
-        float _defaultHeight = 10.0f;
+        [SerializeField][Tooltip("生成位置")] float _defaultHeight = 10.0f;
 
         //ステージの高さ
         float _stageHeight = 0;
+
+        [Header("-----------------------------")]
+        [Space(10)]
+
+        private AttackParameters _currentParameters;
+
+
 
         //追跡するオブジェクト
         [SerializeField] Transform _targetTransform;

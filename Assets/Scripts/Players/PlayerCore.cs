@@ -10,17 +10,29 @@ namespace Players
     [System.Serializable]
     class PlayerParameters
     {
-        public int health;
-        public float unionCount;
-        public int partialHitCount;
+        [Tooltip("体力")] public int health;
+        [HideInInspector] public float unionCount;
+        [HideInInspector] public int partialHitCount;
     }
 
     public class PlayerCore : MonoBehaviour
     {
+
+        [Header("調整用パラメータ")]
+
+        [Header("プレイヤーパラメータ")]
+        [SerializeField] private PlayerParameters _defaultParameters;
+
+        [Header("合体パラメータ")]
+        [SerializeField][Tooltip("増加量")] private float increaseUnionCount;
+        [SerializeField][Tooltip("減少量")] private float decreaseUnionCount;
+        [SerializeField][Tooltip("目標値")] private float _targetUnionCount = 10;
+
+        [Header("-----------------------------")]
+        [Space(10)]
+
         public bool isAlive;
         PlayerInputs _inputs;
-
-        [SerializeField] private PlayerParameters _defaultParameters;
         private PlayerParameters _currentParameters;
 
         public PlayerCharacter character;
@@ -32,17 +44,9 @@ namespace Players
         [SerializeField] private List<GeneratePosition> _generatePositions;
 
         [SerializeField]
-        [Header("巨大化の倍率")]
-        public float sizeUpRate;
-
-        [SerializeField]
         private EnemyCore _enemy;
 
         private bool _isAttacked = false;
-
-        [SerializeField][Tooltip("増加量")] private float increaseUnionCount;
-
-        [SerializeField][Tooltip("減少量")] private float decreaseUnionCount;
 
         void Awake()
         {
@@ -63,7 +67,7 @@ namespace Players
         // Update is called once per frame
         void Update()
         {
-            if (MainGameManager.instance.gameState == GameState.Fight && !_isAttacked)
+            if (MainGameManager.instance.gameState == GameState.Main && !_isAttacked)
             {
                 Attack();
                 if (partial == null)
@@ -92,19 +96,20 @@ namespace Players
         {
             if (_inputs.leftAttack)
             {
-                _enemy.TakeDamage(1);
+                _enemy.TakeDamage((int)_inputs.leftAttackValue);
             }
             if (_inputs.rightAttack)
             {
-                _enemy.TakeDamage(1);
+                _enemy.TakeDamage((int)_inputs.rightAttackValue);
             }
         }
 
         public void UnitePartial()
         {
             _currentParameters.unionCount += increaseUnionCount;
-            if (_currentParameters.unionCount >= 6)
+            if (_currentParameters.unionCount >= _targetUnionCount)
             {
+                _currentParameters.unionCount = _targetUnionCount;
                 SceneFadeManager.instance.FadeOut("Fight");
             }
             DestroyPartial();
@@ -195,5 +200,19 @@ namespace Players
             return _currentParameters.health;
         }
 
+        public float GetCurrentUnionCount()
+        {
+            return _currentParameters.unionCount;
+        }
+
+        public int GetCurrentPartialHitCount()
+        {
+            return _currentParameters.partialHitCount;
+        }
+
+        public float GetTargetUnionCount()
+        {
+            return _targetUnionCount;
+        }
     }
 }
