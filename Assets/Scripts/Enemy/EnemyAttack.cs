@@ -244,5 +244,10 @@ namespace Enemy
                 Move();
             }
         }
+
+        public bool GetIsChase()
+        {
+            return _currentParameters.isChase;
+        }
     }
 }
