@@ -43,6 +43,7 @@ namespace Players
         [SerializeField][Tooltip("増加量")] private float increaseUnionCount;
 
         [SerializeField][Tooltip("減少量")] private float decreaseUnionCount;
+        [SerializeField][Tooltip("目標値")] private float _targetUnionCount = 10;
 
 
 
@@ -65,7 +66,7 @@ namespace Players
         // Update is called once per frame
         void Update()
         {
-            if (MainGameManager.instance.gameState == GameState.Fight && !_isAttacked)
+            if (MainGameManager.instance.gameState == GameState.Main && !_isAttacked)
             {
                 Attack();
                 if (partial == null)
@@ -104,8 +105,9 @@ namespace Players
         public void UnitePartial()
         {
             _currentParameters.unionCount += increaseUnionCount;
-            if (_currentParameters.unionCount >= 6)
+            if (_currentParameters.unionCount >= _targetUnionCount)
             {
+                _currentParameters.unionCount = _targetUnionCount;
                 SceneFadeManager.instance.FadeOut("Fight");
             }
             DestroyPartial();
@@ -194,6 +196,21 @@ namespace Players
         public int GetCurrentHealth()
         {
             return _currentParameters.health;
+        }
+
+        public float GetCurrentUnionCount()
+        {
+            return _currentParameters.unionCount;
+        }
+
+        public int GetCurrentPartialHitCount()
+        {
+            return _currentParameters.partialHitCount;
+        }
+
+        public float GetTargetUnionCount()
+        {
+            return _targetUnionCount;
         }
     }
 }
