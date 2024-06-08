@@ -8,8 +8,20 @@ namespace Enemy
 {
     public class EnemyCore : MonoBehaviour
     {
-        public bool isAlive;
+        [Header("調整用パラメータ")]
+        [Header("敵のパラメータ")]
         public int health;
+
+        [Header("攻撃設定")]
+        [SerializeField] private bool _setHand = true;
+        [SerializeField] private bool _setKnife = true;
+        [SerializeField] private bool _setPot = true;
+
+        [SerializeField][Tooltip("攻撃生成の高さ")] private float _attackStartHeight = 10.0f;
+        [Header("-----------------------------")]
+        [Space(10)]
+
+        public bool isAlive;
 
         private int _currentHealth;
 
@@ -17,15 +29,11 @@ namespace Enemy
         [SerializeField] private EnemyAttack _hand;
         [SerializeField] private EnemyAttack _knife;
         [SerializeField] private EnemyAttack _pot;
-        [SerializeField] private bool _setHand = true;
-        [SerializeField] private bool _setKnife = true;
-        [SerializeField] private bool _setPot = true;
 
         [SerializeField] public static readonly List<EnemyAttack> _attackView = new List<EnemyAttack>();
 
         [SerializeField] private PlayerCore _player;
 
-        [SerializeField] private float _attackStartHeight = 10.0f;
         [SerializeField] private float _stageHeight = 0;
 
         // [SerializeField] private float _stageLimit_x;
