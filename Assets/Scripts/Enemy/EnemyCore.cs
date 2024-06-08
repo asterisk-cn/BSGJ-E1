@@ -48,14 +48,6 @@ namespace Enemy
 
         float maxUnionCount;
 
-        enum _enemyAttack
-        {
-            EnemyAttack,
-            Hand,
-            Knife,
-            Pot
-        }
-
         void LevelAdjustment()
         {
             maxUnionCount = System.Math.Max(maxUnionCount, _player.GetCurrentUnionCount());
@@ -99,6 +91,7 @@ namespace Enemy
             CheckAttack();
             if (_attackView.Count >= 2) return;
             ResetAttackPrefabs();
+            if (_attackPrefabs.Count == 0) return;
             int index = Random.Range(0, _attackPrefabs.Count);
             var generate = Instantiate(_attackPrefabs[index], new Vector3(0, _attackStartHeight, 0), Quaternion.identity, gameObject.transform);
             var comp = generate.GetComponent<EnemyAttack>();
@@ -114,11 +107,11 @@ namespace Enemy
             }
             comp.Initialize(_attackStartHeight, _stageHeight, target);
 
-            if (index == (int)_enemyAttack.Hand)
+            if (!comp.GetIsChase())
             {
                 float buff_x = Random.Range(_stageLimit_left, _stageLimit_right);
                 float buff_z = Random.Range(_stageLimit_front, _stageLimit_back);
-                generate.transform.position = new Vector3(buff_x, 10, buff_z);
+                generate.transform.position = new Vector3(buff_x, _attackStartHeight, buff_z);
             }
             _attackView.Add(comp);
         }
