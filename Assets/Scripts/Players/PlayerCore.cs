@@ -69,11 +69,14 @@ namespace Players
         {
             if (MainGameManager.instance.gameState == GameState.Main && !_isAttacked)
             {
-                Attack();
                 if (partial == null)
                 {
                     GeneratePartial();
                 }
+            }
+            if (MainGameManager.instance.gameState == GameState.Fight)
+            {
+                Attack();
             }
         }
 
