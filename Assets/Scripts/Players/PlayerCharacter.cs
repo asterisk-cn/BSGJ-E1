@@ -1,3 +1,4 @@
+using GameManagers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -66,6 +67,8 @@ namespace Players
                 {
                     _velocity = _velocity.normalized * maxSpeed;
                 }
+
+                AudioManager.Instance.PlaySE("Main_Ashioto_SE");
             }
             else
             {
