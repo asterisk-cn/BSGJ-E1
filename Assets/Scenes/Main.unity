@@ -1761,7 +1761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3481623930667808617, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: m_SkinWidth
-      value: 0.008
+      value: 0.0008
       objectReference: {fileID: 0}
     - target: {fileID: 3481623930667808617, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: m_MinMoveDistance
@@ -1855,6 +1855,18 @@ PrefabInstance:
       propertyPath: _partialPrefabs.Array.data[0]
       value: 
       objectReference: {fileID: 8980861420735901802, guid: f5cb237c4707c448cab610462708f075, type: 3}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _partialPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 8980861420735901802, guid: 5b31285f8c94d104c8982274a9dae976, type: 3}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _partialPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 8980861420735901802, guid: c62971d92803ea549b4f6b19c52bb4e9, type: 3}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _partialPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 8980861420735901802, guid: 6c5559e9949a5d54796490e3e27ad9c1, type: 3}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _generatePositions.Array.data[0]
       value: 

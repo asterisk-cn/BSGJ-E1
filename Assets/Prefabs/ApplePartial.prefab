@@ -22,11 +22,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 292621651774589748, guid: d887a3ff42dfe449789f1376ff2bffd5, type: 3}
       propertyPath: m_SkinWidth
-      value: 0.008
+      value: 0.0008
       objectReference: {fileID: 0}
     - target: {fileID: 292621651774589748, guid: d887a3ff42dfe449789f1376ff2bffd5, type: 3}
       propertyPath: m_MinMoveDistance
-      value: 0.001
+      value: 0.0001
       objectReference: {fileID: 0}
     - target: {fileID: 1017390076894399711, guid: d887a3ff42dfe449789f1376ff2bffd5, type: 3}
       propertyPath: m_LocalScale.x
