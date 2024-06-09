@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5590944205052283596}
+  - component: {fileID: 4393669747660409410}
   - component: {fileID: 103880301627691053}
   - component: {fileID: 612058230213501342}
   - component: {fileID: 4050517935990097673}
   - component: {fileID: 5778626368076084121}
-  - component: {fileID: 4393669747660409410}
   m_Layer: 0
   m_Name: Fist
   m_TagString: Untagged
@@ -36,6 +36,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4393669747660409410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2524539010615295720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e1f1e3645eefd84e859bbf1d8046ff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultParameters:
+    moveSpeed: 0
+    attackSpeed: 0
+    chaseTime: 0
+    attackTime: 0
+    remainTime: 0
+    isChase: 0
+    isStay: 0
+  upSpeed: 0.03
+  _targetTransform: {fileID: 0}
+  isActive: 1
 --- !u!33 &103880301627691053
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -134,26 +157,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4393669747660409410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2524539010615295720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e1f1e3645eefd84e859bbf1d8046ff4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _defaultParameters:
-    moveSpeed: 0
-    attackSpeed: 0
-    chaseTime: 0
-    attackTime: 0
-    remainTime: 0
-    isChase: 0
-    isStay: 0
-  upSpeed: 0.03
-  _targetTransform: {fileID: 0}
-  isActive: 1

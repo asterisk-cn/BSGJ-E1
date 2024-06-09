@@ -116,6 +116,8 @@ public class MainGameManager : MonoBehaviour
         {
             SceneManager.LoadScene(sceneName);
         }
+
+
     }
 
     void Reset()

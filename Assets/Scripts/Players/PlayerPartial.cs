@@ -8,9 +8,12 @@ namespace Players
 {
     public class PlayerPartial : MonoBehaviour
     {
+        [Header("調整用パラメータ")]
+        [Header("プレイヤーパラメータ")]
+        [SerializeField] private CharacterParameters _defaultParameters;
+
         bool isAlive;
 
-        [SerializeField] private CharacterParameters _defaultParameters;
         private CharacterParameters _currentParameters;
 
         private PlayerCore _core;
