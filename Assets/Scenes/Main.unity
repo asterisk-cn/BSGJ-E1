@@ -1586,8 +1586,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
-      propertyPath: _runTime
-      value: 10
+      propertyPath: _mainTime
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
       propertyPath: _mainTime
@@ -1597,10 +1597,6 @@ PrefabInstance:
       propertyPath: gameState
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
-      propertyPath: _gameTimeManager
-      value: 
-      objectReference: {fileID: 1911621403}
     - target: {fileID: 1375568432692862430, guid: d3a35c132e896487eaee6369faa12165, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
