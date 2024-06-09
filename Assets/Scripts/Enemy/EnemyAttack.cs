@@ -51,10 +51,18 @@ namespace Enemy
 
         private bool _isUp = false;
 
-        private Collider[] _colliders;
+        [SerializeField] private float frequency = 20.0f;
+
+        [SerializeField] private float amplitude = 0.02f;
+
+        private Vector3 originalPosition;
+
+        private Collider _collider;
         private Rigidbody _rigidbody;
 
         private MeshRenderer[] _meshRenderers;
+
+        private bool isAttack;
 
         private void Awake()
         {
@@ -110,11 +118,35 @@ namespace Enemy
         void Attack()
         {
             _isMoving = false;
-            StartCoroutine(DelayCoroutine(_currentParameters.attackTime, () => { isAttacking = true; }));
+            //StartCoroutine(DelayCoroutine(_currentParameters.attackTime, () => { isAttacking = true; }));
+            //isShake = true;
+            originalPosition = transform.position;
+            StartCoroutine(Shake());
+        }
+
+        IEnumerator Shake()
+        {
+            float remainingTime = _currentParameters.attackTime;
+
+            
+            while (remainingTime >0)
+            {
+                float shake = Mathf.Sin(remainingTime* frequency *(Mathf.PI)) * amplitude;
+
+                transform.position = new Vector3(originalPosition.x + shake, originalPosition.y, originalPosition.z);
+
+                remainingTime -= Time.deltaTime;
+                yield return null;
+            }
+
+            transform.position = originalPosition;
+            //isShake = false;
+            isAttacking = true;
         }
 
         void AttackMove()
         {
+            if (!isAttacking) return; 
             //武器を降ろす
             if (isAttacking&&!_isUp)
             {
@@ -213,17 +245,17 @@ namespace Enemy
 
         void OnTriggerEnter(Collider other)
         {
-            PlaySE();
-            if (other.gameObject.tag == "Player" && isAttacking)
+            if (other.gameObject.tag == "Player" && isAttack && isAttacking)
             {
+                isAttack = false;
                 if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
                 {
-                    isAttacking = false;
                     player.TakeDamage(1);
                     Destroy(gameObject);
                 }
                 if (other.gameObject.TryGetComponent<PlayerPartial>(out var partial))
                 {
+
                     partial.TakeDamage(1);
                 }
             }

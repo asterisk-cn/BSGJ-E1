@@ -70,10 +70,11 @@ public class SceneFadeManager : MonoBehaviour
     {
         if (isFadeIn)
         {
-            alpha -= fadeTime * Time.deltaTime;
+            alpha -= fadeTime * Time.unscaledDeltaTime;
             Alpha();
             if (alpha <= 0)
             {
+                Time.timeScale = 1;
                 alpha = 0;
                 isFadeIn = false;
             }
@@ -81,7 +82,8 @@ public class SceneFadeManager : MonoBehaviour
 
         if (isFadeOut)
         {
-            alpha += fadeTime * Time.deltaTime;
+            Time.timeScale = 0;
+            alpha += fadeTime * Time.unscaledDeltaTime;
             Alpha();
             if (alpha >= 1)
             {
