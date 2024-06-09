@@ -1,6 +1,8 @@
 using Players;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Enemy
@@ -54,6 +56,9 @@ namespace Enemy
         private Rigidbody _rigidbody;
 
         private MeshRenderer[] _meshRenderers;
+        private SkinnedMeshRenderer[] _skinsMesh;
+
+        private bool coruStop;
 
         private void Awake()
         {
@@ -61,6 +66,24 @@ namespace Enemy
             _rigidbody = GetComponent<Rigidbody>();
 
             _meshRenderers = GetComponentsInChildren<MeshRenderer>();
+
+            _skinsMesh = GetComponentsInChildren<SkinnedMeshRenderer>();
+
+            foreach (var skinsMesh in _skinsMesh)
+            {
+                float alpha = 0.3f;
+                var color = skinsMesh.material.color;
+                color.a = alpha;
+                skinsMesh.material.color = color;
+            }
+
+            foreach (var meshRenderer in _meshRenderers)
+            {
+                float alpha = 0.3f;
+                var color = meshRenderer.material.color;
+                color.a = alpha;
+                meshRenderer.material.color = color;
+            }
 
             _currentParameters = _defaultParameters;
         }
@@ -119,6 +142,9 @@ namespace Enemy
             {
                 // transform.position -= _currentParameters.attackSpeed * transform.up;
                 transform.localPosition -= _currentParameters.attackSpeed * transform.up;
+                if (coruStop) return;
+                StartCoroutine(FadeIn(0.5f));
+                coruStop = true;
             }
 
             //攻撃がステージに到達
@@ -171,6 +197,23 @@ namespace Enemy
         {
             _collider.isTrigger = false;
             isActive = false;
+        }
+
+        IEnumerator FadeIn(float fadeTime)
+        {
+            float alpha = 0.3f;
+            float interval = 0.1f;
+            while (alpha < 1.0f)
+            {
+                alpha += interval / fadeTime;
+                foreach (var meshRenderer in _meshRenderers)
+                {
+                    var color = meshRenderer.material.color;
+                    color.a = alpha;
+                    meshRenderer.material.color = color;
+                }
+                yield return new WaitForSeconds(interval);
+            }
         }
 
         IEnumerator FadeOut(float fadeTime)
