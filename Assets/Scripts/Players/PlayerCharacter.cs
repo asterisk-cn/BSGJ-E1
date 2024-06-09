@@ -30,9 +30,12 @@ namespace Players
 
         private Vector3 _velocity = Vector3.zero;
 
+        private Animator _animator;
+
         void Awake()
         {
             _characterController = GetComponent<CharacterController>();
+            _animator = GetComponentInChildren<Animator>();
         }
 
         // Start is called before the first frame update
@@ -46,11 +49,12 @@ namespace Players
         // Update is called once per frame
         void Update()
         {
-
+            
         }
 
         public void TakeDamage(int damage)
         {
+            _animator.SetTrigger("Down");
             _core.TakeDamage(damage);
         }
 
@@ -62,13 +66,14 @@ namespace Players
 
             if (direction.magnitude > 0)
             {
+                _animator.SetTrigger("Walk");
                 _velocity += direction * acceleration * Time.deltaTime;
                 if (_velocity.magnitude > maxSpeed)
                 {
                     _velocity = _velocity.normalized * maxSpeed;
                 }
 
-                AudioManager.Instance.PlaySE("Main_Ashioto_SE");
+                //AudioManager.Instance.PlaySE("Main_Ashioto_SE");
             }
             else
             {
@@ -110,10 +115,7 @@ namespace Players
             _core.UnitePartial();
         }
         //アニメーションが実装されたらAnimationEventで呼び出す
-        public void OnPlayMoveSE()
-        {
-            AudioManager.Instance.PlaySE("Main_Ashioto_SE");
-        }
+        
     }
 }
 
