@@ -20,5 +20,6 @@ public class FightManager : MonoBehaviour
     {
         MainGameManager.instance.isClear = isClear;
         SceneFadeManager.instance.FadeOut("Result");
+        
     }
 }
