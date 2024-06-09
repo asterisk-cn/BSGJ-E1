@@ -57,7 +57,7 @@ namespace Enemy
 
         private Vector3 originalPosition;
 
-        private Collider _collider;
+        private Collider[] _colliders;
         private Rigidbody _rigidbody;
 
         private MeshRenderer[] _meshRenderers;
@@ -118,8 +118,6 @@ namespace Enemy
         void Attack()
         {
             _isMoving = false;
-            //StartCoroutine(DelayCoroutine(_currentParameters.attackTime, () => { isAttacking = true; }));
-            //isShake = true;
             originalPosition = transform.position;
             StartCoroutine(Shake());
         }
@@ -128,7 +126,6 @@ namespace Enemy
         {
             float remainingTime = _currentParameters.attackTime;
 
-            
             while (remainingTime >0)
             {
                 float shake = Mathf.Sin(remainingTime* frequency *(Mathf.PI)) * amplitude;
@@ -142,6 +139,7 @@ namespace Enemy
             transform.position = originalPosition;
             //isShake = false;
             isAttacking = true;
+            isAttack = true;
         }
 
         void AttackMove()
