@@ -140,6 +140,7 @@ namespace Enemy
             //isShake = false;
             isAttacking = true;
             isAttack = true;
+            AudioManager.Instance.PlaySE("Main_FallStart_SE");
         }
 
         void AttackMove()
