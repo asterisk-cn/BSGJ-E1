@@ -33,6 +33,7 @@ public class MainGameManager : MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+        PlayBGM(gameState);
     }
 
     // Update is called once per frame
@@ -123,5 +124,29 @@ public class MainGameManager : MonoBehaviour
     void Reset()
     {
         isClear = false;
+    }
+
+    void PlayBGM(GameState _state)
+    {
+        switch (_state)
+        {
+            
+
+            case GameState.Title:
+                AudioManager.Instance.PlayBGM("Title_BGM");
+                break;
+
+            case GameState.Main:
+                AudioManager.Instance.PlayBGM("Main_BGM");
+                break;
+
+            case GameState.Fight:
+                AudioManager.Instance.PlayBGM("Fight_BGM");
+                break;
+
+            case GameState.Result:
+                AudioManager.Instance.PlayBGM("GameOver_BGM");
+                break;
+        }
     }
 }
