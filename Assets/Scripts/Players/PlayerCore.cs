@@ -110,6 +110,8 @@ namespace Players
         public void UnitePartial()
         {
             _currentParameters.unionCount += increaseUnionCount;
+
+            AudioManager.Instance.PlaySE("Main_SoulDeth_SE");
             if (_currentParameters.unionCount >= _targetUnionCount)
             {
                 _currentParameters.unionCount = _targetUnionCount;
@@ -162,6 +164,8 @@ namespace Players
         public void TakeDamage(int damage)
         {
             _currentParameters.health -= damage;
+
+            AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
             //ゲームオーバー処理？　リザルト処理に遷移
             if (_currentParameters.health <= 0)
             {
@@ -177,6 +181,8 @@ namespace Players
             {
                 _currentParameters.unionCount = 0;
             }
+
+            AudioManager.Instance.PlaySE("Main_SoulDeth_SE");
 
             DestroyPartial();
             GeneratePartial();
