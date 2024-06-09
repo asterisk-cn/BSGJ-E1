@@ -47,11 +47,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f717425d3501d54b8fd3151fafc5558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAlive: 0
   _defaultParameters:
     health: 0
     unionCount: 0
     partialHitCount: 0
+  increaseUnionCount: 0
+  decreaseUnionCount: 0
+  _targetUnionCount: 10
+  isAlive: 0
   character: {fileID: 0}
   partial: {fileID: 0}
   _partialPrefabs:
@@ -70,10 +73,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  sizeUpRate: 0
   _enemy: {fileID: 0}
-  increaseUnionCount: 0
-  decreaseUnionCount: 0
 --- !u!114 &6701200829780284100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,6 +120,8 @@ MonoBehaviour:
   rightMoveStick: {x: 0, y: 0, z: 0}
   leftAttack: 0
   rightAttack: 0
+  leftAttackValue: 0
+  rightAttackValue: 0
   useJoycon: 1
   leftAccelaration: {x: 0, y: 0, z: 0}
   rightAccelaration: {x: 0, y: 0, z: 0}

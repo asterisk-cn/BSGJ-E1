@@ -1,3 +1,4 @@
+using GameManagers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -92,7 +93,8 @@ namespace Players
 
         public void OnEnableCharacterController()
         {
-                _characterController.enabled = true;
+            _characterController.enabled = true;
+            AudioManager.Instance.PlaySE("Main＿Soul＿On＿Floor");
         }
     }
 }

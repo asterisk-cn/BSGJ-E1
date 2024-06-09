@@ -227,7 +227,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7264710726747607181
 RectTransform:
   m_ObjectHideFlags: 0
@@ -245,6 +245,7 @@ RectTransform:
   - {fileID: 4910946774163824844}
   - {fileID: 2710634880433231316}
   - {fileID: 3880906183548243732}
+  - {fileID: 1935837195152299855}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -316,7 +317,6 @@ GameObject:
   - component: {fileID: 6016415866685776493}
   - component: {fileID: 6156208215144840694}
   - component: {fileID: 1479253837240439408}
-  - component: {fileID: 2444394859433940714}
   m_Layer: 5
   m_Name: BackTitleText (TMP)
   m_TagString: Untagged
@@ -440,20 +440,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &2444394859433940714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3885295763116604438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d1876d38d9f643c8be37024fc1e9495, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AMP: 5
-  SPD: 5
 --- !u!1 &4081663774594845613
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,7 +474,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 250, y: -415}
+  m_AnchoredPosition: {x: 250, y: -430}
   m_SizeDelta: {x: 300, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5601724887154290074
@@ -581,7 +567,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: -415}
+  m_AnchoredPosition: {x: -250, y: -430}
   m_SizeDelta: {x: 300, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7896448252811241409
@@ -651,7 +637,6 @@ GameObject:
   - component: {fileID: 6366479983548642487}
   - component: {fileID: 6780553775984896463}
   - component: {fileID: 8389595984158388142}
-  - component: {fileID: 7506798029778043090}
   m_Layer: 5
   m_Name: RetryText (TMP)
   m_TagString: Untagged
@@ -775,20 +760,57 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &7506798029778043090
+--- !u!1 &6723838595848364625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1935837195152299855}
+  - component: {fileID: 836084746828725613}
+  m_Layer: 0
+  m_Name: TextFloatManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1935837195152299855
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6723838595848364625}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7264710726747607181}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &836084746828725613
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6421243441721050530}
+  m_GameObject: {fileID: 6723838595848364625}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d1876d38d9f643c8be37024fc1e9495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AMP: 5
-  SPD: 5
+  SelectObjects:
+  - {fileID: 4414166369206649414}
+  - {fileID: 4081663774594845613}
+  startSelect: 0
+  AMP: 10
+  SPD: 10
+  testSelectNum: 0
 --- !u!1 &6733716386947741121
 GameObject:
   m_ObjectHideFlags: 0

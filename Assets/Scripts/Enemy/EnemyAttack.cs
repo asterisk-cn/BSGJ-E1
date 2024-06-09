@@ -162,6 +162,7 @@ namespace Enemy
             //isShake = false;
             isAttacking = true;
             isAttack = true;
+            AudioManager.Instance.PlaySE("Main_FallStart_SE");
         }
 
         void AttackMove()
@@ -249,6 +250,12 @@ namespace Enemy
                     color.a = alpha;
                     meshRenderer.material.color = color;
                 }
+                foreach (var skinsMesh in _skinsMesh)
+                {
+                    var color = skinsMesh.material.color;
+                    color.a = alpha;
+                    skinsMesh.material.color = color;
+                }
                 yield return new WaitForSeconds(interval);
             }
         }
@@ -265,6 +272,12 @@ namespace Enemy
                     var color = meshRenderer.material.color;
                     color.a = alpha;
                     meshRenderer.material.color = color;
+                }
+                foreach (var skinsMesh in _skinsMesh)
+                {
+                    var color = skinsMesh.material.color;
+                    color.a = alpha;
+                    skinsMesh.material.color = color;
                 }
                 yield return new WaitForSeconds(interval);
             }
