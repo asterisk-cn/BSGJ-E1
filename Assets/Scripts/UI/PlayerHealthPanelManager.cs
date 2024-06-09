@@ -11,6 +11,8 @@ public class PlayerHealthPanelManager : MonoBehaviour
     int testHealth;
     int maxHealth;
 
+    [SerializeField] private Players.PlayerCore _playerCore;
+
     private void Start()
     {
         maxHealth = HealthImages.Length;
@@ -26,6 +28,9 @@ public class PlayerHealthPanelManager : MonoBehaviour
             testHealth -= 1;
             ChangeHealth(testHealth);
         }
+
+        testHealth = _playerCore.GetCurrentHealth();
+        ChangeHealth(testHealth);
     }
 
     public void ChangeHealth(int playerHealth)
