@@ -79,6 +79,9 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.30764574, y: 0.2080345, z: 0.18590084}
   m_Center: {x: -0.023486188, y: -0.0429172, z: -0.010248105}
+  isShake: 0
+  frequency: 20
+  amplitude: 0.02
 --- !u!54 &4586801146477726085
 Rigidbody:
   m_ObjectHideFlags: 0
