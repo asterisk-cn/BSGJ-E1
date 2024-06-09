@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3420887898559513363}
+  - component: {fileID: 4388407203577213341}
   - component: {fileID: 7885820769555232280}
   - component: {fileID: 7447426784176279248}
   - component: {fileID: 6094162408915902608}
-  - component: {fileID: 4388407203577213341}
   - component: {fileID: 3086937301494972951}
   m_Layer: 0
   m_Name: EnemyAttack
@@ -36,6 +36,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4388407203577213341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7455717685954533642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 533a3b7d58e4d4d4cb8fad59fc98bdfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultParameters:
+    moveSpeed: 0.3
+    attackSpeed: 0.5
+    chaseTime: 1
+    attackTime: 0.1
+    remainTime: 3
+    isChase: 1
+    isStay: 1
+  upSpeed: 0.2
+  _defaultHeight: 10
+  _targetTransform: {fileID: 0}
+  isActive: 1
 --- !u!33 &7885820769555232280
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -107,29 +131,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4388407203577213341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7455717685954533642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 533a3b7d58e4d4d4cb8fad59fc98bdfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _defaultParameters:
-    moveSpeed: 0.3
-    attackSpeed: 0.5
-    chaseTime: 1
-    attackTime: 0.1
-    remainTime: 3
-    isChase: 1
-    isStay: 1
-  upSpeed: 0.2
-  _targetTransform: {fileID: 0}
-  isActive: 1
 --- !u!54 &3086937301494972951
 Rigidbody:
   m_ObjectHideFlags: 0

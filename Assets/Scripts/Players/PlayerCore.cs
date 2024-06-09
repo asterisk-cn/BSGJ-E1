@@ -10,16 +10,29 @@ namespace Players
     [System.Serializable]
     class PlayerParameters
     {
-        public int health;
-        public int unionCount;
+        [Tooltip("体力")] public int health;
+        [HideInInspector] public float unionCount;
+        [HideInInspector] public int partialHitCount;
     }
 
     public class PlayerCore : MonoBehaviour
     {
+
+        [Header("調整用パラメータ")]
+
+        [Header("プレイヤーパラメータ")]
+        [SerializeField] private PlayerParameters _defaultParameters;
+
+        [Header("合体パラメータ")]
+        [SerializeField][Tooltip("増加量")] private float increaseUnionCount;
+        [SerializeField][Tooltip("減少量")] private float decreaseUnionCount;
+        [SerializeField][Tooltip("目標値")] private float _targetUnionCount = 10;
+
+        [Header("-----------------------------")]
+        [Space(10)]
+
         public bool isAlive;
         PlayerInputs _inputs;
-
-        [SerializeField] private PlayerParameters _defaultParameters;
         private PlayerParameters _currentParameters;
 
         public PlayerCharacter character;
@@ -27,18 +40,13 @@ namespace Players
 
         [SerializeField] List<PlayerPartial> _partialPrefabs = new List<PlayerPartial>();
         private int _partialIndex = 0;
-        [SerializeField] private GameObject _generatePosition;
 
-        [SerializeField]
-        [Header("巨大化の倍率")]
-        public float sizeUpRate;
+        [SerializeField] private List<GeneratePosition> _generatePositions;
 
         [SerializeField]
         private EnemyCore _enemy;
 
         private bool _isAttacked = false;
-
-        
 
         void Awake()
         {
@@ -59,7 +67,14 @@ namespace Players
         // Update is called once per frame
         void Update()
         {
-            if (MainGameManager.instance.gameState == GameState.Fight && !_isAttacked)
+            if (MainGameManager.instance.gameState == GameState.Main && !_isAttacked)
+            {
+                if (partial == null)
+                {
+                    GeneratePartial();
+                }
+            }
+            if (MainGameManager.instance.gameState == GameState.Fight)
             {
                 Attack();
             }
@@ -67,6 +82,7 @@ namespace Players
 
         private void FixedUpdate()
         {
+            if (SceneFadeManager.instance.isFadeIn || SceneFadeManager.instance.isFadeOut) return;
             Move();
         }
 
@@ -83,37 +99,61 @@ namespace Players
         {
             if (_inputs.leftAttack)
             {
-                _enemy.TakeDamage(1);
+                _enemy.TakeDamage((int)_inputs.leftAttackValue);
             }
             if (_inputs.rightAttack)
             {
-                _enemy.TakeDamage(1);
+                _enemy.TakeDamage((int)_inputs.rightAttackValue);
             }
         }
 
         public void UnitePartial()
         {
-            _currentParameters.unionCount++;
-            if (_currentParameters.unionCount >= 6)
+            _currentParameters.unionCount += increaseUnionCount;
+            if (_currentParameters.unionCount >= _targetUnionCount)
             {
+                _currentParameters.unionCount = _targetUnionCount;
                 SceneFadeManager.instance.FadeOut("Fight");
             }
+            DestroyPartial();
             GeneratePartial();
         }
 
         void GeneratePartial()
         {
-            if (_partialIndex < _partialPrefabs.Count)
+            if (partial != null)
             {
-                partial = Instantiate(_partialPrefabs[_partialIndex], _generatePosition.transform.position, Quaternion.identity);
-                partial.transform.parent = transform;
-
-                _partialIndex++;
+                return;
             }
-            else
+            // 生成位置を決定
+            Transform generatePositionTransform = null;
+            foreach (var position in _generatePositions)
             {
-                // TODO: RunManagerを呼び出してゲーム終了処理を行う
-                MainGameManager.instance.LoadScene("Fight");
+                if (position.isCollide)
+                {
+                    continue;
+                }
+
+                if (generatePositionTransform == null)
+                {
+                    generatePositionTransform = position.transform;
+                    continue;
+                }
+
+                var currentDistance = Vector3.Distance(generatePositionTransform.position, character.transform.position);
+                var newDistance = Vector3.Distance(position.transform.position, character.transform.position);
+                if (currentDistance < newDistance)
+                {
+                    generatePositionTransform = position.transform;
+                }
+            }
+            partial = Instantiate(_partialPrefabs[_partialIndex], generatePositionTransform.position, Quaternion.identity);
+            partial.SetCore(this);
+
+            _partialIndex++;
+            if (_partialIndex >= _partialPrefabs.Count)
+            {
+                _partialIndex = 0;
             }
         }
 
@@ -129,6 +169,28 @@ namespace Players
             }
         }
 
+        public void TakePartialDamage(int damage)
+        {
+            _currentParameters.partialHitCount++;
+            _currentParameters.unionCount -= decreaseUnionCount;
+            if (_currentParameters.unionCount < 0)
+            {
+                _currentParameters.unionCount = 0;
+            }
+
+            DestroyPartial();
+            GeneratePartial();
+        }
+
+        void DestroyPartial()
+        {
+            if (partial != null)
+            {
+                Destroy(partial.gameObject);
+            }
+            partial = null;
+        }
+
         void Die()
         {
             isAlive = false;
@@ -139,6 +201,21 @@ namespace Players
         public int GetCurrentHealth()
         {
             return _currentParameters.health;
+        }
+
+        public float GetCurrentUnionCount()
+        {
+            return _currentParameters.unionCount;
+        }
+
+        public int GetCurrentPartialHitCount()
+        {
+            return _currentParameters.partialHitCount;
+        }
+
+        public float GetTargetUnionCount()
+        {
+            return _targetUnionCount;
         }
     }
 }

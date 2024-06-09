@@ -19,17 +19,24 @@ namespace Enemy
 
     public class EnemyAttack : MonoBehaviour
     {
+        [Header("調整用パラメータ")]
+        [Header("敵のパラメータ")]
         [SerializeField] private AttackParameters _defaultParameters;
-        private AttackParameters _currentParameters;
-
         //戻る速度
-        [SerializeField] float upSpeed = 0.2f;
+        [SerializeField][Tooltip("上に上がる速度")] float upSpeed = 0.2f;
 
         //元の高さ
-        float _defaultHeight = 10.0f;
+        [SerializeField][Tooltip("生成位置")] float _defaultHeight = 10.0f;
 
         //ステージの高さ
         float _stageHeight = 0;
+
+        [Header("-----------------------------")]
+        [Space(10)]
+
+        private AttackParameters _currentParameters;
+
+
 
         //追跡するオブジェクト
         [SerializeField] Transform _targetTransform;
@@ -46,10 +53,14 @@ namespace Enemy
         private Collider _collider;
         private Rigidbody _rigidbody;
 
+        private MeshRenderer[] _meshRenderers;
+
         private void Awake()
         {
-            _collider = GetComponent<Collider>();
+            _collider = GetComponentInChildren<Collider>();
             _rigidbody = GetComponent<Rigidbody>();
+
+            _meshRenderers = GetComponentsInChildren<MeshRenderer>();
 
             _currentParameters = _defaultParameters;
         }
@@ -104,40 +115,36 @@ namespace Enemy
         void AttackMove()
         {
             //武器を降ろす
-            if (isAttacking)
+            if (isAttacking&&!_isUp)
             {
                 // transform.position -= _currentParameters.attackSpeed * transform.up;
                 transform.localPosition -= _currentParameters.attackSpeed * transform.up;
             }
 
             //攻撃がステージに到達
-            if (isAttacking && transform.position.y - transform.localScale.y / 2 <= _stageHeight)
-            {
-                if (_currentParameters.isStay)
-                {
-                    Deactivate();
-                    StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { Destroy(gameObject); }));
-                    isAttacking = false;
-                }
-                else
-                {
-                    _isUp = true;
-                }
-                //ステージに埋まらないようにする
-                float buff = transform.localScale.y / 2;
-                transform.position = new Vector3(transform.position.x, _stageHeight + buff, transform.position.z);
-            }
+            // if (isAttacking && transform.position.y - transform.localScale.y / 2 <= _stageHeight)
+            // {
+            //     if (_currentParameters.isStay)
+            //     {
+            //         Deactivate();
+            //         StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { DestroyWithFade(); }));
+            //         isAttacking = false;
+            //     }
+            //     else
+            //     {
+            //         _isUp = true;
+            //     }
+            //     //ステージに埋まらないようにする
+            //     float buff = transform.localScale.y / 2;
+            //     transform.position = new Vector3(transform.position.x, _stageHeight + buff, transform.position.z);
+            // }
 
             //元の高さに戻る
             if (_isUp) { transform.position += upSpeed * transform.up; }
             //元の高さに到達
             if (_isUp && transform.position.y >= _defaultHeight)
             {
-                Activate();
-                transform.position = new Vector3(transform.position.x, _defaultHeight, transform.position.z);
-                //関数の終了
-                _isUp = false;
-                isAttacking = false;
+                Destroy(gameObject);
             }
         }
 
@@ -166,6 +173,30 @@ namespace Enemy
             isActive = false;
         }
 
+        IEnumerator FadeOut(float fadeTime)
+        {
+            float alpha = 1.0f;
+            float interval = 0.1f;
+            while (alpha > 0.0f)
+            {
+                alpha -= interval / fadeTime;
+                foreach (var meshRenderer in _meshRenderers)
+                {
+                    var color = meshRenderer.material.color;
+                    color.a = alpha;
+                    meshRenderer.material.color = color;
+                }
+                yield return new WaitForSeconds(interval);
+            }
+
+            Destroy(gameObject);
+        }
+
+        void DestroyWithFade()
+        {
+            StartCoroutine(FadeOut(1.0f));
+        }
+
         IEnumerator DelayCoroutine(float waitTime, System.Action action)
         {
             yield return new WaitForSeconds(waitTime);
@@ -176,13 +207,29 @@ namespace Enemy
         {
             if (other.gameObject.tag == "Player" && isAttacking)
             {
-                isAttacking = false;
                 if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
                 {
-                    Debug.Log("Player Hit");
+                    isAttacking = false;
                     player.TakeDamage(1);
+                    Destroy(gameObject);
                 }
-                Destroy(gameObject);
+                if (other.gameObject.TryGetComponent<PlayerPartial>(out var partial))
+                {
+                    partial.TakeDamage(1);
+                }
+            }
+            else if (other.gameObject.tag == "Stage" && isAttacking)
+            {
+                if (_currentParameters.isStay)
+                {
+                    Deactivate();
+                    StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { DestroyWithFade(); }));
+                    isAttacking = false;
+                }
+                else
+                {
+                    _isUp = true;
+                }
             }
         }
 
@@ -196,6 +243,11 @@ namespace Enemy
             {
                 Move();
             }
+        }
+
+        public bool GetIsChase()
+        {
+            return _currentParameters.isChase;
         }
     }
 }

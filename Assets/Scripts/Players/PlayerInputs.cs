@@ -12,6 +12,9 @@ namespace Players
         public bool leftAttack;
         public bool rightAttack;
 
+        public float leftAttackValue;
+        public float rightAttackValue;
+
         [SerializeField] private bool useJoycon = false;
 
         void FixedUpdate()
@@ -22,10 +25,12 @@ namespace Players
                 if (leftAccelaration.magnitude > 5f)
                 {
                     leftAttack = true;
+                    leftAttackValue = leftAccelaration.magnitude;
                 }
                 if (rightAccelaration.magnitude > 5f)
                 {
                     rightAttack = true;
+                    rightAttackValue = rightAccelaration.magnitude;
                 }
             }
         }
@@ -34,6 +39,9 @@ namespace Players
         {
             leftAttack = false;
             rightAttack = false;
+
+            leftAttackValue = 0;
+            rightAttackValue = 0;
         }
 
         public Vector3 leftAccelaration;
@@ -64,7 +72,9 @@ namespace Players
 
         void OnFireLeft(InputValue value)
         {
+            //デバック用のダメージ(クリック)
             leftAttack = value.isPressed;
+            leftAttackValue = 10.0f;
         }
 
         void OnFireRight(InputValue value)
