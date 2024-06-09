@@ -518,6 +518,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameOverPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 3458850469024609029, guid: 9e8310b5fcb3a4c4dad4a5ae2ac991c3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4988178361758491804, guid: 9e8310b5fcb3a4c4dad4a5ae2ac991c3, type: 3}
       propertyPath: m_fontAsset
       value: 
@@ -622,6 +626,11 @@ PrefabInstance:
 --- !u!224 &534366986 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7264710726747607181, guid: 9e8310b5fcb3a4c4dad4a5ae2ac991c3, type: 3}
+  m_PrefabInstance: {fileID: 534366985}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &534366987 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3458850469024609029, guid: 9e8310b5fcb3a4c4dad4a5ae2ac991c3, type: 3}
   m_PrefabInstance: {fileID: 534366985}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &674383274
@@ -849,6 +858,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4dab6bf71ea14ff88087497ca1abe75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _clearPanel: {fileID: 5963991370277600705}
+  _gameOverPanel: {fileID: 534366987}
 --- !u!1 &932523347
 GameObject:
   m_ObjectHideFlags: 0
@@ -1410,6 +1421,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2010644263}
     m_Modifications:
+    - target: {fileID: 908166517587325546, guid: fc2a82b3658024f71b5d385a4f322499, type: 3}
+      propertyPath: m_text
+      value: 'Result A
+
+        ClearTime 5:00
+
+        DeathMember 9'
+      objectReference: {fileID: 0}
+    - target: {fileID: 908166517587325546, guid: fc2a82b3658024f71b5d385a4f322499, type: 3}
+      propertyPath: m_fontSize
+      value: 58.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 908166517587325546, guid: fc2a82b3658024f71b5d385a4f322499, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 908166517587325546, guid: fc2a82b3658024f71b5d385a4f322499, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 2039332104894094830, guid: fc2a82b3658024f71b5d385a4f322499, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1515,6 +1546,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc2a82b3658024f71b5d385a4f322499, type: 3}
+--- !u!1 &5963991370277600705 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5807332640912224791, guid: fc2a82b3658024f71b5d385a4f322499, type: 3}
+  m_PrefabInstance: {fileID: 5963991370277600704}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
