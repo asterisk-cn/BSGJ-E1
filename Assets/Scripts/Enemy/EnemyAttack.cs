@@ -42,7 +42,7 @@ namespace Enemy
         private AttackParameters _currentParameters;
 
         //追跡するオブジェクト
-        [SerializeField] Transform _targetTransform;
+        [SerializeField] public Transform _targetTransform;
 
         //攻撃関数用のフラグ
         private bool isAttacking = false;
