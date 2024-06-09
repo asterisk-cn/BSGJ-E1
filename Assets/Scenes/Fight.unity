@@ -515,6 +515,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FightSceneTextPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 2049725498552067246, guid: 948439418f1304dd0ab29d370e143475, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6542183050072965536, guid: 948439418f1304dd0ab29d370e143475, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

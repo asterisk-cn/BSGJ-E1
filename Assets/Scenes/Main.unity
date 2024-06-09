@@ -1300,13 +1300,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747613021}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.46144798, y: -0, z: -0, w: 0.8871673}
-  m_LocalPosition: {x: -0.7, y: 1.64, z: -9.63}
+  m_LocalRotation: {x: 0.48098874, y: 0, z: 0, w: 0.8767268}
+  m_LocalPosition: {x: -0.7, y: 1.75, z: -9.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 54.961, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 57.5, y: 0, z: 0}
 --- !u!1 &780550451
 GameObject:
   m_ObjectHideFlags: 0
@@ -1761,7 +1761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3481623930667808617, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: m_SkinWidth
-      value: 0.008
+      value: 0.0008
       objectReference: {fileID: 0}
     - target: {fileID: 3481623930667808617, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: m_MinMoveDistance
@@ -1856,6 +1856,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8980861420735901802, guid: f5cb237c4707c448cab610462708f075, type: 3}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _partialPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 8980861420735901802, guid: 5b31285f8c94d104c8982274a9dae976, type: 3}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _partialPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 8980861420735901802, guid: c62971d92803ea549b4f6b19c52bb4e9, type: 3}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _partialPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 8980861420735901802, guid: 6c5559e9949a5d54796490e3e27ad9c1, type: 3}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _generatePositions.Array.data[0]
       value: 
       objectReference: {fileID: 7405087276617452995}
@@ -1916,7 +1928,7 @@ MonoBehaviour:
   _setHand: 1
   _setKnife: 1
   _setPot: 1
-  _attackStartHeight: 4
+  _attackStartHeight: 1.35
   isAlive: 0
   _hand: {fileID: 2271366039845924913, guid: 7ae10fbf9f039cb498f3eb33fe4e5099, type: 3}
   _knife: {fileID: 8056262493575415640, guid: d77e73267df637446b9037d94f2ae776, type: 3}
@@ -2602,17 +2614,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8048557724845311700, guid: 7f784fbc9f3ba43cd90066ee6a28e29a, type: 3}
   m_PrefabInstance: {fileID: 1878507285}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1911621403 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4308786854474834289, guid: d3a35c132e896487eaee6369faa12165, type: 3}
-  m_PrefabInstance: {fileID: 998232471}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a7beb3e7a139a44699b0e09fd434010, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1986206538
 PrefabInstance:
   m_ObjectHideFlags: 0

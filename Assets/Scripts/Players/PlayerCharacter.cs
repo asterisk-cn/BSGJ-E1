@@ -68,7 +68,7 @@ namespace Players
                     _velocity = _velocity.normalized * maxSpeed;
                 }
 
-               // AudioManager.Instance.PlaySE("Main_Ashioto_SE");
+                AudioManager.Instance.PlaySE("Main_Ashioto_SE");
             }
             else
             {

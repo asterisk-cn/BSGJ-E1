@@ -2,6 +2,7 @@ using GameManagers;
 using Players;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -98,15 +99,32 @@ namespace Enemy
             var comp = generate.GetComponent<EnemyAttack>();
             // ターゲットの選択
             Transform target = null;
+            Transform anotherTarget = null;
             if (_player.partial == null)
             {
                 target = _player.character.transform;
             }
-            else
+            else if(_attackView.Count == 0)
             {
                 target = Random.value < 0.5 ? _player.character.transform : _player.partial.transform;
+                comp.Initialize(_attackStartHeight, _stageHeight, target);
             }
-            comp.Initialize(_attackStartHeight, _stageHeight, target);
+            else if( _attackView.Count == 1)
+            {
+                foreach(var obj in _attackView)
+                {
+                    anotherTarget = obj._targetTransform;
+                    if (anotherTarget == _player.character.transform)
+                    {
+                        anotherTarget = _player.partial.transform;
+                    }
+                    else
+                    {
+                        anotherTarget = _player.character.transform;
+                    }
+                    comp.Initialize(_attackStartHeight, _stageHeight, anotherTarget);
+                }
+            }
 
             if (!comp.GetIsChase())
             {
