@@ -26,6 +26,7 @@ namespace Players
         {
             _currentParameters = _defaultParameters;
             _characterController = GetComponent<CharacterController>();
+            _characterController.enabled = false;
         }
 
         // Start is called before the first frame update
@@ -41,6 +42,7 @@ namespace Players
 
         public void Move(Vector3 direction)
         {
+            if (!_characterController.enabled) return;
             var maxSpeed = _currentParameters.maxSpeed;
             var acceleration = _currentParameters.acceleration;
             var deceleration = _currentParameters.deceleration;
@@ -86,6 +88,11 @@ namespace Players
             {
                 player.UnitePartial(this);
             }
+        }
+
+        public void OnEnableCharacterController()
+        {
+                _characterController.enabled = true;
         }
     }
 }
