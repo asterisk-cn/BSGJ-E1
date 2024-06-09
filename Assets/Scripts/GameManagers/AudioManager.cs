@@ -11,8 +11,8 @@ namespace GameManagers
         public float BGMVolume { get; private set; } = BGM_VOLUME_DEFAULT;
         public float SEVolume { get; private set; } = SE_VOLUME_DEFAULT;
 
-        private const string BGM_PATH = "Audio/BGM";
-        private const string SE_PATH = "Audio/SE";
+        private const string BGM_PATH = "BGM";
+        private const string SE_PATH = "SE";
 
         public const float BGM_FADE_SPEED_RATE_HIGH = 0.9f;
         public const float BGM_FADE_SPEED_RATE_LOW = 0.3f;

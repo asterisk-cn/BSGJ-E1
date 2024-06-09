@@ -1,3 +1,4 @@
+using GameManagers;
 using Players;
 using System.Collections;
 using System.Collections.Generic;
@@ -175,7 +176,7 @@ namespace Enemy
             foreach( var collider in _colliders)
             {
                 collider.isTrigger =false;
-                Debug.Log($"コライダーの状態:{collider},{collider.isTrigger}");
+                //Debug.Log($"コライダーの状態:{collider},{collider.isTrigger}");
             }
             isActive = false;
         }
@@ -212,6 +213,7 @@ namespace Enemy
 
         void OnTriggerEnter(Collider other)
         {
+            PlaySE();
             if (other.gameObject.tag == "Player" && isAttacking)
             {
                 if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
@@ -256,5 +258,7 @@ namespace Enemy
         {
             return _currentParameters.isChase;
         }
+
+        public virtual void PlaySE() { }
     }
 }
