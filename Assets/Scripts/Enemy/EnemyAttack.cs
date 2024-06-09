@@ -61,6 +61,8 @@ namespace Enemy
 
         private MeshRenderer[] _meshRenderers;
 
+        private bool isAttack;
+
         private void Awake()
         {
             _collider = GetComponentInChildren<Collider>();
@@ -123,7 +125,7 @@ namespace Enemy
 
         IEnumerator Shake()
         {
-            float remainingTime = 1.5f;
+            float remainingTime = _currentParameters.attackTime;
 
             
             while (remainingTime >0)
@@ -235,16 +237,17 @@ namespace Enemy
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "Player" && isAttacking)
+            if (other.gameObject.tag == "Player" && isAttack && isAttacking)
             {
+                isAttack = false;
                 if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
                 {
-                    isAttacking = false;
                     player.TakeDamage(1);
                     Destroy(gameObject);
                 }
                 if (other.gameObject.TryGetComponent<PlayerPartial>(out var partial))
                 {
+
                     partial.TakeDamage(1);
                 }
             }
