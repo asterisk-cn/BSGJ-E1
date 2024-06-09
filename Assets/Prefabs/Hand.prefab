@@ -51,11 +51,12 @@ MonoBehaviour:
     moveSpeed: 0.08
     attackSpeed: 0.04
     chaseTime: 0
-    attackTime: 0
+    attackTime: 10
     remainTime: 0
     isChase: 0
     isStay: 0
   upSpeed: 0.03
+  _defaultHeight: 10
   _targetTransform: {fileID: 0}
   isActive: 1
 --- !u!65 &5876421828703442672
@@ -79,9 +80,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.30764574, y: 0.2080345, z: 0.18590084}
   m_Center: {x: -0.023486188, y: -0.0429172, z: -0.010248105}
-  isShake: 0
-  frequency: 20
-  amplitude: 0.02
 --- !u!54 &4586801146477726085
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -170,8 +168,58 @@ PrefabInstance:
     - {fileID: 4832710077630885516, guid: 6cf889bd2cc299a449745408d5820c14, type: 3}
     - {fileID: 9051967158199867080, guid: 6cf889bd2cc299a449745408d5820c14, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6948880169545829589, guid: 6cf889bd2cc299a449745408d5820c14, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4448932249593925156}
   m_SourcePrefab: {fileID: 100100000, guid: 6cf889bd2cc299a449745408d5820c14, type: 3}
+--- !u!1 &4669792184439936459 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6948880169545829589, guid: 6cf889bd2cc299a449745408d5820c14, type: 3}
+  m_PrefabInstance: {fileID: 2351176915239901470}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4448932249593925156
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4669792184439936459}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: b665eb539ade85c4fa32ab75f05a7e86, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!4 &7319024762172101043 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4986444441292589229, guid: 6cf889bd2cc299a449745408d5820c14, type: 3}
