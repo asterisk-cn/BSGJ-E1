@@ -1,3 +1,4 @@
+using GameManagers;
 using Players;
 using System.Collections;
 using System.Collections.Generic;
@@ -149,6 +150,8 @@ namespace Enemy
             if (_currentHealth <= 0)
             {
                 _currentHealth = 0;
+                //!
+                AudioManager.Instance.PlaySE("Fight_FinishBlaw");
                 Die();
             }
         }
