@@ -249,6 +249,12 @@ namespace Enemy
                     color.a = alpha;
                     meshRenderer.material.color = color;
                 }
+                foreach (var skinsMesh in _skinsMesh)
+                {
+                    var color = skinsMesh.material.color;
+                    color.a = alpha;
+                    skinsMesh.material.color = color;
+                }
                 yield return new WaitForSeconds(interval);
             }
         }
@@ -265,6 +271,12 @@ namespace Enemy
                     var color = meshRenderer.material.color;
                     color.a = alpha;
                     meshRenderer.material.color = color;
+                }
+                foreach (var skinsMesh in _skinsMesh)
+                {
+                    var color = skinsMesh.material.color;
+                    color.a = alpha;
+                    skinsMesh.material.color = color;
                 }
                 yield return new WaitForSeconds(interval);
             }
