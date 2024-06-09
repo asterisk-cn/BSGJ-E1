@@ -1,3 +1,4 @@
+using GameManagers;
 using Players;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,7 +57,7 @@ namespace Enemy
 
         private Vector3 originalPosition;
 
-        private Collider _collider;
+        private Collider[] _colliders;
         private Rigidbody _rigidbody;
 
         private MeshRenderer[] _meshRenderers;
@@ -65,7 +66,7 @@ namespace Enemy
 
         private void Awake()
         {
-            _collider = GetComponentInChildren<Collider>();
+            _colliders = GetComponentsInChildren<Collider>();
             _rigidbody = GetComponent<Rigidbody>();
 
             _meshRenderers = GetComponentsInChildren<MeshRenderer>();
@@ -117,8 +118,6 @@ namespace Enemy
         void Attack()
         {
             _isMoving = false;
-            //StartCoroutine(DelayCoroutine(_currentParameters.attackTime, () => { isAttacking = true; }));
-            //isShake = true;
             originalPosition = transform.position;
             StartCoroutine(Shake());
         }
@@ -127,7 +126,6 @@ namespace Enemy
         {
             float remainingTime = _currentParameters.attackTime;
 
-            
             while (remainingTime >0)
             {
                 float shake = Mathf.Sin(remainingTime* frequency *(Mathf.PI)) * amplitude;
@@ -141,6 +139,7 @@ namespace Enemy
             transform.position = originalPosition;
             //isShake = false;
             isAttacking = true;
+            isAttack = true;
         }
 
         void AttackMove()
@@ -195,13 +194,20 @@ namespace Enemy
 
         void Activate()
         {
-            _collider.isTrigger = true;
+            foreach( var collider in _colliders)
+            {
+                collider.isTrigger = true;
+            }
             isActive = true;
         }
 
         void Deactivate()
         {
-            _collider.isTrigger = false;
+            foreach( var collider in _colliders)
+            {
+                collider.isTrigger =false;
+                //Debug.Log($"コライダーの状態:{collider},{collider.isTrigger}");
+            }
             isActive = false;
         }
 
@@ -282,5 +288,7 @@ namespace Enemy
         {
             return _currentParameters.isChase;
         }
+
+        public virtual void PlaySE() { }
     }
 }
