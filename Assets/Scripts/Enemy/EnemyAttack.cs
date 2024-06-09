@@ -50,14 +50,14 @@ namespace Enemy
 
         private bool _isUp = false;
 
-        private Collider _collider;
+        private Collider[] _colliders;
         private Rigidbody _rigidbody;
 
         private MeshRenderer[] _meshRenderers;
 
         private void Awake()
         {
-            _collider = GetComponentInChildren<Collider>();
+            _colliders = GetComponentsInChildren<Collider>();
             _rigidbody = GetComponent<Rigidbody>();
 
             _meshRenderers = GetComponentsInChildren<MeshRenderer>();
@@ -163,13 +163,20 @@ namespace Enemy
 
         void Activate()
         {
-            _collider.isTrigger = true;
+            foreach( var collider in _colliders)
+            {
+                collider.isTrigger = true;
+            }
             isActive = true;
         }
 
         void Deactivate()
         {
-            _collider.isTrigger = false;
+            foreach( var collider in _colliders)
+            {
+                collider.isTrigger =false;
+                Debug.Log($"コライダーの状態:{collider},{collider.isTrigger}");
+            }
             isActive = false;
         }
 
