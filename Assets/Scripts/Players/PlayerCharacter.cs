@@ -68,7 +68,7 @@ namespace Players
                     _velocity = _velocity.normalized * maxSpeed;
                 }
 
-                AudioManager.Instance.PlaySE("Main_Ashioto_SE");
+               // AudioManager.Instance.PlaySE("Main_Ashioto_SE");
             }
             else
             {
@@ -108,6 +108,11 @@ namespace Players
         public void UnitePartial(PlayerPartial playerPartial)
         {
             _core.UnitePartial();
+        }
+        //アニメーションが実装されたらAnimationEventで呼び出す
+        public void OnPlayMoveSE()
+        {
+            AudioManager.Instance.PlaySE("Main_Ashioto_SE");
         }
     }
 }
