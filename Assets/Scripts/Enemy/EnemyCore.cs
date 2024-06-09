@@ -151,7 +151,7 @@ namespace Enemy
             {
                 _currentHealth = 0;
                 //!
-                AudioManager.Instance.PlaySE("Fight_FinishBlaw");
+                AudioManager.Instance.PlaySE("Fight_FinishiBlaw_SE");
                 Die();
             }
         }
