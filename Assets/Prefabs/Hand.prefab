@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 1, z: 3}
+  m_LocalScale: {x: 0.7, y: 0.23, z: 1.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7319024762172101043}
@@ -48,10 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultParameters:
-    moveSpeed: 0.08
-    attackSpeed: 0.04
+    moveSpeed: 0.02
+    attackSpeed: 0.034
     chaseTime: 0
-    attackTime: 10
+    attackTime: 1.37
     remainTime: 0
     isChase: 0
     isStay: 0

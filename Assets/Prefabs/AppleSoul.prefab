@@ -90,7 +90,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9203997197074302471, guid: d887a3ff42dfe449789f1376ff2bffd5, type: 3}
       propertyPath: _defaultParameters.maxSpeed
-      value: 0.015
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 9203997197074302471, guid: d887a3ff42dfe449789f1376ff2bffd5, type: 3}
       propertyPath: _defaultParameters.moveSpeed
@@ -98,11 +98,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9203997197074302471, guid: d887a3ff42dfe449789f1376ff2bffd5, type: 3}
       propertyPath: _defaultParameters.acceleration
-      value: 0.03
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 9203997197074302471, guid: d887a3ff42dfe449789f1376ff2bffd5, type: 3}
       propertyPath: _defaultParameters.deceleration
-      value: 0.08
+      value: 0.015
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4933290290799495603, guid: d887a3ff42dfe449789f1376ff2bffd5, type: 3}

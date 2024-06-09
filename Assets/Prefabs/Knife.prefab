@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2291149221808025921}
@@ -49,15 +49,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultParameters:
     moveSpeed: 0.05
-    attackSpeed: 0.05
-    chaseTime: 5
-    attackTime: 0.3
+    attackSpeed: 0.039
+    chaseTime: 0.8
+    attackTime: 1
     remainTime: 3
     isChase: 1
     isStay: 1
   upSpeed: 0
+  _defaultHeight: 10
   _targetTransform: {fileID: 0}
   isActive: 1
+  frequency: 20
+  amplitude: 0.02
 --- !u!65 &1209565074298310344
 BoxCollider:
   m_ObjectHideFlags: 0
