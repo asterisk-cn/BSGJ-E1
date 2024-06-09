@@ -109,6 +109,11 @@ namespace Players
         {
             _core.UnitePartial();
         }
+        //アニメーションが実装されたらAnimationEventで呼び出す
+        public void OnPlayMoveSE()
+        {
+            AudioManager.Instance.PlaySE("Main_Ashioto_SE");
+        }
     }
 }
 
