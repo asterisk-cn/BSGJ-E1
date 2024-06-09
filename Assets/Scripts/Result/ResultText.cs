@@ -14,14 +14,7 @@ public class ResultText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (MainGameManager.instance.isClear)
-        {
-            _text.text = "Clear!";
-        }
-        else
-        {
-            _text.text = "Game Over";
-        }
+
     }
 
     // Update is called once per frame

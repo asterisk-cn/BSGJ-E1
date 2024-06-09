@@ -1,3 +1,4 @@
+using GameManagers;
 using Players;
 using System;
 using System.Collections;
@@ -23,6 +24,8 @@ namespace Enemy
     {
         [Header("調整用パラメータ")]
         [Header("敵のパラメータ")]
+        [Header("調整用パラメータ")]
+        [Header("敵のパラメータ")]
         [SerializeField] private AttackParameters _defaultParameters;
         //戻る速度
         [SerializeField][Tooltip("上に上がる速度")] float upSpeed = 0.2f;
@@ -38,8 +41,6 @@ namespace Enemy
 
         private AttackParameters _currentParameters;
 
-
-
         //追跡するオブジェクト
         [SerializeField] Transform _targetTransform;
 
@@ -52,17 +53,24 @@ namespace Enemy
 
         private bool _isUp = false;
 
-        private Collider _collider;
+        [SerializeField] private float frequency = 20.0f;
+
+        [SerializeField] private float amplitude = 0.02f;
+
+        private Vector3 originalPosition;
+
+        private Collider[] _colliders;
         private Rigidbody _rigidbody;
 
         private MeshRenderer[] _meshRenderers;
         private SkinnedMeshRenderer[] _skinsMesh;
 
         private bool coruStop;
+        private bool isAttack = false;
 
         private void Awake()
         {
-            _collider = GetComponentInChildren<Collider>();
+            _colliders = GetComponentsInChildren<Collider>();
             _rigidbody = GetComponent<Rigidbody>();
 
             _meshRenderers = GetComponentsInChildren<MeshRenderer>();
@@ -132,11 +140,33 @@ namespace Enemy
         void Attack()
         {
             _isMoving = false;
-            StartCoroutine(DelayCoroutine(_currentParameters.attackTime, () => { isAttacking = true; }));
+            originalPosition = transform.position;
+            StartCoroutine(Shake());
+        }
+
+        IEnumerator Shake()
+        {
+            float remainingTime = _currentParameters.attackTime;
+
+            while (remainingTime >0)
+            {
+                float shake = Mathf.Sin(remainingTime* frequency *(Mathf.PI)) * amplitude;
+
+                transform.position = new Vector3(originalPosition.x + shake, originalPosition.y, originalPosition.z);
+
+                remainingTime -= Time.deltaTime;
+                yield return null;
+            }
+
+            transform.position = originalPosition;
+            //isShake = false;
+            isAttacking = true;
+            isAttack = true;
         }
 
         void AttackMove()
         {
+            if (!isAttacking) return; 
             //武器を降ろす
             if (isAttacking&&!_isUp)
             {
@@ -189,13 +219,20 @@ namespace Enemy
 
         void Activate()
         {
-            _collider.isTrigger = true;
+            foreach( var collider in _colliders)
+            {
+                collider.isTrigger = true;
+            }
             isActive = true;
         }
 
         void Deactivate()
         {
-            _collider.isTrigger = false;
+            foreach( var collider in _colliders)
+            {
+                collider.isTrigger =false;
+                //Debug.Log($"コライダーの状態:{collider},{collider.isTrigger}");
+            }
             isActive = false;
         }
 
@@ -248,8 +285,9 @@ namespace Enemy
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "Player" && isAttacking)
+            if (other.gameObject.tag == "Player" && isAttack && isAttacking)
             {
+                isAttack = false;
                 if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
                 {
                     isAttacking = false;
@@ -292,5 +330,7 @@ namespace Enemy
         {
             return _currentParameters.isChase;
         }
+
+        public virtual void PlaySE() { }
     }
 }
