@@ -27,6 +27,8 @@ public class MainGameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
         DontDestroyOnLoad(this.gameObject);
+
+        Cursor.visible = false;
     }
 
     void Start()
