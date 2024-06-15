@@ -50,6 +50,11 @@ namespace Enemy
 
         float maxUnionCount;
 
+        public Animator _animator;
+        private AnimatorStateInfo _animatorStateInfo;
+        private AnimatorClipInfo[] _animatorClip;
+        private float _stateTime;
+
         void LevelAdjustment()
         {
             maxUnionCount = System.Math.Max(maxUnionCount, _player.GetCurrentUnionCount());
@@ -142,6 +147,11 @@ namespace Enemy
 
         void Start()
         {
+
+            if(MainGameManager.instance.gameState == GameState.Fight)
+            {
+                _animator = GetComponentInChildren<Animator>();
+            }
             _currentHealth = health;
 
             if (MainGameManager.instance.gameState == GameManagers.GameState.Main)
@@ -151,6 +161,8 @@ namespace Enemy
                 _stageLimit_front = _stageLimit_top_left.position.z > _stageLimit_bottom_right.position.z ? _stageLimit_bottom_right.position.z : _stageLimit_top_left.position.z;
                 _stageLimit_back = _stageLimit_top_left.position.z < _stageLimit_bottom_right.position.z ? _stageLimit_bottom_right.position.z : _stageLimit_top_left.position.z;
             }
+
+            
         }
 
         void Update()
@@ -164,13 +176,14 @@ namespace Enemy
 
         public void TakeDamage(int damage)
         {
+            _animator.SetTrigger("Damage");
             _currentHealth -= damage;
             if (_currentHealth <= 0)
             {
+                _animator.SetTrigger("Down");
                 _currentHealth = 0;
                 //!
                 AudioManager.Instance.PlaySE("Fight_FinishiBlaw_SE");
-                Die();
             }
         }
 
