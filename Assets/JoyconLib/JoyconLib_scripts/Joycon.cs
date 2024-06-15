@@ -8,6 +8,7 @@ using System;
 using System.Threading;
 using UnityEngine;
 
+[System.Serializable]
 public class Joycon
 {
     public enum DebugType : int

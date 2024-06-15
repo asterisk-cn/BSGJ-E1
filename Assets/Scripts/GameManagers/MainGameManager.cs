@@ -10,7 +10,7 @@ public class MainGameManager : MonoBehaviour
     public static MainGameManager instance;
     public GameState gameState;
 
-    // [SerializeField] private float _mainTime = 60;
+    [SerializeField] private float _mainTime = 180;
     [SerializeField] private float _fightTime = 10;
 
     public bool isClear = false;
@@ -27,12 +27,15 @@ public class MainGameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
         DontDestroyOnLoad(this.gameObject);
+
+        Cursor.visible = false;
     }
 
     void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+        PlayBGM(gameState);
     }
 
     // Update is called once per frame
@@ -78,6 +81,15 @@ public class MainGameManager : MonoBehaviour
     void OnRunLoaded()
     {
         gameState = GameState.Main;
+        GameTimeManager.instance.AddListenerOnTimeUp(() => ForceEnd());
+        GameTimeManager.instance.StartTimer(_mainTime, true);
+
+        Reset();
+    }
+
+    void ForceEnd()
+    {
+        instance.LoadScene("Result");
     }
 
     /**
@@ -107,10 +119,36 @@ public class MainGameManager : MonoBehaviour
         {
             SceneManager.LoadScene(sceneName);
         }
+
+
     }
 
     void Reset()
     {
         isClear = false;
+    }
+
+    void PlayBGM(GameState _state)
+    {
+        switch (_state)
+        {
+            
+
+            case GameState.Title:
+                AudioManager.Instance.PlayBGM("Title_BGM");
+                break;
+
+            case GameState.Main:
+                AudioManager.Instance.PlayBGM("Main_BGM");
+                break;
+
+            case GameState.Fight:
+                AudioManager.Instance.PlayBGM("Fight_BGM");
+                break;
+
+            case GameState.Result:
+                AudioManager.Instance.PlayBGM("GameOver_BGM");
+                break;
+        }
     }
 }
