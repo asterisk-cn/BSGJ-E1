@@ -19,11 +19,11 @@ namespace Players
             if (useJoycon)
             {
                 UpdateJoyconInputs();
-                if (leftAccelaration.magnitude > 5f)
+                if (leftAcceleration.magnitude > 5f)
                 {
                     leftAttack = true;
                 }
-                if (rightAccelaration.magnitude > 5f)
+                if (rightAcceleration.magnitude > 5f)
                 {
                     rightAttack = true;
                 }
@@ -36,8 +36,8 @@ namespace Players
             rightAttack = false;
         }
 
-        public Vector3 leftAccelaration;
-        public Vector3 rightAccelaration;
+        public Vector3 leftAcceleration;
+        public Vector3 rightAcceleration;
 
         private List<Joycon> _joycons;
         private float _minDeadZone = 0.125f;
@@ -91,12 +91,12 @@ namespace Players
                 if (joycon.isLeft)
                 {
                     leftMoveStick = new Vector3(_tmp.x, 0, _tmp.y);
-                    leftAccelaration = joycon.GetAccel();
+                    leftAcceleration = joycon.GetAccel();
                 }
                 else
                 {
                     rightMoveStick = new Vector3(_tmp.x, 0, _tmp.y);
-                    rightAccelaration = joycon.GetAccel();
+                    rightAcceleration = joycon.GetAccel();
                 }
             }
         }

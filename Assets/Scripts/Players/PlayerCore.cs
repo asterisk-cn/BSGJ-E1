@@ -32,10 +32,6 @@ namespace Players
         [SerializeField] private List<GameObject> _generatePositions = new List<GameObject>();
 
         [SerializeField]
-        [Header("巨大化の倍率")]
-        public float sizeUpRate;
-
-        [SerializeField]
         private EnemyCore _enemy;
 
         private bool _isAttacked = false;
@@ -126,7 +122,6 @@ namespace Players
             }
         }
 
-        //5/25追加 Suzuki H
         //ダメージ処理用の呼び出し関数
         public void TakeDamage(int damage)
         {

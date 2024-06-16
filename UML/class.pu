@@ -6,53 +6,70 @@ namespace Players {
     class PlayerParameters{
         + int health
         + int unionCount
+        + int partialHitCount
     }
 
     class CharacterParameters{
-        + float moveSpeed
+        + float maxSpeed
+        + float acceleration
+        + float deceleration
     }
 
     class PlayerInputs{
-        + Vector2 LeftMove
-        + Vector2 RightMove
-        + bool Attack
+        + Vector2 leftMoveStick
+        + Vector2 rightMoveStick
+        + bool leftAttack
+        + bool rightAttack
 
-        + void OnLeftMove(InputValue value)
-        + void OnRightMove(InputValue value)
-        + void OnAttack(InputValue value)
+        + bool leftAcceleration
+        + bool rightAcceleration
+
+        - void OnLeftMove(InputValue value)
+        - void OnRightMove(InputValue value)
+        - void OnFireLeft()
+        - void OnFireRight()
     }
 
 
     class PlayerCore {
         + bool isAlive
         - PlayerInputs _inputs
-        - PlayerCharacter _character1
-        - PlayerCharacter _character2
+        + PlayerCharacter character
+        + PlayerPartial partial
         - List<PlayerPartial> _partialPrefabs
+        - List<GameObject> _generatePositions
+        - EnemyCore _enemy
 
         - PlayerParameters _defaultParameters
         - PlayerParameters _currentParameters
 
+        + void UnitePartial()
+        + void GeneratePartial()
         + void TakeDamage(int damage)
-        + void AddUnionCount()
-        + GeneratePartial()
-        + void Die()
+        + void TakePartialDamage(int damage)
+
+        - void Die()
         - void Move()
         - void Attack()
     }
 
-    PlayerCore --> PlayerInputs
     PlayerCore *-- PlayerParameters
+    PlayerCore *-- PlayerPartial
+
+    PlayerCore --> PlayerInputs
+    PlayerCore --> PlayerCharacter
+    PlayerCore --> EnemyCore
 
     class PlayerCharacter {
         - CharacterParameters _defaultParameters
         - CharacterParameters _currentParameters
 
         + void Move(Vector3 direction)
+        + void TakeDamage(int damage)
         + void UnitePartial(PlayerPartial partial)
     }
 
-    PlayerCore *-- PlayerCharacter
+    PlayerCore <-- PlayerCharacter
     PlayerCharacter *-- CharacterParameters
 
     class PlayerPartial {
@@ -60,10 +77,11 @@ namespace Players {
         - CharacterParameters _currentParameters
 
         + void Move(Vector3 direction)
+        + void TakeDamage(int damage)
         - OnTriggerEnter(Collider other)
     }
 
-    PlayerCore --> PlayerPartial
+    PlayerCore <-- PlayerPartial
     PlayerPartial *-- CharacterParameters
 }
 

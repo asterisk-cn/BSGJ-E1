@@ -13,7 +13,6 @@ namespace Players
         [SerializeField][Tooltip("最大速度")] public float maxSpeed;
         [SerializeField][Tooltip("加速度")] public float acceleration;
         [SerializeField][Tooltip("減速度")] public float deceleration;
-        [SerializeField][Tooltip("体力")] public int health;
     }
 
     public class PlayerCharacter : MonoBehaviour
