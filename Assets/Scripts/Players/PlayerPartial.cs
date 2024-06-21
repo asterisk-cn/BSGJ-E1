@@ -23,6 +23,8 @@ namespace Players
 
         private Vector3 _velocity = Vector3.zero;
 
+        public bool isOnFloor = false;
+
         void Awake()
         {
             _currentParameters = _defaultParameters;
@@ -94,6 +96,7 @@ namespace Players
         public void OnEnableCharacterController()
         {
             _characterController.enabled = true;
+            isOnFloor = true;
             AudioManager.Instance.PlaySE("Main＿Soul＿On＿Floor");
         }
     }
