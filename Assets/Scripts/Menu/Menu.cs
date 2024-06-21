@@ -29,7 +29,7 @@ namespace Menu
         // Update is called once per frame
         void Update()
         {
-            if (_menuInputs.navigate.y > 0)
+            if (_menuInputs.navigate.x > 0)
             {
                 if (_prevStickState == StickState.None || _prevStickState == StickState.Down)
                 {
@@ -38,7 +38,7 @@ namespace Menu
                     _prevStickState = StickState.Up;
                 }
             }
-            else if (_menuInputs.navigate.y < 0)
+            else if (_menuInputs.navigate.x < 0)
             {
                 if (_prevStickState == StickState.None || _prevStickState == StickState.Up)
                 {
