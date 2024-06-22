@@ -142,6 +142,7 @@ namespace Enemy
             _isMoving = false;
             originalPosition = transform.position;
             StartCoroutine(Shake());
+            
         }
 
         IEnumerator Shake()
@@ -157,12 +158,12 @@ namespace Enemy
                 remainingTime -= Time.deltaTime;
                 yield return null;
             }
-
+            AudioManager.Instance.PlaySE("Main_FallStart_SE");
             transform.position = originalPosition;
             //isShake = false;
             isAttacking = true;
             isAttack = true;
-            AudioManager.Instance.PlaySE("Main_FallStart_SE");
+            
         }
 
         void AttackMove()
@@ -318,6 +319,7 @@ namespace Enemy
                 {
                     Deactivate();
                     StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { DestroyWithFade(); }));
+                    PlaySE();
                     isAttacking = false;
                 }
                 else

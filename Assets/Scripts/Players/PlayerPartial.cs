@@ -98,7 +98,7 @@ namespace Players
         public void OnEnableCharacterController()
         {
             _characterController.enabled = true;
-            AudioManager.Instance.PlaySE("Main＿Soul＿On＿Floor");
+            AudioManager.Instance.PlaySE("Main_SoulOnFloor_SE");
         }
     }
 }

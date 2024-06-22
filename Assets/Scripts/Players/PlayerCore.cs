@@ -114,7 +114,7 @@ namespace Players
         {
             _currentParameters.unionCount += increaseUnionCount;
 
-            AudioManager.Instance.PlaySE("Main_SoulDeth_SE");
+            AudioManager.Instance.PlaySE("Main_Gattai_SE");
             if (_currentParameters.unionCount >= _targetUnionCount)
             {
                 _currentParameters.unionCount = _targetUnionCount;
