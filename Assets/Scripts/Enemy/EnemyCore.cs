@@ -19,6 +19,7 @@ namespace Enemy
         [SerializeField] private bool _setKnife = true;
         [SerializeField] private bool _setPot = true;
 
+        [SerializeField][Tooltip("同時に生成する攻撃の最大数")] private int _maxAttackCount = 2;
         [SerializeField][Tooltip("攻撃生成の高さ")] private float _attackStartHeight = 10.0f;
         [Header("-----------------------------")]
         [Space(10)]
@@ -91,46 +92,41 @@ namespace Enemy
         void GenerateAttack()
         {
             CheckAttack();
-            if (_attackView.Count >= 2) return;
+            if (_attackView.Count >= _maxAttackCount) return;
             ResetAttackPrefabs();
             if (_attackPrefabs.Count == 0) return;
             int index = Random.Range(0, _attackPrefabs.Count);
             var generate = Instantiate(_attackPrefabs[index], new Vector3(0, _attackStartHeight, 0), Quaternion.identity, gameObject.transform);
             var comp = generate.GetComponent<EnemyAttack>();
             // ターゲットの選択
-            Transform target = null;
-            Transform anotherTarget = null;
-            if (_player.partial == null || !_player.partial.isOnFloor)
+            bool canTargetPlayerCharacter = _player.character != null;
+            bool canTargetPlayerPartial = (_player.partial != null && _player.partial.isOnFloor);
+
+            foreach (var obj in _attackView)
             {
-                foreach (var obj in _attackView)
+                if (obj._targetTransform == _player.character.transform)
                 {
-                    anotherTarget = obj._targetTransform;
-                    if (anotherTarget == _player.character.transform)
-                    {
-                        return;
-                    }
+                    canTargetPlayerCharacter = false;
                 }
-                target = _player.character.transform;
+                if (obj._targetTransform == _player.partial.transform)
+                {
+                    canTargetPlayerPartial = false;
+                }
             }
-            else if(_attackView.Count == 0)
+
+            Transform target = null;
+
+            if (canTargetPlayerCharacter && canTargetPlayerPartial)
             {
                 target = Random.value < 0.5 ? _player.character.transform : _player.partial.transform;
             }
-            else if( _attackView.Count == 1)
+            else if (canTargetPlayerCharacter)
             {
-                foreach(var obj in _attackView)
-                {
-                    anotherTarget = obj._targetTransform;
-                    if (anotherTarget == _player.character.transform)
-                    {
-                        target = _player.partial.transform;
-                    }
-                    else
-                    {
-                        target = _player.character.transform;
-                    }
-                    comp.Initialize(_attackStartHeight, _stageHeight, anotherTarget);
-                }
+                target = _player.character.transform;
+            }
+            else if (canTargetPlayerPartial)
+            {
+                target = _player.partial.transform;
             }
 
             if (target != null)
