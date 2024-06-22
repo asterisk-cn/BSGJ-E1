@@ -69,6 +69,7 @@ namespace Enemy
         private bool coruStop;
         private bool isAttack = false;
 
+        [SerializeField] GameObject hitEffect;
         private void Awake()
         {
             _colliders = GetComponentsInChildren<Collider>();
@@ -307,6 +308,10 @@ namespace Enemy
             if (other.gameObject.tag == "Player" && isAttack && isAttacking)
             {
                 isAttack = false;
+                //エフェクト再生
+                GameObject effect = Instantiate(hitEffect,other.transform);
+                ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
+                if(particleSystem != null)particleSystem.Play();
                 if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
                 {
                     isAttacking = false;

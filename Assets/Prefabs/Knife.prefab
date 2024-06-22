@@ -61,6 +61,7 @@ MonoBehaviour:
   isActive: 1
   frequency: 20
   amplitude: 0.02
+  hitEffect: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7, type: 3}
 --- !u!65 &1209565074298310344
 BoxCollider:
   m_ObjectHideFlags: 0
