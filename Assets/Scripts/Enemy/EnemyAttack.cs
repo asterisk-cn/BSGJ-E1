@@ -70,6 +70,7 @@ namespace Enemy
         private bool isAttack = false;
 
         [SerializeField] GameObject hitEffect;
+        [SerializeField] Vector3 effectScale = Vector3.one;
         private void Awake()
         {
             _colliders = GetComponentsInChildren<Collider>();
@@ -310,6 +311,7 @@ namespace Enemy
                 isAttack = false;
                 //エフェクト再生
                 GameObject effect = Instantiate(hitEffect,other.transform);
+                effect.transform.localScale = effectScale;
                 ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
                 if(particleSystem != null)particleSystem.Play();
                 if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
