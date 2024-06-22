@@ -152,6 +152,12 @@ namespace Players
                     generatePositionTransform = position.transform;
                 }
             }
+
+            if (generatePositionTransform == null)
+            {
+                return;
+            }
+
             partial = Instantiate(_partialPrefabs[_partialIndex], generatePositionTransform.position, Quaternion.identity);
             partial.SetCore(this);
 
