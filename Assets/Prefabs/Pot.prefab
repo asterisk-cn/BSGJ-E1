@@ -61,7 +61,6 @@ MonoBehaviour:
   _defaultHeight: 10
   _targetTransform: {fileID: 0}
   isActive: 1
-  isShake: 0
   frequency: 20
   amplitude: 0.02
 --- !u!54 &426629243483575978
@@ -491,7 +490,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
