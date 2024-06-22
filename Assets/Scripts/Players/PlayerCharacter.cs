@@ -32,6 +32,10 @@ namespace Players
 
         private Animator _animator;
 
+        private bool _hitDamage;
+
+        [SerializeField] float _invincibleTime;
+
         void Awake()
         {
             _characterController = GetComponent<CharacterController>();
@@ -49,13 +53,22 @@ namespace Players
         // Update is called once per frame
         void Update()
         {
-            
+
         }
 
         public void TakeDamage(int damage)
         {
+            if (_hitDamage) return;
+            StartCoroutine(InvincibleTime(_invincibleTime));
             _animator.SetTrigger("Down");
             _core.TakeDamage(damage);
+        }
+
+        IEnumerator InvincibleTime(float time)
+        {
+            _hitDamage = true;
+            yield return new WaitForSeconds(time);
+            _hitDamage = false;
         }
 
         public void Move(Vector3 direction)
