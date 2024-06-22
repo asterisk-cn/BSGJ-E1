@@ -196,7 +196,6 @@ namespace Enemy
                 _currentHealth = 0;
                 //!
                 if (isAlive)AudioManager.Instance.PlaySE("Fight_FinishiBlaw_SE");
-                Die();
             }
         }
 
