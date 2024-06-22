@@ -39,6 +39,7 @@ namespace Players
         [HideInInspector] public PlayerPartial partial;
 
         [SerializeField] List<PlayerPartial> _partialPrefabs = new List<PlayerPartial>();
+        [SerializeField] List<PlayerPartial> _soulPrefabs = new List<PlayerPartial>();
         private int _partialIndex = 0;
 
         [SerializeField] private List<GeneratePosition> _generatePositions;
@@ -130,6 +131,18 @@ namespace Players
             {
                 return;
             }
+
+            PlayerPartial partialPrefab = null;
+            if (_partialIndex < _partialPrefabs.Count)
+            {
+                partialPrefab = _partialPrefabs[_partialIndex];
+                _partialIndex++;
+            }
+            else
+            {
+                partialPrefab = _soulPrefabs[Random.Range(0, _soulPrefabs.Count)];
+            }
+
             // 生成位置を決定
             Transform generatePositionTransform = null;
             foreach (var position in _generatePositions)
@@ -158,14 +171,8 @@ namespace Players
                 return;
             }
 
-            partial = Instantiate(_partialPrefabs[_partialIndex], generatePositionTransform.position, Quaternion.identity);
+            partial = Instantiate(partialPrefab, generatePositionTransform.position, Quaternion.identity);
             partial.SetCore(this);
-
-            _partialIndex++;
-            if (_partialIndex >= _partialPrefabs.Count)
-            {
-                _partialIndex = 0;
-            }
         }
 
         //5/25追加 Suzuki H

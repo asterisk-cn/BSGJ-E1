@@ -1840,6 +1840,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _soulPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _defaultParameters.health
       value: 3
       objectReference: {fileID: 0}
@@ -1847,6 +1851,18 @@ PrefabInstance:
       propertyPath: _partialPrefabs.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _soulPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 8980861420735901802, guid: 5b31285f8c94d104c8982274a9dae976, type: 3}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _soulPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 8980861420735901802, guid: c62971d92803ea549b4f6b19c52bb4e9, type: 3}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _soulPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 8980861420735901802, guid: 6c5559e9949a5d54796490e3e27ad9c1, type: 3}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _generatePositions.Array.size
       value: 4
