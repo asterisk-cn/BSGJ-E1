@@ -64,6 +64,7 @@ namespace Enemy
 
         private MeshRenderer[] _meshRenderers;
         private SkinnedMeshRenderer[] _skinsMesh;
+        private TrailRenderer _trailrenderer;
 
         private bool coruStop;
         private bool isAttack = false;
@@ -76,6 +77,7 @@ namespace Enemy
             _meshRenderers = GetComponentsInChildren<MeshRenderer>();
 
             _skinsMesh = GetComponentsInChildren<SkinnedMeshRenderer>();
+            _trailrenderer = GetComponentInChildren<TrailRenderer>();
 
             foreach (var skinsMesh in _skinsMesh)
             {
@@ -94,6 +96,8 @@ namespace Enemy
             }
 
             _currentParameters = _defaultParameters;
+            if(_trailrenderer != null)
+            _trailrenderer.enabled = false;
         }
 
         // Start is called before the first frame update
@@ -163,7 +167,8 @@ namespace Enemy
             //isShake = false;
             isAttacking = true;
             isAttack = true;
-            
+            if (_trailrenderer != null) 
+            _trailrenderer.enabled = true;
         }
 
         void AttackMove()
