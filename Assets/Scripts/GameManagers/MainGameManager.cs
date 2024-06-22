@@ -73,6 +73,7 @@ public class MainGameManager : MonoBehaviour
     void OnTitleLoaded()
     {
         gameState = GameState.Title;
+        PlayBGM(gameState);
     }
 
     /**
@@ -83,7 +84,7 @@ public class MainGameManager : MonoBehaviour
         gameState = GameState.Main;
         GameTimeManager.instance.AddListenerOnTimeUp(() => ForceEnd());
         GameTimeManager.instance.StartTimer(_mainTime, true);
-
+        PlayBGM(gameState);
         Reset();
     }
 
@@ -100,13 +101,14 @@ public class MainGameManager : MonoBehaviour
         gameState = GameState.Fight;
         GameTimeManager.instance.AddListenerOnTimeUp(() => instance.LoadScene("Result"));
         GameTimeManager.instance.StartTimer(_fightTime, true);
-
+        PlayBGM(gameState);
         Reset();
     }
 
     void OnResultLoaded()
     {
         gameState = GameState.Result;
+        PlayBGM(gameState);
     }
 
     public void LoadScene(string sceneName, bool isFade = true)
@@ -147,7 +149,9 @@ public class MainGameManager : MonoBehaviour
                 break;
 
             case GameState.Result:
-                AudioManager.Instance.PlayBGM("GameOver_BGM");
+                AudioManager.Instance.StopBGM();
+                if(!isClear) AudioManager.Instance.PlayBGM("GameOver_BGM");
+                if (isClear) AudioManager.Instance.PlaySE("GameClear_Jingle");
                 break;
         }
     }

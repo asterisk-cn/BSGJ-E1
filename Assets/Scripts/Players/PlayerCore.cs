@@ -113,7 +113,7 @@ namespace Players
                 {
                     _animator.speed = _inputs.leftAttackValue;
                 }
-                AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
+                if(_enemy.isAlive)AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
                 _enemy.TakeDamage((int)_inputs.leftAttackValue);
             }
             if (_inputs.rightAttack)
@@ -123,7 +123,7 @@ namespace Players
                 {
                     _animator.speed = _inputs.rightAttackValue;
                 }
-                AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
+                if (_enemy.isAlive)AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
                 _enemy.TakeDamage((int)_inputs.rightAttackValue);
             }
         }
@@ -132,7 +132,7 @@ namespace Players
         {
             _currentParameters.unionCount += increaseUnionCount;
 
-            AudioManager.Instance.PlaySE("Main_SoulDeth_SE");
+            AudioManager.Instance.PlaySE("Main_Gattai_SE");
             if (_currentParameters.unionCount >= _targetUnionCount)
             {
                 _currentParameters.unionCount = _targetUnionCount;
@@ -170,6 +170,12 @@ namespace Players
                     generatePositionTransform = position.transform;
                 }
             }
+
+            if (generatePositionTransform == null)
+            {
+                return;
+            }
+
             partial = Instantiate(_partialPrefabs[_partialIndex], generatePositionTransform.position, Quaternion.identity);
             partial.SetCore(this);
 
@@ -187,6 +193,7 @@ namespace Players
             _currentParameters.health -= damage;
 
             AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
+            _inputs.RumbleLeft(160, 320, 0.8f, 0.6f);
             //ゲームオーバー処理？　リザルト処理に遷移
             if (_currentParameters.health <= 0)
             {
@@ -204,6 +211,7 @@ namespace Players
             }
 
             AudioManager.Instance.PlaySE("Main_SoulDeth_SE");
+            _inputs.RumbleRight(160, 320, 0.6f, 0.4f);
 
             DestroyPartial();
             GeneratePartial();

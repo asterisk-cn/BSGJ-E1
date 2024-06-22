@@ -105,14 +105,21 @@ namespace Enemy
             // ターゲットの選択
             Transform target = null;
             Transform anotherTarget = null;
-            if (_player.partial == null)
+            if (_player.partial == null || !_player.partial.isOnFloor)
             {
+                foreach (var obj in _attackView)
+                {
+                    anotherTarget = obj._targetTransform;
+                    if (anotherTarget == _player.character.transform)
+                    {
+                        return;
+                    }
+                }
                 target = _player.character.transform;
             }
             else if(_attackView.Count == 0)
             {
                 target = Random.value < 0.5 ? _player.character.transform : _player.partial.transform;
-                comp.Initialize(_attackStartHeight, _stageHeight, target);
             }
             else if( _attackView.Count == 1)
             {
@@ -121,23 +128,29 @@ namespace Enemy
                     anotherTarget = obj._targetTransform;
                     if (anotherTarget == _player.character.transform)
                     {
-                        anotherTarget = _player.partial.transform;
+                        target = _player.partial.transform;
                     }
                     else
                     {
-                        anotherTarget = _player.character.transform;
+                        target = _player.character.transform;
                     }
                     comp.Initialize(_attackStartHeight, _stageHeight, anotherTarget);
                 }
             }
 
-            if (!comp.GetIsChase())
+            if (target != null)
             {
-                float buff_x = Random.Range(_stageLimit_left, _stageLimit_right);
-                float buff_z = Random.Range(_stageLimit_front, _stageLimit_back);
-                generate.transform.position = new Vector3(buff_x, _attackStartHeight, buff_z);
+                comp.Initialize(_attackStartHeight, _stageHeight, target);
+
+                if (!comp.GetIsChase())
+                {
+                    float buff_x = Random.Range(_stageLimit_left, _stageLimit_right);
+                    float buff_z = Random.Range(_stageLimit_front, _stageLimit_back);
+                    generate.transform.position = new Vector3(buff_x, _attackStartHeight, buff_z);
+                }
+
+                _attackView.Add(comp);
             }
-            _attackView.Add(comp);
         }
 
         void CheckAttack()
@@ -161,8 +174,7 @@ namespace Enemy
                 _stageLimit_front = _stageLimit_top_left.position.z > _stageLimit_bottom_right.position.z ? _stageLimit_bottom_right.position.z : _stageLimit_top_left.position.z;
                 _stageLimit_back = _stageLimit_top_left.position.z < _stageLimit_bottom_right.position.z ? _stageLimit_bottom_right.position.z : _stageLimit_top_left.position.z;
             }
-
-            
+            isAlive = true;
         }
 
         void Update()
@@ -183,7 +195,8 @@ namespace Enemy
                 _animator.SetTrigger("Down");
                 _currentHealth = 0;
                 //!
-                AudioManager.Instance.PlaySE("Fight_FinishiBlaw_SE");
+                if (isAlive)AudioManager.Instance.PlaySE("Fight_FinishiBlaw_SE");
+                Die();
             }
         }
 

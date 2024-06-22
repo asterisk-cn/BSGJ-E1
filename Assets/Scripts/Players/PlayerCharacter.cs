@@ -73,7 +73,10 @@ namespace Players
                     _velocity = _velocity.normalized * maxSpeed;
                 }
 
-                //AudioManager.Instance.PlaySE("Main_Ashioto_SE");
+                Quaternion targetRotation =Quaternion.LookRotation(direction);
+
+                transform.rotation = targetRotation;
+
             }
             else
             {
