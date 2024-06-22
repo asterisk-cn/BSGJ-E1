@@ -95,12 +95,10 @@ namespace Enemy
             if (_attackView.Count >= _maxAttackCount) return;
             ResetAttackPrefabs();
             if (_attackPrefabs.Count == 0) return;
-            int index = Random.Range(0, _attackPrefabs.Count);
-            var generate = Instantiate(_attackPrefabs[index], new Vector3(0, _attackStartHeight, 0), Quaternion.identity, gameObject.transform);
-            var comp = generate.GetComponent<EnemyAttack>();
+
             // ターゲットの選択
             bool canTargetPlayerCharacter = _player.character != null;
-            bool canTargetPlayerPartial = (_player.partial != null && _player.partial.isOnFloor);
+            bool canTargetPlayerPartial = _player.partial != null && _player.partial.isOnFloor;
 
             foreach (var obj in _attackView)
             {
@@ -131,6 +129,9 @@ namespace Enemy
 
             if (target != null)
             {
+                int index = Random.Range(0, _attackPrefabs.Count);
+                var generate = Instantiate(_attackPrefabs[index], new Vector3(0, _attackStartHeight, 0), Quaternion.identity, gameObject.transform);
+                var comp = generate.GetComponent<EnemyAttack>();
                 comp.Initialize(_attackStartHeight, _stageHeight, target);
 
                 if (!comp.GetIsChase())
