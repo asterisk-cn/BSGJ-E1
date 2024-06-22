@@ -175,6 +175,7 @@ namespace Players
             _currentParameters.health -= damage;
 
             AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
+            _inputs.RumbleLeft(160, 320, 0.8f, 0.6f);
             //ゲームオーバー処理？　リザルト処理に遷移
             if (_currentParameters.health <= 0)
             {
@@ -192,6 +193,7 @@ namespace Players
             }
 
             AudioManager.Instance.PlaySE("Main_SoulDeth_SE");
+            _inputs.RumbleRight(160, 320, 0.6f, 0.4f);
 
             DestroyPartial();
             GeneratePartial();
