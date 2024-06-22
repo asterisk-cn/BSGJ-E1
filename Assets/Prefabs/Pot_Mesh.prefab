@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 665740549187784687}
   - component: {fileID: 426629243483575978}
   m_Layer: 0
-  m_Name: Pot
+  m_Name: Pot_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,7 +169,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30

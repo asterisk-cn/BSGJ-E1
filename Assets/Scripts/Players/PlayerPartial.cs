@@ -22,6 +22,7 @@ namespace Players
         private CharacterController _characterController;
 
         private Vector3 _velocity = Vector3.zero;
+        [SerializeField] GameObject _stareffect;
 
         public bool isOnFloor = false;
 
@@ -94,6 +95,15 @@ namespace Players
             if (other.TryGetComponent<PlayerCharacter>(out var player))
             {
                 player.UnitePartial(this);
+                if (_stareffect != null)
+                {
+                    GameObject effect =Instantiate(_stareffect,other.transform);
+                    ParticleSystem[] particleSystems = effect.GetComponentsInChildren<ParticleSystem>();
+                    foreach(var particleSystem in particleSystems)
+                    {
+                        particleSystem.Play();
+                    }
+                } 
             }
         }
 
@@ -101,7 +111,7 @@ namespace Players
         {
             _characterController.enabled = true;
             isOnFloor = true;
-            AudioManager.Instance.PlaySE("Main＿Soul＿On＿Floor");
+            AudioManager.Instance.PlaySE("Main_SoulOnFloor_SE");
         }
     }
 }

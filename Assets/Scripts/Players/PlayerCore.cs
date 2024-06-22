@@ -100,12 +100,12 @@ namespace Players
             if (MainGameManager.instance.gameState != GameState.Fight) return;
             if (_inputs.leftAttack)
             {
-                AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
+                if(_enemy.isAlive)AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
                 _enemy.TakeDamage((int)_inputs.leftAttackValue);
             }
             if (_inputs.rightAttack)
             {
-                AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
+                if (_enemy.isAlive)AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
                 _enemy.TakeDamage((int)_inputs.rightAttackValue);
             }
         }
@@ -114,7 +114,7 @@ namespace Players
         {
             _currentParameters.unionCount += increaseUnionCount;
 
-            AudioManager.Instance.PlaySE("Main_SoulDeth_SE");
+            AudioManager.Instance.PlaySE("Main_Gattai_SE");
             if (_currentParameters.unionCount >= _targetUnionCount)
             {
                 _currentParameters.unionCount = _targetUnionCount;

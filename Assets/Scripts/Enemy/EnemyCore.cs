@@ -164,6 +164,7 @@ namespace Enemy
                 _stageLimit_front = _stageLimit_top_left.position.z > _stageLimit_bottom_right.position.z ? _stageLimit_bottom_right.position.z : _stageLimit_top_left.position.z;
                 _stageLimit_back = _stageLimit_top_left.position.z < _stageLimit_bottom_right.position.z ? _stageLimit_bottom_right.position.z : _stageLimit_top_left.position.z;
             }
+            isAlive = true;
         }
 
         void Update()
@@ -182,7 +183,7 @@ namespace Enemy
             {
                 _currentHealth = 0;
                 //!
-                AudioManager.Instance.PlaySE("Fight_FinishiBlaw_SE");
+                if (isAlive)AudioManager.Instance.PlaySE("Fight_FinishiBlaw_SE");
                 Die();
             }
         }
