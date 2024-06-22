@@ -92,7 +92,6 @@ namespace Enemy
         void GenerateAttack()
         {
             CheckAttack();
-            Debug.Log(_attackView.Count);
             if (_attackView.Count >= _maxAttackCount) return;
             ResetAttackPrefabs();
             if (_attackPrefabs.Count == 0) return;
