@@ -24,6 +24,8 @@ namespace Players
         private Vector3 _velocity = Vector3.zero;
         [SerializeField] GameObject _stareffect;
 
+        public bool isOnFloor = false;
+
         void Awake()
         {
             _currentParameters = _defaultParameters;
@@ -108,6 +110,7 @@ namespace Players
         public void OnEnableCharacterController()
         {
             _characterController.enabled = true;
+            isOnFloor = true;
             AudioManager.Instance.PlaySE("Main_SoulOnFloor_SE");
         }
     }
