@@ -1633,6 +1633,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2576979063523852975, guid: d3a35c132e896487eaee6369faa12165, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8645832911766535399, guid: d3a35c132e896487eaee6369faa12165, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -3041,7 +3045,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!4 &5582632049477604425 stripped
 Transform:
