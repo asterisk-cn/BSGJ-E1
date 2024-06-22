@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1017390076894399711}
+  - component: {fileID: 9203997197074302471}
   - component: {fileID: 2681954507550455089}
   - component: {fileID: 4933290290799495603}
   - component: {fileID: 292621651774589748}
   - component: {fileID: 6896240508515160633}
   - component: {fileID: 1483547548702257893}
-  - component: {fileID: 9203997197074302471}
   m_Layer: 0
   m_Name: PlayerPartial
   m_TagString: Player
@@ -37,6 +37,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9203997197074302471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5895224362709358197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e71a2cc86bf46caa8f47cd24d1036f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultParameters:
+    maxSpeed: 0.15
+    acceleration: 0.3
+    deceleration: 0.8
+    health: 0
 --- !u!33 &2681954507550455089
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -132,7 +149,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.6
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -163,18 +180,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &9203997197074302471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5895224362709358197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71e71a2cc86bf46caa8f47cd24d1036f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _defaultParameters:
-    moveSpeed: 0.1
-    health: 0

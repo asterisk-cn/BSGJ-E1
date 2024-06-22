@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class SceneFadeManager : MonoBehaviour
 {
-    bool isFadeIn;
-    bool isFadeOut;
+   public bool isFadeIn { private set;  get; }
+   public bool isFadeOut { private set; get; }
 
     [SerializeField]
     private Image fadeImage;
@@ -20,6 +20,8 @@ public class SceneFadeManager : MonoBehaviour
     public static SceneFadeManager instance;
 
     private string afterScene;
+
+    
 
     void Awake()
     {
@@ -52,12 +54,12 @@ public class SceneFadeManager : MonoBehaviour
     }
 
     /**
-     * @brief ƒtƒF[ƒhƒAƒEƒg‚µ‚ÄAŸ‚ÌƒV[ƒ“‚É‘JˆÚ‚·‚é
-     * @param nextScene ‘JˆÚæ‚ÌƒV[ƒ“–¼
+     * @brief ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã—ã¦ã€æ¬¡ã®ã‚·ãƒ¼ãƒ³ã«é·ç§»ã™ã‚‹
+     * @param nextScene é·ç§»å…ˆã®ã‚·ãƒ¼ãƒ³å
      */
     public void FadeOut(string nextScene)
     {
-        // ƒtƒF[ƒhƒAƒEƒg‚Ìƒtƒ‰ƒO‚ğã‚°‚é
+        // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã®ãƒ•ãƒ©ã‚°ã‚’ä¸Šã’ã‚‹
         isFadeOut = true;
 
         afterScene = nextScene;
@@ -68,10 +70,11 @@ public class SceneFadeManager : MonoBehaviour
     {
         if (isFadeIn)
         {
-            alpha -= fadeTime * Time.deltaTime;
+            alpha -= fadeTime * Time.unscaledDeltaTime;
             Alpha();
             if (alpha <= 0)
             {
+                Time.timeScale = 1;
                 alpha = 0;
                 isFadeIn = false;
             }
@@ -79,7 +82,8 @@ public class SceneFadeManager : MonoBehaviour
 
         if (isFadeOut)
         {
-            alpha += fadeTime * Time.deltaTime;
+            Time.timeScale = 0;
+            alpha += fadeTime * Time.unscaledDeltaTime;
             Alpha();
             if (alpha >= 1)
             {

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Linq;
+using UnityEngine.InputSystem.Haptics;
 
 namespace Players
 {
@@ -12,7 +14,12 @@ namespace Players
         public bool leftAttack;
         public bool rightAttack;
 
+        public float leftAttackValue;
+        public float rightAttackValue;
+
         [SerializeField] private bool useJoycon = false;
+
+        PlayerInput _playerInput;
 
         void FixedUpdate()
         {
@@ -22,10 +29,12 @@ namespace Players
                 if (leftAccelaration.magnitude > 5f)
                 {
                     leftAttack = true;
+                    leftAttackValue = leftAccelaration.magnitude;
                 }
                 if (rightAccelaration.magnitude > 5f)
                 {
                     rightAttack = true;
+                    rightAttackValue = rightAccelaration.magnitude;
                 }
             }
         }
@@ -34,6 +43,9 @@ namespace Players
         {
             leftAttack = false;
             rightAttack = false;
+
+            leftAttackValue = 0;
+            rightAttackValue = 0;
         }
 
         public Vector3 leftAccelaration;
@@ -45,6 +57,8 @@ namespace Players
 
         void Start()
         {
+            _playerInput = GetComponent<PlayerInput>();
+
             _joycons = JoyconManager.Instance.j;
         }
 
@@ -64,7 +78,9 @@ namespace Players
 
         void OnFireLeft(InputValue value)
         {
+            //デバック用のダメージ(クリック)
             leftAttack = value.isPressed;
+            leftAttackValue = 10.0f;
         }
 
         void OnFireRight(InputValue value)
@@ -99,6 +115,60 @@ namespace Players
                     rightAccelaration = joycon.GetAccel();
                 }
             }
+        }
+
+        public void RumbleLeft(float lowFreq, float highFreq, float amp, float time)
+        {
+            foreach (var joycon in _joycons)
+            {
+                if (joycon.isLeft)
+                {
+                    joycon.SetRumble(lowFreq, highFreq, amp, (int)time);
+                }
+            }
+
+            StartCoroutine(RumbleLeft(amp, time));
+        }
+
+        public void RumbleRight(float lowFreq, float highFreq, float amp, float time)
+        {
+            foreach (var joycon in _joycons)
+            {
+                if (!joycon.isLeft)
+                {
+                    joycon.SetRumble(lowFreq, highFreq, amp, (int)time);
+                }
+            }
+
+            StartCoroutine(RumbleRight(amp, time));
+        }
+
+        private IEnumerator RumbleLeft(float amp, float time)
+        {
+            if (_playerInput.devices.FirstOrDefault(x => x is IDualMotorRumble) is not IDualMotorRumble gamepad)
+            {
+                yield break;
+            }
+
+            // 振動
+            gamepad.SetMotorSpeeds(amp, 0.0f);
+            yield return new WaitForSecondsRealtime(time);
+
+            gamepad.SetMotorSpeeds(0.0f, 0.0f);
+        }
+
+        private IEnumerator RumbleRight(float amp, float time)
+        {
+            if (_playerInput.devices.FirstOrDefault(x => x is IDualMotorRumble) is not IDualMotorRumble gamepad)
+            {
+                yield break;
+            }
+
+            // 振動
+            gamepad.SetMotorSpeeds(0.0f, amp);
+            yield return new WaitForSecondsRealtime(time);
+
+            gamepad.SetMotorSpeeds(0.0f, 0.0f);
         }
     }
 }
