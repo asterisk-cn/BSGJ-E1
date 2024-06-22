@@ -55,6 +55,10 @@ namespace Players
                 {
                     _velocity = _velocity.normalized * maxSpeed;
                 }
+
+                Quaternion targetRotation = Quaternion.LookRotation(-direction);
+
+                transform.rotation = targetRotation;
             }
             else
             {
