@@ -303,7 +303,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttons:
-  - {fileID: 0}
+  - {fileID: 8629481240809705831}
+  - {fileID: 2865380169449201147}
   _menuInputs: {fileID: 0}
 --- !u!1 &3885295763116604438
 GameObject:
@@ -316,7 +317,6 @@ GameObject:
   - component: {fileID: 6016415866685776493}
   - component: {fileID: 6156208215144840694}
   - component: {fileID: 1479253837240439408}
-  - component: {fileID: 2444394859433940714}
   m_Layer: 5
   m_Name: BackTitleText (TMP)
   m_TagString: Untagged
@@ -440,20 +440,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &2444394859433940714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3885295763116604438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d1876d38d9f643c8be37024fc1e9495, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AMP: 5
-  SPD: 5
 --- !u!1 &4081663774594845613
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,6 +450,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3880906183548243732}
   - component: {fileID: 5601724887154290074}
+  - component: {fileID: 2865380169449201147}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -536,17 +523,31 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+        m_TargetAssemblyTypeName: ResultManager, Assembly-CSharp
+        m_MethodName: OnTitleButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2865380169449201147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4081663774594845613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 866aff1965339a74b8075ff30b13c51a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AMP: 5
+  SPD: 5
 --- !u!1 &4414166369206649414
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,6 +558,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2710634880433231316}
   - component: {fileID: 7896448252811241409}
+  - component: {fileID: 8629481240809705831}
   m_Layer: 5
   m_Name: Retry
   m_TagString: Untagged
@@ -629,17 +631,31 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+        m_TargetAssemblyTypeName: ResultManager, Assembly-CSharp
+        m_MethodName: OnRetryButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8629481240809705831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4414166369206649414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 866aff1965339a74b8075ff30b13c51a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AMP: 5
+  SPD: 5
 --- !u!1 &6421243441721050530
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,7 +667,6 @@ GameObject:
   - component: {fileID: 6366479983548642487}
   - component: {fileID: 6780553775984896463}
   - component: {fileID: 8389595984158388142}
-  - component: {fileID: 7506798029778043090}
   m_Layer: 5
   m_Name: RetryText (TMP)
   m_TagString: Untagged
@@ -775,20 +790,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &7506798029778043090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6421243441721050530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d1876d38d9f643c8be37024fc1e9495, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AMP: 5
-  SPD: 5
 --- !u!1 &6733716386947741121
 GameObject:
   m_ObjectHideFlags: 0
