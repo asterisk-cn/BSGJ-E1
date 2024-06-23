@@ -18,10 +18,11 @@ namespace Players
         public float rightAttackValue;
 
         [SerializeField] private bool useJoycon = false;
+        public bool UseJoycon => useJoycon;
 
         PlayerInput _playerInput;
 
-        void FixedUpdate()
+    void FixedUpdate()
         {
             if (useJoycon)
             {

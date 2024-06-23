@@ -49,11 +49,18 @@ namespace Players
 
         private bool _isAttacked = false;
 
+        private Animator _animator;
+
         void Awake()
         {
             _inputs = GetComponent<PlayerInputs>();
 
             _currentParameters = _defaultParameters;
+
+            if(MainGameManager.instance.gameState == GameState.Fight)
+            {
+                _animator = GetComponentInChildren<Animator>();
+            }
         }
 
         // Start is called before the first frame update
@@ -99,13 +106,24 @@ namespace Players
         void Attack()
         {
             if (MainGameManager.instance.gameState != GameState.Fight) return;
+            if (_enemy.GetCurrentHealth() <= 0) return;
             if (_inputs.leftAttack)
             {
+                _animator.SetTrigger("LeftPunch");
+                if (_inputs.UseJoycon)
+                {
+                    _animator.speed = _inputs.leftAttackValue;
+                }
                 if(_enemy.isAlive)AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
                 _enemy.TakeDamage((int)_inputs.leftAttackValue);
             }
             if (_inputs.rightAttack)
             {
+                _animator.SetTrigger("RightPunch");
+                if (_inputs.UseJoycon)
+                {
+                    _animator.speed = _inputs.rightAttackValue;
+                }
                 if (_enemy.isAlive)AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
                 _enemy.TakeDamage((int)_inputs.rightAttackValue);
             }
@@ -165,6 +183,14 @@ namespace Players
                     generatePositionTransform = position.transform;
                 }
             }
+
+            if (generatePositionTransform == null)
+            {
+                return;
+            }
+
+            partial = Instantiate(_partialPrefabs[_partialIndex], generatePositionTransform.position, Quaternion.identity);
+            partial.SetCore(this);
 
             if (generatePositionTransform == null)
             {

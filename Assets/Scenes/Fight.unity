@@ -344,6 +344,7 @@ MonoBehaviour:
   _stageHeight: 0
   _stageLimit_top_left: {fileID: 0}
   _stageLimit_bottom_right: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!4 &33792268
 Transform:
   m_ObjectHideFlags: 0
@@ -3907,7 +3908,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5582632049313810589, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.696
+      value: -0.678
       objectReference: {fileID: 0}
     - target: {fileID: 5582632049313810589, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4144,6 +4145,10 @@ PrefabInstance:
     - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
       propertyPath: gameState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
+      propertyPath: _fightTime
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
       propertyPath: _move.m_Name
