@@ -1,3 +1,4 @@
+using GameManagers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -62,6 +63,12 @@ namespace Title
         {
             TransitionToImage1();
             _prevPress = true;
+            //
+            AudioManager.Instance.PlaySE("Button_SE");
+            //タイトルを止める
+            AudioManager.Instance.StopBGM();
+            //OPを再生
+            AudioManager.Instance.PlayBGM("OP_BGM");
         }
 
         void TransitionToImage1()

@@ -144,6 +144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2335819500579008730}
   - component: {fileID: 2841899382794572129}
+  - component: {fileID: 880978683876425990}
   m_Layer: 5
   m_Name: Retry
   m_TagString: Untagged
@@ -216,17 +217,31 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+        m_TargetAssemblyTypeName: ResultManager, Assembly-CSharp
+        m_MethodName: OnRetryButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &880978683876425990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927572222098282184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 866aff1965339a74b8075ff30b13c51a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AMP: 5
+  SPD: 5
 --- !u!1 &5807332640912224791
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +336,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttons:
-  - {fileID: 0}
+  - {fileID: 880978683876425990}
+  - {fileID: 7015765704300636677}
   _menuInputs: {fileID: 0}
 --- !u!1 &6251804527427953169
 GameObject:
@@ -484,6 +500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9162825344817562860}
   - component: {fileID: 7578533915165072334}
+  - component: {fileID: 7015765704300636677}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -556,12 +573,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+        m_TargetAssemblyTypeName: ResultManager, Assembly-CSharp
+        m_MethodName: OnTitleButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

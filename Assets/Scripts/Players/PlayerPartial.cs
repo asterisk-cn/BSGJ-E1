@@ -1,3 +1,4 @@
+using GameManagers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,9 @@ namespace Players
         private CharacterController _characterController;
 
         private Vector3 _velocity = Vector3.zero;
+        [SerializeField] GameObject _stareffect;
+
+        public bool isOnFloor = false;
 
         void Awake()
         {
@@ -54,6 +58,10 @@ namespace Players
                 {
                     _velocity = _velocity.normalized * maxSpeed;
                 }
+
+                Quaternion targetRotation = Quaternion.LookRotation(-direction);
+
+                transform.rotation = targetRotation;
             }
             else
             {
@@ -87,12 +95,23 @@ namespace Players
             if (other.TryGetComponent<PlayerCharacter>(out var player))
             {
                 player.UnitePartial(this);
+                if (_stareffect != null)
+                {
+                    GameObject effect =Instantiate(_stareffect,other.transform);
+                    ParticleSystem[] particleSystems = effect.GetComponentsInChildren<ParticleSystem>();
+                    foreach(var particleSystem in particleSystems)
+                    {
+                        particleSystem.Play();
+                    }
+                } 
             }
         }
 
         public void OnEnableCharacterController()
         {
-                _characterController.enabled = true;
+            _characterController.enabled = true;
+            isOnFloor = true;
+            AudioManager.Instance.PlaySE("Main_SoulOnFloor_SE");
         }
     }
 }

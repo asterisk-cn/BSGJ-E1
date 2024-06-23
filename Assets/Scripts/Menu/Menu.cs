@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Menu
 {
@@ -14,7 +13,7 @@ namespace Menu
             None
         }
 
-        [SerializeField] List<Button> _buttons = new List<Button>();
+        [SerializeField] List<TextButton> _buttons = new List<TextButton>();
         [SerializeField] MenuInputs _menuInputs;
         StickState _prevStickState = StickState.None;
 
@@ -29,7 +28,7 @@ namespace Menu
         // Update is called once per frame
         void Update()
         {
-            if (_menuInputs.navigate.y > 0)
+            if (_menuInputs.navigate.x > 0)
             {
                 if (_prevStickState == StickState.None || _prevStickState == StickState.Down)
                 {
@@ -38,7 +37,7 @@ namespace Menu
                     _prevStickState = StickState.Up;
                 }
             }
-            else if (_menuInputs.navigate.y < 0)
+            else if (_menuInputs.navigate.x < 0)
             {
                 if (_prevStickState == StickState.None || _prevStickState == StickState.Up)
                 {
@@ -54,7 +53,24 @@ namespace Menu
 
             if (_menuInputs.press)
             {
-                _buttons[_selectedButtonIndex].onClick.Invoke();
+                _buttons[_selectedButtonIndex].Click();
+            }
+
+            UpdateButtonState();
+        }
+
+        void UpdateButtonState()
+        {
+            for (int i = 0; i < _buttons.Count; i++)
+            {
+                if (i == _selectedButtonIndex)
+                {
+                    _buttons[i].Select();
+                }
+                else
+                {
+                    _buttons[i].Deselect();
+                }
             }
         }
     }
