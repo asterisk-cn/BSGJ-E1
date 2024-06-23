@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6542183050072965536
 RectTransform:
   m_ObjectHideFlags: 0
@@ -224,12 +224,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1876d38d9f643c8be37024fc1e9495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectObjects:
-  - {fileID: 4380854083926061620}
-  startSelect: 1
   AMP: 20
   SPD: -20
-  testSelectNum: 0
 --- !u!1 &5595421535003294019
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,9 +373,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1876d38d9f643c8be37024fc1e9495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectObjects:
-  - {fileID: 5595421535003294019}
-  startSelect: 1
   AMP: 20
   SPD: 20
-  testSelectNum: 0

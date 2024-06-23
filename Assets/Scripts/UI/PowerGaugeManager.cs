@@ -26,7 +26,7 @@ public class PowerGaugeManager : MonoBehaviour
 
     private void Update()
     {
-        if (currentPower >= 1)
+        if (PowerGauge.fillAmount >= 1)
         {
             MaxPowerGauge();
         }
@@ -53,7 +53,12 @@ public class PowerGaugeManager : MonoBehaviour
         for (i = 0; i < a; i++)
         {
             PowerGauge.fillAmount += ChangeNum / a;
-            yield return new WaitForSecondsRealtime(PowerUpTime / a);
+            yield return new WaitForSeconds(PowerUpTime / a);
+        }
+
+        if(PowerGauge.fillAmount >= 0.999) //誤差調整用
+        {
+            PowerGauge.fillAmount = 1;
         }
     }
 

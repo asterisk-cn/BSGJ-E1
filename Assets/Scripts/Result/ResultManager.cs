@@ -7,7 +7,8 @@ public class ResultManager : MonoBehaviour
 {
     [SerializeField] private GameObject _clearPanel;
     [SerializeField] private GameObject _gameOverPanel;
-    bool select;
+    bool select = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +23,6 @@ public class ResultManager : MonoBehaviour
         {
             _gameOverPanel.SetActive(true);
         }
-        select =false;
     }
 
     // Update is called once per frame
