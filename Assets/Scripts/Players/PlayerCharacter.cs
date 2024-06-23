@@ -146,7 +146,6 @@ namespace Players
             _core.UnitePartial();
         }
         //アニメーションが実装されたらAnimationEventで呼び出す
-        
     }
 }
 
