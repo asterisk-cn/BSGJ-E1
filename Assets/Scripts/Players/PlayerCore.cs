@@ -189,14 +189,6 @@ namespace Players
                 return;
             }
 
-            partial = Instantiate(_partialPrefabs[_partialIndex], generatePositionTransform.position, Quaternion.identity);
-            partial.SetCore(this);
-
-            if (generatePositionTransform == null)
-            {
-                return;
-            }
-
             partial = Instantiate(partialPrefab, generatePositionTransform.position, Quaternion.identity);
             partial.SetCore(this);
         }
