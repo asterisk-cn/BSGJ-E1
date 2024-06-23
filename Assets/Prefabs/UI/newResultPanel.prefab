@@ -144,7 +144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2335819500579008730}
   - component: {fileID: 2841899382794572129}
-  - component: {fileID: 880978683876425990}
+  - component: {fileID: 8800819147298530548}
   m_Layer: 5
   m_Name: Retry
   m_TagString: Untagged
@@ -228,7 +228,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &880978683876425990
+--- !u!114 &8800819147298530548
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -237,11 +237,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1927572222098282184}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 866aff1965339a74b8075ff30b13c51a, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d1876d38d9f643c8be37024fc1e9495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AMP: 5
-  SPD: 5
+  AMP: 20
+  SPD: 10
 --- !u!1 &5807332640912224791
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4826318295087823177
 RectTransform:
   m_ObjectHideFlags: 0
@@ -335,8 +335,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttons:
-  - {fileID: 880978683876425990}
-  - {fileID: 7015765704300636677}
+  - {fileID: 0}
+  - {fileID: 0}
   _menuInputs: {fileID: 0}
 --- !u!1 &6251804527427953169
 GameObject:
@@ -499,7 +499,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9162825344817562860}
   - component: {fileID: 7578533915165072334}
-  - component: {fileID: 7015765704300636677}
+  - component: {fileID: 3530060629449130076}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -583,7 +583,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7015765704300636677
+--- !u!114 &3530060629449130076
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -592,11 +592,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7001066511462762561}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 866aff1965339a74b8075ff30b13c51a, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d1876d38d9f643c8be37024fc1e9495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AMP: 5
-  SPD: 5
+  AMP: 20
+  SPD: 10
 --- !u!1 &8397156987789498063
 GameObject:
   m_ObjectHideFlags: 0
