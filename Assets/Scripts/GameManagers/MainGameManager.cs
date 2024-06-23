@@ -27,12 +27,15 @@ public class MainGameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
         DontDestroyOnLoad(this.gameObject);
+
+        Cursor.visible = false;
     }
 
     void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+        PlayBGM(gameState);
     }
 
     // Update is called once per frame
@@ -70,6 +73,7 @@ public class MainGameManager : MonoBehaviour
     void OnTitleLoaded()
     {
         gameState = GameState.Title;
+        PlayBGM(gameState);
     }
 
     /**
@@ -80,7 +84,7 @@ public class MainGameManager : MonoBehaviour
         gameState = GameState.Main;
         GameTimeManager.instance.AddListenerOnTimeUp(() => ForceEnd());
         GameTimeManager.instance.StartTimer(_mainTime, true);
-
+        PlayBGM(gameState);
         Reset();
     }
 
@@ -97,13 +101,14 @@ public class MainGameManager : MonoBehaviour
         gameState = GameState.Fight;
         GameTimeManager.instance.AddListenerOnTimeUp(() => instance.LoadScene("Result"));
         GameTimeManager.instance.StartTimer(_fightTime, true);
-
+        PlayBGM(gameState);
         Reset();
     }
 
     void OnResultLoaded()
     {
         gameState = GameState.Result;
+        PlayBGM(gameState);
     }
 
     public void LoadScene(string sceneName, bool isFade = true)
@@ -123,5 +128,31 @@ public class MainGameManager : MonoBehaviour
     void Reset()
     {
         isClear = false;
+    }
+
+    void PlayBGM(GameState _state)
+    {
+        switch (_state)
+        {
+            
+
+            case GameState.Title:
+                AudioManager.Instance.PlayBGM("Title_BGM");
+                break;
+
+            case GameState.Main:
+                AudioManager.Instance.PlayBGM("Main_BGM");
+                break;
+
+            case GameState.Fight:
+                AudioManager.Instance.PlayBGM("Fight_BGM");
+                break;
+
+            case GameState.Result:
+                AudioManager.Instance.StopBGM();
+                if(!isClear) AudioManager.Instance.PlayBGM("GameOver_BGM");
+                if (isClear) AudioManager.Instance.PlaySE("GameClear_Jingle");
+                break;
+        }
     }
 }

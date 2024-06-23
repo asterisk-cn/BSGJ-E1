@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditorInternal.ReorderableList;
 
-public class TextFloat : MonoBehaviour
+public class TitleTextFloat : MonoBehaviour
 {
     public float AMP, SPD;
     Vector3 defaultPos;

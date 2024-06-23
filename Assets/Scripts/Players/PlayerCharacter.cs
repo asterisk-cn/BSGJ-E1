@@ -1,5 +1,7 @@
+using GameManagers;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Windows;
 
@@ -29,9 +31,19 @@ namespace Players
 
         private Vector3 _velocity = Vector3.zero;
 
+        private Animator _animator;
+
+        private bool _hitDamage;
+
+        private bool _down;
+
+        [SerializeField] float _invincibleTime;
+        [SerializeField] float _downTime;
+
         void Awake()
         {
             _characterController = GetComponent<CharacterController>();
+            _animator = GetComponentInChildren<Animator>();
         }
 
         // Start is called before the first frame update
@@ -50,22 +62,42 @@ namespace Players
 
         public void TakeDamage(int damage)
         {
+            if (_hitDamage) return;
+            StartCoroutine(InvincibleTime(_invincibleTime));
+            StartCoroutine(DownTime(_downTime));
+            _animator.SetTrigger("Down");
             _core.TakeDamage(damage);
         }
 
+        IEnumerator InvincibleTime(float time)
+        {
+            _hitDamage = true;
+            yield return new WaitForSeconds(time);
+            _hitDamage = false;
+        }
+
+
+
         public void Move(Vector3 direction)
         {
+            if (_down) return;
             var maxSpeed = _currentParameters.maxSpeed;
             var acceleration = _currentParameters.acceleration;
             var deceleration = _currentParameters.deceleration;
 
             if (direction.magnitude > 0)
             {
+                _animator.SetTrigger("Walk");
                 _velocity += direction * acceleration * Time.deltaTime;
                 if (_velocity.magnitude > maxSpeed)
                 {
                     _velocity = _velocity.normalized * maxSpeed;
                 }
+
+                Quaternion targetRotation =Quaternion.LookRotation(direction);
+
+                transform.rotation = targetRotation;
+
             }
             else
             {
@@ -82,6 +114,13 @@ namespace Players
             var gravity = Physics.gravity.y * Time.deltaTime;
             Vector3 velocity = _velocity + new Vector3(0, gravity, 0);
             _characterController.Move(velocity);
+        }
+
+        IEnumerator DownTime(float time)
+        {
+            _down = true;
+            yield return new WaitForSeconds(time);
+            _down = false;
         }
 
         public void ScaleAroundFoot(float newScale)
@@ -106,6 +145,7 @@ namespace Players
         {
             _core.UnitePartial();
         }
+        //アニメーションが実装されたらAnimationEventで呼び出す
     }
 }
 
