@@ -91419,7 +91419,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 3.5666666
+  - time: 2.8333333
     functionName: AnimEve
     data: 
     objectReferenceParameter: {fileID: 0}

@@ -61,7 +61,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!114 &3501316305629915787
 MonoBehaviour:
@@ -115,8 +115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1237483851c54d4e991229bdb9e6e50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFadeIn: 0
-  isFadeOut: 0
   fadeImage: {fileID: 1863769375982818224}
   fadeTime: 0.5
 --- !u!1 &8623811347998843747

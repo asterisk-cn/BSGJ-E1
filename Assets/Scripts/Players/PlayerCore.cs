@@ -57,10 +57,10 @@ namespace Players
 
             _currentParameters = _defaultParameters;
 
-            if(MainGameManager.instance.gameState == GameState.Fight)
-            {
-                _animator = GetComponentInChildren<Animator>();
-            }
+            // if(MainGameManager.instance.gameState == GameState.Fight)
+            // {
+            //     _animator = GetComponentInChildren<Animator>();
+            // }
         }
 
         // Start is called before the first frame update
@@ -69,6 +69,11 @@ namespace Players
             if (MainGameManager.instance.gameState == GameState.Main)
             {
                 GeneratePartial();
+            }
+
+            if (MainGameManager.instance.gameState == GameState.Fight)
+            {
+                _animator = GetComponentInChildren<Animator>();
             }
         }
 

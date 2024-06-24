@@ -9,7 +9,7 @@ public class PlayerHealthPanelManager : MonoBehaviour
 
     public GameObject[] HealthObjects;
     public Image[] HealthImages;
-    public int ShakeAMP;
+    public float ShakeAMP;
     public int shakeTime; //被ダメージアニメーション時間とそろえる
     int testHealth;
     int maxHealth;
@@ -32,8 +32,11 @@ public class PlayerHealthPanelManager : MonoBehaviour
             ChangeHealth(testHealth);
         }
 
-        testHealth = _playerCore.GetCurrentHealth();
-        ChangeHealth(testHealth);
+        if (testHealth != _playerCore.GetCurrentHealth())
+        {
+            testHealth = _playerCore.GetCurrentHealth();
+            ChangeHealth(testHealth);
+        }
     }
 
     public void ChangeHealth(int playerHealth)
@@ -55,12 +58,10 @@ public class PlayerHealthPanelManager : MonoBehaviour
 
     IEnumerator HitDamage(int num)
     {
-        int i, pole = ShakeAMP;
         Vector3 defaultPos = HealthObjects[num].transform.position;
-        for(i = 0; i < shakeTime * 10; i++)
+        for (int i = 0; i < shakeTime * 10; i++)
         {
-            HealthObjects[num].transform.Translate(pole, pole, 0);
-            pole = -pole;
+            HealthObjects[num].transform.position = defaultPos + Random.insideUnitSphere * ShakeAMP;
             yield return new WaitForSeconds(0.1f);
         }
         HealthObjects[num].transform.position = defaultPos;

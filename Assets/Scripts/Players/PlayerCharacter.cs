@@ -80,6 +80,7 @@ namespace Players
 
         public void Move(Vector3 direction)
         {
+            if (MainGameManager.instance.gameState != GameState.Main) return;
             if (_down) return;
             var maxSpeed = _currentParameters.maxSpeed;
             var acceleration = _currentParameters.acceleration;
