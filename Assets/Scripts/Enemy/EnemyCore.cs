@@ -19,6 +19,7 @@ namespace Enemy
         [SerializeField] private bool _setKnife = true;
         [SerializeField] private bool _setPot = true;
 
+        [SerializeField][Tooltip("同時に生成する攻撃の最大数")] private int _maxAttackCount = 2;
         [SerializeField][Tooltip("攻撃生成の高さ")] private float _attackStartHeight = 10.0f;
         [Header("-----------------------------")]
         [Space(10)]
@@ -49,6 +50,11 @@ namespace Enemy
         private float _stageLimit_back;
 
         float maxUnionCount;
+
+        public Animator _animator;
+        private AnimatorStateInfo _animatorStateInfo;
+        private AnimatorClipInfo[] _animatorClip;
+        private float _stateTime;
 
         void LevelAdjustment()
         {
@@ -91,48 +97,57 @@ namespace Enemy
         void GenerateAttack()
         {
             CheckAttack();
-            if (_attackView.Count >= 2) return;
+            if (_attackView.Count >= _maxAttackCount) return;
             ResetAttackPrefabs();
             if (_attackPrefabs.Count == 0) return;
-            int index = Random.Range(0, _attackPrefabs.Count);
-            var generate = Instantiate(_attackPrefabs[index], new Vector3(0, _attackStartHeight, 0), Quaternion.identity, gameObject.transform);
-            var comp = generate.GetComponent<EnemyAttack>();
+
             // ターゲットの選択
-            Transform target = null;
-            Transform anotherTarget = null;
-            if (_player.partial == null)
+            bool canTargetPlayerCharacter = _player.character != null;
+            bool canTargetPlayerPartial = _player.partial != null && _player.partial.isOnFloor;
+
+            foreach (var obj in _attackView)
             {
-                target = _player.character.transform;
-            }
-            else if(_attackView.Count == 0)
-            {
-                target = Random.value < 0.5 ? _player.character.transform : _player.partial.transform;
-                comp.Initialize(_attackStartHeight, _stageHeight, target);
-            }
-            else if( _attackView.Count == 1)
-            {
-                foreach(var obj in _attackView)
+                if (obj._targetTransform == _player.character.transform)
                 {
-                    anotherTarget = obj._targetTransform;
-                    if (anotherTarget == _player.character.transform)
-                    {
-                        anotherTarget = _player.partial.transform;
-                    }
-                    else
-                    {
-                        anotherTarget = _player.character.transform;
-                    }
-                    comp.Initialize(_attackStartHeight, _stageHeight, anotherTarget);
+                    canTargetPlayerCharacter = false;
+                }
+                if (obj._targetTransform == _player.partial.transform)
+                {
+                    canTargetPlayerPartial = false;
                 }
             }
 
-            if (!comp.GetIsChase())
+            Transform target = null;
+
+            if (canTargetPlayerCharacter && canTargetPlayerPartial)
             {
-                float buff_x = Random.Range(_stageLimit_left, _stageLimit_right);
-                float buff_z = Random.Range(_stageLimit_front, _stageLimit_back);
-                generate.transform.position = new Vector3(buff_x, _attackStartHeight, buff_z);
+                target = Random.value < 0.5 ? _player.character.transform : _player.partial.transform;
             }
-            _attackView.Add(comp);
+            else if (canTargetPlayerCharacter)
+            {
+                target = _player.character.transform;
+            }
+            else if (canTargetPlayerPartial)
+            {
+                target = _player.partial.transform;
+            }
+
+            if (target != null)
+            {
+                int index = Random.Range(0, _attackPrefabs.Count);
+                var generate = Instantiate(_attackPrefabs[index], new Vector3(0, _attackStartHeight, 0), Quaternion.identity, gameObject.transform);
+                var comp = generate.GetComponent<EnemyAttack>();
+                comp.Initialize(_attackStartHeight, _stageHeight, target);
+
+                if (!comp.GetIsChase())
+                {
+                    float buff_x = Random.Range(_stageLimit_left, _stageLimit_right);
+                    float buff_z = Random.Range(_stageLimit_front, _stageLimit_back);
+                    generate.transform.position = new Vector3(buff_x, _attackStartHeight, buff_z);
+                }
+
+                _attackView.Add(comp);
+            }
         }
 
         void CheckAttack()
@@ -142,6 +157,11 @@ namespace Enemy
 
         void Start()
         {
+
+            if(MainGameManager.instance.gameState == GameState.Fight)
+            {
+                _animator = GetComponentInChildren<Animator>();
+            }
             _currentHealth = health;
 
             if (MainGameManager.instance.gameState == GameManagers.GameState.Main)
@@ -151,6 +171,7 @@ namespace Enemy
                 _stageLimit_front = _stageLimit_top_left.position.z > _stageLimit_bottom_right.position.z ? _stageLimit_bottom_right.position.z : _stageLimit_top_left.position.z;
                 _stageLimit_back = _stageLimit_top_left.position.z < _stageLimit_bottom_right.position.z ? _stageLimit_bottom_right.position.z : _stageLimit_top_left.position.z;
             }
+            isAlive = true;
         }
 
         void Update()
@@ -164,13 +185,15 @@ namespace Enemy
 
         public void TakeDamage(int damage)
         {
+            _animator.SetTrigger("Damage");
             _currentHealth -= damage;
             if (_currentHealth <= 0)
             {
+                _animator.SetTrigger("Down");
                 _currentHealth = 0;
                 //!
-                AudioManager.Instance.PlaySE("Fight_FinishiBlaw_SE");
-                Die();
+                if (isAlive)AudioManager.Instance.PlaySE("Fight_FinishiBlaw_SE");
+                // Die();
             }
         }
 

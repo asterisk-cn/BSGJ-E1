@@ -64,10 +64,13 @@ namespace Enemy
 
         private MeshRenderer[] _meshRenderers;
         private SkinnedMeshRenderer[] _skinsMesh;
+        private TrailRenderer _trailrenderer;
 
         private bool coruStop;
         private bool isAttack = false;
 
+        [SerializeField] GameObject hitEffect;
+        [SerializeField] Vector3 effectScale = Vector3.one;
         private void Awake()
         {
             _colliders = GetComponentsInChildren<Collider>();
@@ -76,6 +79,7 @@ namespace Enemy
             _meshRenderers = GetComponentsInChildren<MeshRenderer>();
 
             _skinsMesh = GetComponentsInChildren<SkinnedMeshRenderer>();
+            _trailrenderer = GetComponentInChildren<TrailRenderer>();
 
             foreach (var skinsMesh in _skinsMesh)
             {
@@ -94,6 +98,8 @@ namespace Enemy
             }
 
             _currentParameters = _defaultParameters;
+            if(_trailrenderer != null)
+            _trailrenderer.enabled = false;
         }
 
         // Start is called before the first frame update
@@ -142,6 +148,7 @@ namespace Enemy
             _isMoving = false;
             originalPosition = transform.position;
             StartCoroutine(Shake());
+            
         }
 
         IEnumerator Shake()
@@ -157,12 +164,13 @@ namespace Enemy
                 remainingTime -= Time.deltaTime;
                 yield return null;
             }
-
+            AudioManager.Instance.PlaySE("Main_FallStart_SE");
             transform.position = originalPosition;
             //isShake = false;
             isAttacking = true;
             isAttack = true;
-            AudioManager.Instance.PlaySE("Main_FallStart_SE");
+            if (_trailrenderer != null) 
+            _trailrenderer.enabled = true;
         }
 
         void AttackMove()
@@ -301,6 +309,11 @@ namespace Enemy
             if (other.gameObject.tag == "Player" && isAttack && isAttacking)
             {
                 isAttack = false;
+                //エフェクト再生
+                GameObject effect = Instantiate(hitEffect,other.transform);
+                effect.transform.localScale = effectScale;
+                ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
+                if(particleSystem != null)particleSystem.Play();
                 if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
                 {
                     isAttacking = false;
@@ -318,6 +331,7 @@ namespace Enemy
                 {
                     Deactivate();
                     StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { DestroyWithFade(); }));
+                    PlaySE();
                     isAttacking = false;
                 }
                 else

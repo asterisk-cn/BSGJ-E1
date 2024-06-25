@@ -39,6 +39,7 @@ namespace Players
         [HideInInspector] public PlayerPartial partial;
 
         [SerializeField] List<PlayerPartial> _partialPrefabs = new List<PlayerPartial>();
+        [SerializeField] List<PlayerPartial> _soulPrefabs = new List<PlayerPartial>();
         private int _partialIndex = 0;
 
         [SerializeField] private List<GeneratePosition> _generatePositions;
@@ -48,11 +49,18 @@ namespace Players
 
         private bool _isAttacked = false;
 
+        private Animator _animator;
+
         void Awake()
         {
             _inputs = GetComponent<PlayerInputs>();
 
             _currentParameters = _defaultParameters;
+
+            // if(MainGameManager.instance.gameState == GameState.Fight)
+            // {
+            //     _animator = GetComponentInChildren<Animator>();
+            // }
         }
 
         // Start is called before the first frame update
@@ -61,6 +69,11 @@ namespace Players
             if (MainGameManager.instance.gameState == GameState.Main)
             {
                 GeneratePartial();
+            }
+
+            if (MainGameManager.instance.gameState == GameState.Fight)
+            {
+                _animator = GetComponentInChildren<Animator>();
             }
         }
 
@@ -98,14 +111,25 @@ namespace Players
         void Attack()
         {
             if (MainGameManager.instance.gameState != GameState.Fight) return;
+            if (_enemy.GetCurrentHealth() <= 0) return;
             if (_inputs.leftAttack)
             {
-                AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
+                _animator.SetTrigger("LeftPunch");
+                if (_inputs.UseJoycon)
+                {
+                    _animator.speed = _inputs.leftAttackValue;
+                }
+                if(_enemy.isAlive)AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
                 _enemy.TakeDamage((int)_inputs.leftAttackValue);
             }
             if (_inputs.rightAttack)
             {
-                AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
+                _animator.SetTrigger("RightPunch");
+                if (_inputs.UseJoycon)
+                {
+                    _animator.speed = _inputs.rightAttackValue;
+                }
+                if (_enemy.isAlive)AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
                 _enemy.TakeDamage((int)_inputs.rightAttackValue);
             }
         }
@@ -114,7 +138,7 @@ namespace Players
         {
             _currentParameters.unionCount += increaseUnionCount;
 
-            AudioManager.Instance.PlaySE("Main_SoulDeth_SE");
+            AudioManager.Instance.PlaySE("Main_Gattai_SE");
             if (_currentParameters.unionCount >= _targetUnionCount)
             {
                 _currentParameters.unionCount = _targetUnionCount;
@@ -130,6 +154,18 @@ namespace Players
             {
                 return;
             }
+
+            PlayerPartial partialPrefab = null;
+            if (_partialIndex < _partialPrefabs.Count)
+            {
+                partialPrefab = _partialPrefabs[_partialIndex];
+                _partialIndex++;
+            }
+            else
+            {
+                partialPrefab = _soulPrefabs[Random.Range(0, _soulPrefabs.Count)];
+            }
+
             // 生成位置を決定
             Transform generatePositionTransform = null;
             foreach (var position in _generatePositions)
@@ -152,14 +188,14 @@ namespace Players
                     generatePositionTransform = position.transform;
                 }
             }
-            partial = Instantiate(_partialPrefabs[_partialIndex], generatePositionTransform.position, Quaternion.identity);
-            partial.SetCore(this);
 
-            _partialIndex++;
-            if (_partialIndex >= _partialPrefabs.Count)
+            if (generatePositionTransform == null)
             {
-                _partialIndex = 0;
+                return;
             }
+
+            partial = Instantiate(partialPrefab, generatePositionTransform.position, Quaternion.identity);
+            partial.SetCore(this);
         }
 
         //5/25追加 Suzuki H
@@ -169,6 +205,7 @@ namespace Players
             _currentParameters.health -= damage;
 
             AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
+            _inputs.RumbleLeft(160, 320, 0.8f, 0.6f);
             //ゲームオーバー処理？　リザルト処理に遷移
             if (_currentParameters.health <= 0)
             {
@@ -186,6 +223,7 @@ namespace Players
             }
 
             AudioManager.Instance.PlaySE("Main_SoulDeth_SE");
+            _inputs.RumbleRight(160, 320, 0.6f, 0.4f);
 
             DestroyPartial();
             GeneratePartial();

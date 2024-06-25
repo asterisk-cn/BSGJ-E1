@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Linq;
+using UnityEngine.InputSystem.Haptics;
 
 namespace Players
 {
@@ -16,9 +18,21 @@ namespace Players
         public float rightAttackValue;
 
         [SerializeField] private bool useJoycon = false;
+        public bool UseJoycon => useJoycon;
+
+        PlayerInput _playerInput;
 
         void FixedUpdate()
         {
+            if (_joycons.Count == 0)
+            {
+                useJoycon = false;
+            }
+            else
+            {
+                useJoycon = true;
+            }
+
             if (useJoycon)
             {
                 UpdateJoyconInputs();
@@ -53,6 +67,8 @@ namespace Players
 
         void Start()
         {
+            _playerInput = GetComponent<PlayerInput>();
+
             _joycons = JoyconManager.Instance.j;
         }
 
@@ -109,6 +125,60 @@ namespace Players
                     rightAccelaration = joycon.GetAccel();
                 }
             }
+        }
+
+        public void RumbleLeft(float lowFreq, float highFreq, float amp, float time)
+        {
+            foreach (var joycon in _joycons)
+            {
+                if (joycon.isLeft)
+                {
+                    joycon.SetRumble(lowFreq, highFreq, amp, (int)time);
+                }
+            }
+
+            StartCoroutine(RumbleLeft(amp, time));
+        }
+
+        public void RumbleRight(float lowFreq, float highFreq, float amp, float time)
+        {
+            foreach (var joycon in _joycons)
+            {
+                if (!joycon.isLeft)
+                {
+                    joycon.SetRumble(lowFreq, highFreq, amp, (int)time);
+                }
+            }
+
+            StartCoroutine(RumbleRight(amp, time));
+        }
+
+        private IEnumerator RumbleLeft(float amp, float time)
+        {
+            if (_playerInput.devices.FirstOrDefault(x => x is IDualMotorRumble) is not IDualMotorRumble gamepad)
+            {
+                yield break;
+            }
+
+            // 振動
+            gamepad.SetMotorSpeeds(amp, 0.0f);
+            yield return new WaitForSecondsRealtime(time);
+
+            gamepad.SetMotorSpeeds(0.0f, 0.0f);
+        }
+
+        private IEnumerator RumbleRight(float amp, float time)
+        {
+            if (_playerInput.devices.FirstOrDefault(x => x is IDualMotorRumble) is not IDualMotorRumble gamepad)
+            {
+                yield break;
+            }
+
+            // 振動
+            gamepad.SetMotorSpeeds(0.0f, amp);
+            yield return new WaitForSecondsRealtime(time);
+
+            gamepad.SetMotorSpeeds(0.0f, 0.0f);
         }
     }
 }

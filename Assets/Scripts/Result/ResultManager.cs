@@ -7,6 +7,7 @@ public class ResultManager : MonoBehaviour
 {
     [SerializeField] private GameObject _clearPanel;
     [SerializeField] private GameObject _gameOverPanel;
+    bool select = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,12 +34,14 @@ public class ResultManager : MonoBehaviour
     public void OnRetryButton()
     {
         SceneFadeManager.instance.FadeOut("Main");
-        AudioManager.Instance.PlaySE("Button_SE");
+        if(!select)AudioManager.Instance.PlaySE("Button_SE");
+        select =true;
     }
 
     public void OnTitleButton()
     {
         SceneFadeManager.instance.FadeOut("Title");
-        AudioManager.Instance.PlaySE("Button_SE");
+       if(!select) AudioManager.Instance.PlaySE("Button_SE");
+       select =true;
     }
 }

@@ -1,48 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditorInternal.ReorderableList;
+using TMPro;
+using UnityEngine.UI;
 
-public class TextFloat : MonoBehaviour
+namespace Menu
 {
-    public GameObject[] SelectObjects;
-    public bool startSelect;
-    public float AMP, SPD;
-    int selectObjNum;
-    Vector3[] DefaultPos;
-    int i, nowSelectNum;
-
-    public int testSelectNum; //テスト用
-
-
-    private void Start()
+    public class TextButton : MonoBehaviour
     {
-        selectObjNum = SelectObjects.Length;
-        DefaultPos = new Vector3[selectObjNum];
-        for(i = 0; i < selectObjNum; i++)
-        {
-            DefaultPos[i] = SelectObjects[i].transform.position;
-        }
-    }
+        private bool _isSelect;
+        public float AMP, SPD;
+        Vector3 _defaultPos;
+        private TextMeshProUGUI _text;
+        private Button _button;
 
-    void Update()
-    {
-        //テスト用
-        if(testSelectNum != nowSelectNum)
+        void Awake()
         {
-            ChangeSelectObj(testSelectNum);
+            _text = GetComponentInChildren<TextMeshProUGUI>();
+            _button = GetComponent<Button>();
+
+            _defaultPos = transform.position;
         }
 
-        if(startSelect)
-            SelectObjects[nowSelectNum].transform.position = DefaultPos[nowSelectNum] + (new Vector3(0, AMP * Mathf.Sin(SPD * Time.time), 0));
-    }
-
-    public void ChangeSelectObj(int selectNum)
-    {
-        nowSelectNum = selectNum;
-        for (i = 0; i < selectObjNum; i++)
+        void Update()
         {
-            SelectObjects[i].transform.position = DefaultPos[i];
+            if (_isSelect)
+            {
+                _text.transform.position = _defaultPos + new Vector3(0, AMP * Mathf.Sin(SPD * Time.time), 0);
+            }
+            else
+            {
+                _text.transform.position = _defaultPos;
+            }
+        }
+
+        public void Select()
+        {
+            _isSelect = true;
+        }
+
+        public void Deselect()
+        {
+            _isSelect = false;
+        }
+
+        public void Click()
+        {
+            _button.onClick.Invoke();
         }
     }
 }

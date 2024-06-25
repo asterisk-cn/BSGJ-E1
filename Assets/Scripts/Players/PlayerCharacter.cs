@@ -1,6 +1,7 @@
 using GameManagers;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Windows;
 
@@ -32,6 +33,13 @@ namespace Players
 
         private Animator _animator;
 
+        private bool _hitDamage;
+
+        private bool _down;
+
+        [SerializeField] float _invincibleTime;
+        [SerializeField] float _downTime;
+
         void Awake()
         {
             _characterController = GetComponent<CharacterController>();
@@ -49,17 +57,31 @@ namespace Players
         // Update is called once per frame
         void Update()
         {
-            
+
         }
 
         public void TakeDamage(int damage)
         {
+            if (_hitDamage) return;
+            StartCoroutine(InvincibleTime(_invincibleTime));
+            StartCoroutine(DownTime(_downTime));
             _animator.SetTrigger("Down");
             _core.TakeDamage(damage);
         }
 
+        IEnumerator InvincibleTime(float time)
+        {
+            _hitDamage = true;
+            yield return new WaitForSeconds(time);
+            _hitDamage = false;
+        }
+
+
+
         public void Move(Vector3 direction)
         {
+            if (MainGameManager.instance.gameState != GameState.Main) return;
+            if (_down) return;
             var maxSpeed = _currentParameters.maxSpeed;
             var acceleration = _currentParameters.acceleration;
             var deceleration = _currentParameters.deceleration;
@@ -73,7 +95,10 @@ namespace Players
                     _velocity = _velocity.normalized * maxSpeed;
                 }
 
-                //AudioManager.Instance.PlaySE("Main_Ashioto_SE");
+                Quaternion targetRotation =Quaternion.LookRotation(direction);
+
+                transform.rotation = targetRotation;
+
             }
             else
             {
@@ -90,6 +115,13 @@ namespace Players
             var gravity = Physics.gravity.y * Time.deltaTime;
             Vector3 velocity = _velocity + new Vector3(0, gravity, 0);
             _characterController.Move(velocity);
+        }
+
+        IEnumerator DownTime(float time)
+        {
+            _down = true;
+            yield return new WaitForSeconds(time);
+            _down = false;
         }
 
         public void ScaleAroundFoot(float newScale)
@@ -115,7 +147,6 @@ namespace Players
             _core.UnitePartial();
         }
         //アニメーションが実装されたらAnimationEventで呼び出す
-        
     }
 }
 
