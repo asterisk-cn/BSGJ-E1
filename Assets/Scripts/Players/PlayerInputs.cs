@@ -22,8 +22,17 @@ namespace Players
 
         PlayerInput _playerInput;
 
-    void FixedUpdate()
+        void FixedUpdate()
         {
+            if (_joycons.Count == 0)
+            {
+                useJoycon = false;
+            }
+            else
+            {
+                useJoycon = true;
+            }
+
             if (useJoycon)
             {
                 UpdateJoyconInputs();
