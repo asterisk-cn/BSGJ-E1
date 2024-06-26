@@ -1995,11 +1995,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  _setHand: 1
-  _setKnife: 1
-  _setPot: 1
   _maxAttackCount: 2
   _attackStartHeight: 1.35
+  _stageLevels:
+  - unionCount: 1
+    knifeRate: 0
+    potRate: 0
+    handRate: 0
+  - unionCount: 4
+    knifeRate: 1
+    potRate: 0
+    handRate: 0
+  - unionCount: 7
+    knifeRate: 3
+    potRate: 1
+    handRate: 0
+  - unionCount: 10
+    knifeRate: 2
+    potRate: 1
+    handRate: 1
   isAlive: 0
   _hand: {fileID: 2271366039845924913, guid: 7ae10fbf9f039cb498f3eb33fe4e5099, type: 3}
   _knife: {fileID: 8056262493575415640, guid: d77e73267df637446b9037d94f2ae776, type: 3}

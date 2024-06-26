@@ -1,5 +1,6 @@
 using GameManagers;
 using Players;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,17 +11,24 @@ namespace Enemy
 {
     public class EnemyCore : MonoBehaviour
     {
+        [Serializable]
+        public class StageLevel
+        {
+            [Tooltip("この合体数まではこのレベルが適用される")] public int unionCount;
+            [Tooltip("ナイフの攻撃の確率")] public float knifeRate;
+            [Tooltip("鍋の攻撃の確率")] public float potRate;
+            [Tooltip("手の攻撃の確率")] public float handRate;
+        }
+
         [Header("調整用パラメータ")]
         [Header("敵のパラメータ")]
         public int health;
 
-        [Header("攻撃設定")]
-        [SerializeField] private bool _setHand = true;
-        [SerializeField] private bool _setKnife = true;
-        [SerializeField] private bool _setPot = true;
-
         [SerializeField][Tooltip("同時に生成する攻撃の最大数")] private int _maxAttackCount = 2;
         [SerializeField][Tooltip("攻撃生成の高さ")] private float _attackStartHeight = 10.0f;
+
+        [Header("レベル調整")]
+        [SerializeField][Tooltip("ステージレベル")] private List<StageLevel> _stageLevels;
         [Header("-----------------------------")]
         [Space(10)]
 
@@ -28,7 +36,7 @@ namespace Enemy
 
         private int _currentHealth;
 
-        private List<EnemyAttack> _attackPrefabs;
+        // private List<EnemyAttack> _attackPrefabs;
         [SerializeField] private EnemyAttack _hand;
         [SerializeField] private EnemyAttack _knife;
         [SerializeField] private EnemyAttack _pot;
@@ -49,6 +57,10 @@ namespace Enemy
         private float _stageLimit_front;
         private float _stageLimit_back;
 
+        private float _handRate;
+        private float _knifeRate;
+        private float _potRate;
+
         float maxUnionCount;
 
         public Animator _animator;
@@ -59,47 +71,35 @@ namespace Enemy
         void LevelAdjustment()
         {
             maxUnionCount = System.Math.Max(maxUnionCount, _player.GetCurrentUnionCount());
-            var ratio = maxUnionCount / _player.GetTargetUnionCount();
+            // var ratio = maxUnionCount / _player.GetTargetUnionCount();
 
-            switch (ratio)
+            for (int i = 0; i < _stageLevels.Count; i++)
             {
-                case 0:
-                    _setHand = false;
-                    _setKnife = true;
-                    _setPot = false;
+                if (maxUnionCount < _stageLevels[i].unionCount)
+                {
+                    _handRate = _stageLevels[i].handRate;
+                    _knifeRate = _stageLevels[i].knifeRate;
+                    _potRate = _stageLevels[i].potRate;
                     break;
-                case { } n when (ratio < 0.25):
-                    _setHand = false;
-                    _setKnife = true;
-                    _setPot = false;
-                    break;
-                case { } n when (ratio < 0.5):
-                    _setHand = false;
-                    _setKnife = true;
-                    _setPot = true;
-                    break;
-                case { } n when (ratio < 0.75):
-                    _setHand = true;
-                    _setKnife = true;
-                    _setPot = true;
-                    break;
+                }
             }
         }
 
-        void ResetAttackPrefabs()
-        {
-            _attackPrefabs = new List<EnemyAttack>();
-            if (_setHand) _attackPrefabs.Add(_hand);
-            if (_setKnife) _attackPrefabs.Add(_knife);
-            if (_setPot) _attackPrefabs.Add(_pot);
-        }
+        // void ResetAttackPrefabs()
+        // {
+        //     _attackPrefabs = new List<EnemyAttack>();
+        // if (_setHand) _attackPrefabs.Add(_hand);
+        // if (_setKnife) _attackPrefabs.Add(_knife);
+        // if (_setPot) _attackPrefabs.Add(_pot);
+        // }
 
         void GenerateAttack()
         {
             CheckAttack();
             if (_attackView.Count >= _maxAttackCount) return;
-            ResetAttackPrefabs();
-            if (_attackPrefabs.Count == 0) return;
+            // ResetAttackPrefabs();
+            // if (_attackPrefabs.Count == 0) return;
+            if (_handRate + _knifeRate + _potRate == 0) return;
 
             // ターゲットの選択
             bool canTargetPlayerCharacter = _player.character != null;
@@ -121,7 +121,7 @@ namespace Enemy
 
             if (canTargetPlayerCharacter && canTargetPlayerPartial)
             {
-                target = Random.value < 0.5 ? _player.character.transform : _player.partial.transform;
+                target = UnityEngine.Random.value < 0.5 ? _player.character.transform : _player.partial.transform;
             }
             else if (canTargetPlayerCharacter)
             {
@@ -134,15 +134,30 @@ namespace Enemy
 
             if (target != null)
             {
-                int index = Random.Range(0, _attackPrefabs.Count);
-                var generate = Instantiate(_attackPrefabs[index], new Vector3(0, _attackStartHeight, 0), Quaternion.identity, gameObject.transform);
+                GameObject generate = null;
+                float rate = UnityEngine.Random.value * (_handRate + _knifeRate + _potRate);
+                if (rate < _handRate)
+                {
+                    generate = Instantiate(_hand.gameObject, new Vector3(0, _attackStartHeight, 0), Quaternion.identity, gameObject.transform);
+                }
+                else if (rate < _handRate + _knifeRate)
+                {
+                    generate = Instantiate(_knife.gameObject, new Vector3(0, _attackStartHeight, 0), Quaternion.identity, gameObject.transform);
+                }
+                else
+                {
+                    generate = Instantiate(_pot.gameObject, new Vector3(0, _attackStartHeight, 0), Quaternion.identity, gameObject.transform);
+                }
+
+                // int index = UnityEngine.Random.Range(0, _attackPrefabs.Count);
+                // var generate = Instantiate(_attackPrefabs[index], new Vector3(0, _attackStartHeight, 0), Quaternion.identity, gameObject.transform);
                 var comp = generate.GetComponent<EnemyAttack>();
                 comp.Initialize(_attackStartHeight, _stageHeight, target);
 
                 if (!comp.GetIsChase())
                 {
-                    float buff_x = Random.Range(_stageLimit_left, _stageLimit_right);
-                    float buff_z = Random.Range(_stageLimit_front, _stageLimit_back);
+                    float buff_x = UnityEngine.Random.Range(_stageLimit_left, _stageLimit_right);
+                    float buff_z = UnityEngine.Random.Range(_stageLimit_front, _stageLimit_back);
                     generate.transform.position = new Vector3(buff_x, _attackStartHeight, buff_z);
                 }
 
