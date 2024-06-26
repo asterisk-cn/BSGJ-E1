@@ -142,6 +142,7 @@ namespace Players
             if (_currentParameters.unionCount >= _targetUnionCount)
             {
                 _currentParameters.unionCount = _targetUnionCount;
+                MainGameManager.instance.SetScore(GameTimeManager.instance.GetTime(), _currentParameters.partialHitCount);
                 SceneFadeManager.instance.FadeOut("Fight");
             }
             DestroyPartial();
