@@ -400,7 +400,8 @@ MonoBehaviour:
   PowerGauge: {fileID: 260011256724437185}
   PowerGaugeFrame: {fileID: 1833372774735162980}
   maxPower: 10
-  PowerUpTime: 0.1
+  PowerUpTime: 0.2
+  gaugeShakeAMP: 10
   powerUpNum: 2
   powerDownNum: -1
   _playerCore: {fileID: 0}
@@ -730,7 +731,7 @@ MonoBehaviour:
   - {fileID: 12751046664121001}
   - {fileID: 8687278414458514993}
   - {fileID: 523821243535905496}
-  ShakeAMP: 10
+  ShakeAMP: 15
   shakeTime: 1
   _playerCore: {fileID: 0}
 --- !u!1 &9019381199314428264
