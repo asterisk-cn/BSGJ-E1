@@ -63,10 +63,10 @@ namespace Players
         public void TakeDamage(int damage)
         {
             if (_hitDamage) return;
-            StartCoroutine(InvincibleTime(_invincibleTime));
-            StartCoroutine(DownTime(_downTime));
             _animator.SetTrigger("Down");
             _core.TakeDamage(damage);
+            StartCoroutine(InvincibleTime(_invincibleTime));
+            StartCoroutine(DownTime(_downTime));
         }
 
         IEnumerator InvincibleTime(float time)
@@ -102,10 +102,12 @@ namespace Players
             }
             else
             {
+                _animator.SetTrigger("Idle");
                 if (_velocity.magnitude > 0)
                 {
                     _velocity -= _velocity.normalized * deceleration * Time.deltaTime;
                     if (_velocity.magnitude <= 0.01f) { _velocity = Vector3.zero; }
+                    
                 }
             }
 
