@@ -119,8 +119,12 @@ namespace Players
                 {
                     _animator.speed = _inputs.leftAttackValue;
                 }
-                if(_enemy.isAlive)AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
-                _enemy.TakeDamage((int)_inputs.leftAttackValue);
+                if (_enemy.isAlive)
+                {
+                    _enemy.TakeDamage((int)_inputs.leftAttackValue);
+                    AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
+                    _inputs.RumbleLeft(160, 320, 0.8f, 0.6f);
+                }
             }
             if (_inputs.rightAttack)
             {
@@ -129,8 +133,12 @@ namespace Players
                 {
                     _animator.speed = _inputs.rightAttackValue;
                 }
-                if (_enemy.isAlive)AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
-                _enemy.TakeDamage((int)_inputs.rightAttackValue);
+                if (_enemy.isAlive)
+                {
+                    _enemy.TakeDamage((int)_inputs.rightAttackValue);
+                    AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
+                    _inputs.RumbleRight(160, 320, 0.8f, 0.6f);
+                }
             }
         }
 
