@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using Players;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditorInternal.ReorderableList;
 
 public class PowerGaugeManager : MonoBehaviour
 {
     public GameObject Fire;
     public Sprite NotMax, Max;
-    public Image PowerGauge, PowerGaugeFrame;
+    public Sprite[] GaugeEffectSprites;
+    public Image PowerGauge, PowerGaugeFrame, GaugeEffect_Image;
     public float maxPower, PowerUpTime, gaugeShakeAMP;
     public float powerUpNum; //合体成功時の変化量を代入
     public float powerDownNum; //被ダメ時の変化量を代入
@@ -19,7 +21,7 @@ public class PowerGaugeManager : MonoBehaviour
     [SerializeField] private Players.PlayerCore _playerCore;
 
     //テスト用
-    //float testPower;
+    float testPower;
 
     private void Start()
     {
@@ -31,7 +33,7 @@ public class PowerGaugeManager : MonoBehaviour
     private void Update()
     {
         currentPower = _playerCore.GetCurrentUnionCount() / _playerCore.GetTargetUnionCount();
-        if(currentPower != beforePower)
+        if (currentPower != beforePower)
         {
             StartChangePowerGaugeCoroutine(currentPower);
             beforePower = currentPower;
@@ -72,6 +74,9 @@ public class PowerGaugeManager : MonoBehaviour
             if (ChangeNum < 0)
             {
                 transform.transform.position = defaultPos + Random.insideUnitSphere * gaugeShakeAMP;
+            } else if(i == 0)
+            {
+                StartCoroutine("GaugeEffect");
             }
 
             PowerGauge.fillAmount += ChangeNum / times;
@@ -88,6 +93,17 @@ public class PowerGaugeManager : MonoBehaviour
         {
             PowerGauge.fillAmount = 1f;
             MaxPowerGauge();
+        }
+    }
+
+    IEnumerator GaugeEffect()
+    {
+        int i;
+
+        for (i = 0; i < GaugeEffectSprites.Length; i++)
+        {
+            GaugeEffect_Image.sprite = GaugeEffectSprites[i];
+            yield return new WaitForSecondsRealtime(0.034f);
         }
     }
 

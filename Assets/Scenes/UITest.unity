@@ -819,7 +819,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2049725498552067246, guid: 948439418f1304dd0ab29d370e143475, type: 3}
       propertyPath: m_Name
-      value: FightSceneTextPanel
+      value: FightScenePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2049725498552067246, guid: 948439418f1304dd0ab29d370e143475, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6542183050072965536, guid: 948439418f1304dd0ab29d370e143475, type: 3}
       propertyPath: m_Pivot.x
@@ -917,10 +921,6 @@ PrefabInstance:
     - target: {fileID: 3743163559167868052, guid: 7f784fbc9f3ba43cd90066ee6a28e29a, type: 3}
       propertyPath: m_Name
       value: MainSceneUIPanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 3743163559167868052, guid: 7f784fbc9f3ba43cd90066ee6a28e29a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8048557724845311700, guid: 7f784fbc9f3ba43cd90066ee6a28e29a, type: 3}
       propertyPath: m_Pivot.x
