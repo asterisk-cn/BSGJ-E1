@@ -29,6 +29,11 @@ namespace Enemy
 
         [Header("レベル調整")]
         [SerializeField][Tooltip("ステージレベル")] private List<StageLevel> _stageLevels;
+
+        [Header("カメラの揺れ")]
+        [SerializeField][Tooltip("カメラの揺れの時間")] private float _shakeDuration = 0.5f;
+        [SerializeField][Tooltip("カメラの揺れの強さ（位置）")] private float _shakePosMagnitude = 0.1f;
+        [SerializeField][Tooltip("カメラの揺れの強さ（回転）")] private float _shakeRotMagnitude = 0.1f;
         [Header("-----------------------------")]
         [Space(10)]
 
@@ -67,6 +72,8 @@ namespace Enemy
         private AnimatorStateInfo _animatorStateInfo;
         private AnimatorClipInfo[] _animatorClip;
         private float _stateTime;
+
+        private ShakeCamera _camera;
 
         void LevelAdjustment()
         {
@@ -152,6 +159,7 @@ namespace Enemy
                 // int index = UnityEngine.Random.Range(0, _attackPrefabs.Count);
                 // var generate = Instantiate(_attackPrefabs[index], new Vector3(0, _attackStartHeight, 0), Quaternion.identity, gameObject.transform);
                 var comp = generate.GetComponent<EnemyAttack>();
+                comp.SetCore(this);
                 comp.Initialize(_attackStartHeight, _stageHeight, target);
 
                 if (!comp.GetIsChase())
@@ -185,6 +193,8 @@ namespace Enemy
                 _stageLimit_right = _stageLimit_top_left.position.x < _stageLimit_bottom_right.position.x ? _stageLimit_bottom_right.position.x : _stageLimit_top_left.position.x;
                 _stageLimit_front = _stageLimit_top_left.position.z > _stageLimit_bottom_right.position.z ? _stageLimit_bottom_right.position.z : _stageLimit_top_left.position.z;
                 _stageLimit_back = _stageLimit_top_left.position.z < _stageLimit_bottom_right.position.z ? _stageLimit_bottom_right.position.z : _stageLimit_top_left.position.z;
+
+                _camera = Camera.main.GetComponent<ShakeCamera>();
             }
             isAlive = true;
         }
@@ -221,6 +231,11 @@ namespace Enemy
         public int GetCurrentHealth()
         {
             return _currentHealth;
+        }
+
+        public void ShakeCamera()
+        {
+            _camera.Shake(_shakeDuration, _shakePosMagnitude, _shakeRotMagnitude);
         }
     }
 }
