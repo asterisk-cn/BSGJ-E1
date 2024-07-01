@@ -66,7 +66,8 @@ public class PowerGaugeManager : MonoBehaviour
         float nowPower = PowerGauge.fillAmount;
         float ChangeNum = newPower - nowPower;
         int i;
-        int times = (int)(PowerUpTime / Time.fixedDeltaTime);
+        float interval = 0.02f;
+        int times = (int)(PowerUpTime / interval);
         Vector3 defaultPos = transform.position;
 
         for (i = 0; i < times; i++)
@@ -80,7 +81,7 @@ public class PowerGaugeManager : MonoBehaviour
             }
 
             PowerGauge.fillAmount += ChangeNum / times;
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForSecondsRealtime(interval);
         }
 
         //調整用

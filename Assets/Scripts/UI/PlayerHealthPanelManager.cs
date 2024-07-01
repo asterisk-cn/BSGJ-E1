@@ -58,12 +58,13 @@ public class PlayerHealthPanelManager : MonoBehaviour
 
     IEnumerator HitDamage(int num)
     {
-        int times = (int)(shakeTime / Time.fixedDeltaTime);
+        float interval = 0.02f;
+        int times = (int)(shakeTime / interval);
         Vector3 defaultPos = HealthObjects[num].transform.position;
         for (int i = 0; i < times; i++)
         {
             HealthObjects[num].transform.position = defaultPos + Random.insideUnitSphere * ShakeAMP;
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForSecondsRealtime(interval);
         }
         HealthObjects[num].transform.position = defaultPos;
     }
