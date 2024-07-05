@@ -1822,6 +1822,10 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6615022875421718895, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: dustSmoke
+      value: 
+      objectReference: {fileID: 1876081050882714, guid: e5df5caad603c8349ba3481b8ded0927, type: 3}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _enemy
       value: 

@@ -148,5 +148,7 @@ namespace Players
         }
         //アニメーションが実装されたらAnimationEventで呼び出す
     }
+
+    
 }
 
