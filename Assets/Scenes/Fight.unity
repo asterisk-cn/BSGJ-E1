@@ -332,11 +332,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 200
-  _setHand: 1
-  _setKnife: 1
-  _setPot: 1
   _maxAttackCount: 2
   _attackStartHeight: 4
+  _stageLevels: []
+  _shakeDuration: 0.5
+  _shakePosMagnitude: 0.1
+  _shakeRotMagnitude: 0.1
   isAlive: 0
   _hand: {fileID: 0}
   _knife: {fileID: 0}

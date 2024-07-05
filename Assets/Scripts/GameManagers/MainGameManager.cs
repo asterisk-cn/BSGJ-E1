@@ -101,6 +101,7 @@ public class MainGameManager : MonoBehaviour
 
     void ForceEnd()
     {
+        if (gameState == GameState.Result) return;
         instance.LoadScene("Result");
     }
 
@@ -110,7 +111,7 @@ public class MainGameManager : MonoBehaviour
     void OnFightLoaded()
     {
         gameState = GameState.Fight;
-        GameTimeManager.instance.AddListenerOnTimeUp(() => instance.LoadScene("Result"));
+        GameTimeManager.instance.AddListenerOnTimeUp(() => ForceEnd());
         GameTimeManager.instance.StartTimer(_fightTime, true);
         PlayBGM(gameState);
     }
