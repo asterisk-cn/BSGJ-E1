@@ -109,5 +109,16 @@ namespace Title
         {
             MainGameManager.instance.LoadScene("Main");
         }
+
+        public void Update()
+        {
+            if (_titleManagerState ==TitleManagerState.Movie)
+            {
+                if (Input.anyKey)
+                {
+                    LoopPointReached(_videoPlayer);
+                }
+            }
+        }
     }
 }
