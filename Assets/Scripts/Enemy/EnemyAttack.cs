@@ -340,14 +340,15 @@ namespace Enemy
                 {
                     Deactivate();
                     StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { DestroyWithFade(); }));
-                    PlaySE();
-                    _enemyCore.ShakeCamera();
-                    isAttacking = false;
+                    
                 }
                 else
                 {
                     _isUp = true;
                 }
+                PlaySE();
+                _enemyCore.ShakeCamera();
+                isAttacking = false;
             }
         }
 
