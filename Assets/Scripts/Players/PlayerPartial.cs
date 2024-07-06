@@ -112,8 +112,6 @@ namespace Players
         {
             _characterController.enabled = true;
             isOnFloor = true;
-            AudioManager.Instance.PlaySE("Main_SoulOnFloor_SE");
-
             GameObject effect = Instantiate(_dustSmoke, transform);
             ParticleSystem[] particleSystems = effect.GetComponentsInChildren<ParticleSystem>();
             foreach (var particleSystem in particleSystems)
@@ -121,5 +119,11 @@ namespace Players
                 particleSystem.Play();
             }
         }
+
+        public void PlaySE()
+        {
+            AudioManager.Instance.PlaySE("Main_SoulOnFloor_SE");
+        }
+
     }
 }
