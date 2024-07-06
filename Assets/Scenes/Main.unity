@@ -1832,7 +1832,7 @@ PrefabInstance:
       objectReference: {fileID: 5625115824647577521}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: decreaseUnionCount
-      value: 1
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: increaseUnionCount

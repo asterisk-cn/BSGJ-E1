@@ -114,7 +114,7 @@ namespace Title
         {
             if (_titleManagerState ==TitleManagerState.Movie)
             {
-                if (Input.anyKey)
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
                     LoopPointReached(_videoPlayer);
                 }
