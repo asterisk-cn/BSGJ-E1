@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028373, g: 0.22571398, b: 0.30692294, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -202,7 +202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3458850469024609029, guid: 9e8310b5fcb3a4c4dad4a5ae2ac991c3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4514782467275694298, guid: 9e8310b5fcb3a4c4dad4a5ae2ac991c3, type: 3}
       propertyPath: _menuInputs
@@ -420,6 +420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clearPanel: {fileID: 5963991370277600705}
   _gameOverPanel: {fileID: 1916459990}
+  _scoreText: {fileID: 1852311466}
 --- !u!114 &837654904 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3530060629449130076, guid: fc2a82b3658024f71b5d385a4f322499, type: 3}
@@ -778,6 +779,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1852311466 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 908166517587325546, guid: fc2a82b3658024f71b5d385a4f322499, type: 3}
+  m_PrefabInstance: {fileID: 5963991370277600704}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1916459990 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3458850469024609029, guid: 9e8310b5fcb3a4c4dad4a5ae2ac991c3, type: 3}
@@ -1025,7 +1037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5807332640912224791, guid: fc2a82b3658024f71b5d385a4f322499, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7015765704300636677, guid: fc2a82b3658024f71b5d385a4f322499, type: 3}
       propertyPath: AMP

@@ -71,6 +71,9 @@ namespace Enemy
 
         [SerializeField] GameObject hitEffect;
         [SerializeField] Vector3 effectScale = Vector3.one;
+
+        private EnemyCore _enemyCore;
+
         private void Awake()
         {
             _colliders = GetComponentsInChildren<Collider>();
@@ -226,6 +229,11 @@ namespace Enemy
             transform.localPosition = new Vector3(_targetTransform.position.x, _defaultHeight, _targetTransform.position.z);
         }
 
+        public void SetCore(EnemyCore core)
+        {
+            _enemyCore = core;
+        }
+
         void Activate()
         {
             foreach( var collider in _colliders)
@@ -314,6 +322,7 @@ namespace Enemy
                 effect.transform.localScale = effectScale;
                 ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
                 if(particleSystem != null)particleSystem.Play();
+                _enemyCore.ShakeCamera();
                 if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
                 {
                     isAttacking = false;
@@ -332,6 +341,7 @@ namespace Enemy
                     Deactivate();
                     StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { DestroyWithFade(); }));
                     PlaySE();
+                    _enemyCore.ShakeCamera();
                     isAttacking = false;
                 }
                 else

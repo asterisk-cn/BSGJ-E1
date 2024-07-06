@@ -1073,6 +1073,7 @@ GameObject:
   - component: {fileID: 747613023}
   - component: {fileID: 747613022}
   - component: {fileID: 747613025}
+  - component: {fileID: 747613026}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1214,6 +1215,18 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &747613026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747613021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60c717afd9a3f224491ffb2a20167cb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &780550451
 GameObject:
   m_ObjectHideFlags: 0
@@ -1423,23 +1436,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86562abf1471cfc42b0b14e54bbc2874, type: 3}
---- !u!1 &974361352 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1275858894720041000, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
-  m_PrefabInstance: {fileID: 1406550684}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &974361356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 974361352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53d9f5f467431c1478f8cda4a306f1e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &998232471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1840,7 +1836,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: increaseUnionCount
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _soulPrefabs.Array.size
@@ -1960,10 +1956,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5582632049313810589, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1762217205401749403}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1275858894720041000, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 974361356}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
 --- !u!1 &1416238021
 GameObject:
@@ -1995,11 +1988,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  _setHand: 1
-  _setKnife: 1
-  _setPot: 1
   _maxAttackCount: 2
   _attackStartHeight: 1.35
+  _stageLevels:
+  - unionCount: 1
+    knifeRate: 0
+    potRate: 0
+    handRate: 0
+  - unionCount: 4
+    knifeRate: 1
+    potRate: 0
+    handRate: 0
+  - unionCount: 7
+    knifeRate: 3
+    potRate: 2
+    handRate: 0
+  - unionCount: 10
+    knifeRate: 0
+    potRate: 2
+    handRate: 3
+  _shakeDuration: 0.3
+  _shakePosMagnitude: 0.01
+  _shakeRotMagnitude: 0.01
   isAlive: 0
   _hand: {fileID: 2271366039845924913, guid: 7ae10fbf9f039cb498f3eb33fe4e5099, type: 3}
   _knife: {fileID: 8056262493575415640, guid: d77e73267df637446b9037d94f2ae776, type: 3}

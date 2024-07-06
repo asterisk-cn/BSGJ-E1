@@ -331,12 +331,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a047062546fd45d9a9bb31cdf2e0a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 200
-  _setHand: 1
-  _setKnife: 1
-  _setPot: 1
+  health: 220
   _maxAttackCount: 2
   _attackStartHeight: 4
+  _stageLevels: []
+  _shakeDuration: 0.5
+  _shakePosMagnitude: 0.1
+  _shakeRotMagnitude: 0.1
   isAlive: 0
   _hand: {fileID: 0}
   _knife: {fileID: 0}

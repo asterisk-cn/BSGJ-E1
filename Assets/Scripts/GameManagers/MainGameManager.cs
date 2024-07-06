@@ -13,6 +13,17 @@ public class MainGameManager : MonoBehaviour
     [SerializeField] private float _mainTime = 180;
     [SerializeField] private float _fightTime = 10;
 
+    [Header("スコアランクの閾値")]
+
+    [SerializeField][Tooltip("Sランクの閾値")] private float _scoreRankS = 50;
+    [SerializeField][Tooltip("Aランクの閾値")] private float _scoreRankA = 70;
+    [SerializeField][Tooltip("Bランクの閾値")] private float _scoreRankB = 90;
+
+    private float _score = 0;
+    private float _clearTime = 0;
+    private int _soulDeadCount = 0;
+    private string _scoreRank;
+
     public bool isClear = false;
 
     // Start is called before the first frame update
@@ -90,6 +101,7 @@ public class MainGameManager : MonoBehaviour
 
     void ForceEnd()
     {
+        if (gameState == GameState.Result) return;
         instance.LoadScene("Result");
     }
 
@@ -99,10 +111,9 @@ public class MainGameManager : MonoBehaviour
     void OnFightLoaded()
     {
         gameState = GameState.Fight;
-        GameTimeManager.instance.AddListenerOnTimeUp(() => instance.LoadScene("Result"));
+        GameTimeManager.instance.AddListenerOnTimeUp(() => ForceEnd());
         GameTimeManager.instance.StartTimer(_fightTime, true);
         PlayBGM(gameState);
-        Reset();
     }
 
     void OnResultLoaded()
@@ -121,21 +132,21 @@ public class MainGameManager : MonoBehaviour
         {
             SceneManager.LoadScene(sceneName);
         }
-
-
     }
 
     void Reset()
     {
         isClear = false;
+        _score = 0;
+        _clearTime = 0;
+        _soulDeadCount = 0;
+        _scoreRank = "";
     }
 
     void PlayBGM(GameState _state)
     {
         switch (_state)
         {
-            
-
             case GameState.Title:
                 AudioManager.Instance.PlayBGM("Title_BGM");
                 break;
@@ -155,4 +166,45 @@ public class MainGameManager : MonoBehaviour
                 break;
         }
     }
+
+    public void SetScore(float clearTime, int soulDeadCount)
+    {
+        _clearTime = clearTime;
+        _soulDeadCount = soulDeadCount;
+        _score = clearTime + soulDeadCount * 5;
+
+        if (_score <= _scoreRankS)
+        {
+            _scoreRank = "S";
+        }
+        else if (_score <= _scoreRankA)
+        {
+            _scoreRank = "A";
+        }
+        else if (_score <= _scoreRankB)
+        {
+            _scoreRank = "B";
+        }
+        else
+        {
+            _scoreRank = "C";
+        }
+    }
+
+    public string GetScoreRank()
+    {
+        return _scoreRank;
+    }
+
+    public float GetClearTime()
+    {
+        return _clearTime;
+    }
+
+    public int GetSoulDeadCount()
+    {
+        return _soulDeadCount;
+    }
+
+
 }
