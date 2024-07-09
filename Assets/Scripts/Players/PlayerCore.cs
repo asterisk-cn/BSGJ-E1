@@ -211,6 +211,11 @@ namespace Players
         //ダメージ処理用の呼び出し関数
         public void TakeDamage(int damage)
         {
+            if (_targetUnionCount <= _currentParameters.unionCount)
+            {
+                return;
+            }
+
             _currentParameters.health -= damage;
 
             AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
@@ -224,6 +229,11 @@ namespace Players
 
         public void TakePartialDamage(int damage)
         {
+            if (_targetUnionCount <= _currentParameters.unionCount)
+            {
+                return;
+            }
+
             _currentParameters.partialHitCount++;
             _currentParameters.unionCount -= decreaseUnionCount;
             if (_currentParameters.unionCount < 0)
