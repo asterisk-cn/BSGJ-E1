@@ -1,21 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using Players;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class PowerGaugeManager : MonoBehaviour
 {
     public GameObject Fire;
     public Sprite NotMax, Max;
-    public Image PowerGauge, PowerGaugeFrame;
-    public float maxPower, PowerUpTime;
+    public Sprite[] GaugeEffectSprites;
+    public Image PowerGauge, PowerGaugeFrame, GaugeEffect_Image;
+    public float maxPower, PowerUpTime, gaugeShakeAMP;
     public float powerUpNum; //合体成功時の変化量を代入
     public float powerDownNum; //被ダメ時の変化量を代入
 
-    float currentPower;
+    float currentPower, beforePower;
     Coroutine _coroutine;
 
     [SerializeField] private Players.PlayerCore _playerCore;
+
+    //テスト用
+    float testPower;
 
     private void Start()
     {
@@ -26,13 +32,24 @@ public class PowerGaugeManager : MonoBehaviour
 
     private void Update()
     {
-        if (PowerGauge.fillAmount >= 1)
+        currentPower = _playerCore.GetCurrentUnionCount() / _playerCore.GetTargetUnionCount();
+        if (currentPower != beforePower)
         {
-            MaxPowerGauge();
+            StartChangePowerGaugeCoroutine(currentPower);
+            beforePower = currentPower;
         }
 
-        currentPower = _playerCore.GetCurrentUnionCount() / _playerCore.GetTargetUnionCount();
-        StartChangePowerGaugeCoroutine(currentPower);
+        //テスト用
+        //if (Input.GetKeyDown(KeyCode.I))
+        //{
+        //    testPower += 0.2f;
+        //    StartCoroutine("ChangePowerGauge", testPower);
+        //}
+        //if (Input.GetKeyDown(KeyCode.H))
+        //{
+        //    testPower -= 0.1f;
+        //    StartCoroutine("ChangePowerGauge", testPower);
+        //}
     }
 
     void StartChangePowerGaugeCoroutine(float newPower)
@@ -49,16 +66,45 @@ public class PowerGaugeManager : MonoBehaviour
         float nowPower = PowerGauge.fillAmount;
         float ChangeNum = newPower - nowPower;
         int i;
-        float a = 100;
-        for (i = 0; i < a; i++)
+        float interval = 0.02f;
+        int times = (int)(PowerUpTime / interval);
+        Vector3 defaultPos = transform.position;
+
+        for (i = 0; i < times; i++)
         {
-            PowerGauge.fillAmount += ChangeNum / a;
-            yield return new WaitForSeconds(PowerUpTime / a);
+            if (ChangeNum < 0)
+            {
+                transform.transform.position = defaultPos + Random.insideUnitSphere * gaugeShakeAMP;
+            } else if(i == 0)
+            {
+                StartCoroutine("GaugeEffect");
+            }
+
+            PowerGauge.fillAmount += ChangeNum / times;
+            yield return new WaitForSecondsRealtime(interval);
         }
 
-        if(PowerGauge.fillAmount >= 0.999) //誤差調整用
+        //調整用
+        PowerGauge.fillAmount = newPower;
+        transform.position = defaultPos;
+
+
+        //Max時処理
+        if (_playerCore.GetCurrentUnionCount() >= _playerCore.GetTargetUnionCount())
         {
-            PowerGauge.fillAmount = 1;
+            PowerGauge.fillAmount = 1f;
+            MaxPowerGauge();
+        }
+    }
+
+    IEnumerator GaugeEffect()
+    {
+        int i;
+
+        for (i = 0; i < GaugeEffectSprites.Length; i++)
+        {
+            GaugeEffect_Image.sprite = GaugeEffectSprites[i];
+            yield return new WaitForSecondsRealtime(0.034f);
         }
     }
 
