@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a047062546fd45d9a9bb31cdf2e0a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 200
+  health: 220
   _maxAttackCount: 2
   _attackStartHeight: 4
   _stageLevels: []
@@ -1559,6 +1559,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8224119668883317748, guid: 948439418f1304dd0ab29d370e143475, type: 3}
+      propertyPath: _enemyCore
+      value: 
+      objectReference: {fileID: 33792267}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

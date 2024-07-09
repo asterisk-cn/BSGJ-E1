@@ -32,6 +32,15 @@ public class ResultManager : MonoBehaviour
         {
             _gameOverPanel.SetActive(true);
         }
+
+        if(JoyconManager.Instance.j != null)
+        {
+               foreach(var joycon in JoyconManager.Instance.j)
+            {
+                Debug.Log("hoge");
+                joycon.SetRumble(0, 0, 0.0f, 0);
+            } 
+        }
     }
 
     // Update is called once per frame

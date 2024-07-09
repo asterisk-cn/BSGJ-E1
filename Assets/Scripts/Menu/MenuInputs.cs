@@ -39,6 +39,7 @@ namespace Menu
 
         void OnSubmit(InputValue value)
         {
+            if (SceneFadeManager.instance.isFade == true) return;
             press = value.isPressed;
         }
 
