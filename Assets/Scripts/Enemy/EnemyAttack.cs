@@ -24,8 +24,6 @@ namespace Enemy
     {
         [Header("調整用パラメータ")]
         [Header("敵のパラメータ")]
-        [Header("調整用パラメータ")]
-        [Header("敵のパラメータ")]
         [SerializeField] private AttackParameters _defaultParameters;
         //戻る速度
         [SerializeField][Tooltip("上に上がる速度")] float upSpeed = 0.2f;
@@ -73,6 +71,11 @@ namespace Enemy
         [SerializeField] Vector3 effectScale = Vector3.one;
 
         private EnemyCore _enemyCore;
+
+        [SerializeField] Material defaultMaterial;
+        [SerializeField] Material fadeMaterial;
+
+        public virtual void LoadMaterial() { }
 
         private void Awake()
         {
@@ -189,24 +192,6 @@ namespace Enemy
                 coruStop = true;
             }
 
-            //攻撃がステージに到達
-            // if (isAttacking && transform.position.y - transform.localScale.y / 2 <= _stageHeight)
-            // {
-            //     if (_currentParameters.isStay)
-            //     {
-            //         Deactivate();
-            //         StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { DestroyWithFade(); }));
-            //         isAttacking = false;
-            //     }
-            //     else
-            //     {
-            //         _isUp = true;
-            //     }
-            //     //ステージに埋まらないようにする
-            //     float buff = transform.localScale.y / 2;
-            //     transform.position = new Vector3(transform.position.x, _stageHeight + buff, transform.position.z);
-            // }
-
             //元の高さに戻る
             if (_isUp) { transform.position += upSpeed * transform.up; }
             //元の高さに到達
@@ -255,6 +240,7 @@ namespace Enemy
 
         IEnumerator FadeIn(float fadeTime)
         {
+            ChangeMaterial(fadeMaterial);
             float alpha = 0.3f;
             float interval = 0.1f;
             while (alpha < 1.0f)
@@ -274,10 +260,25 @@ namespace Enemy
                 }
                 yield return new WaitForSeconds(interval);
             }
+            ChangeMaterial(defaultMaterial);
+        }
+
+        void ChangeMaterial(Material material)
+        {
+            foreach (var meshRenderer in _meshRenderers)
+            {
+                meshRenderer.material = material;
+            }
+
+            foreach (var skinsMesh in _skinsMesh)
+            {
+                skinsMesh.material = material;
+            }
         }
 
         IEnumerator FadeOut(float fadeTime)
         {
+            ChangeMaterial(fadeMaterial);
             float alpha = 1.0f;
             float interval = 0.1f;
             while (alpha > 0.0f)

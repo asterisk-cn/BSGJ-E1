@@ -65,6 +65,8 @@ MonoBehaviour:
   amplitude: 0.02
   hitEffect: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7, type: 3}
   effectScale: {x: 1, y: 1, z: 1}
+  defaultMaterial: {fileID: 2100000, guid: 32e0359e1fc2b41139fc5ab373717224, type: 2}
+  fadeMaterial: {fileID: 2100000, guid: a7a44d65e983c492baba6df9a44b48ba, type: 2}
 --- !u!54 &426629243483575978
 Rigidbody:
   m_ObjectHideFlags: 0
