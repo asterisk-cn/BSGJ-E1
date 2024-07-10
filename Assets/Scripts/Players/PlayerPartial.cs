@@ -92,6 +92,7 @@ namespace Players
 
         void OnTriggerEnter(Collider other)
         {
+            if (!_characterController.enabled) return;
             if (other.TryGetComponent<PlayerCharacter>(out var player))
             {
                 player.UnitePartial(this);
