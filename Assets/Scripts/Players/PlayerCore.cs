@@ -28,6 +28,9 @@ namespace Players
         [SerializeField][Tooltip("減少量")] private float decreaseUnionCount;
         [SerializeField][Tooltip("目標値")] private float _targetUnionCount = 10;
 
+        [Header("変換割合")]
+        [SerializeField] private int _conversionRate;
+
         [Header("-----------------------------")]
         [Space(10)]
 
@@ -121,7 +124,14 @@ namespace Players
                 }
                 if (_enemy.isAlive)
                 {
-                    _enemy.TakeDamage((int)_inputs.leftAttackValue);
+                    if (_inputs.UseJoycon)
+                    {
+                        _enemy.TakeDamage((int)_inputs.leftAttackValue / _conversionRate);
+                    }
+                    else
+                    {
+                        _enemy.TakeDamage(1);
+                    }
                     AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
                     _inputs.RumbleLeft(160, 320, 0.8f, 0.6f);
                 }
@@ -134,8 +144,15 @@ namespace Players
                     _animator.speed = _inputs.rightAttackValue;
                 }
                 if (_enemy.isAlive)
-                {
-                    _enemy.TakeDamage((int)_inputs.rightAttackValue);
+                {   
+                    if (_inputs.UseJoycon)
+                    {
+                        _enemy.TakeDamage((int)_inputs.leftAttackValue / _conversionRate);
+                    }
+                    else
+                    {
+                        _enemy.TakeDamage(1);
+                    }
                     AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
                     _inputs.RumbleRight(160, 320, 0.8f, 0.6f);
                 }
