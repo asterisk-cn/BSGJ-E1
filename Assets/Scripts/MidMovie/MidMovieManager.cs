@@ -22,6 +22,7 @@ namespace MidMovie
         private VideoPlayer _videoPlayer;
 
         bool _prevPress = false;
+        bool _prevHold = false;
 
         void Awake()
         {
@@ -43,14 +44,14 @@ namespace MidMovie
             switch (_midMovieManagerState)
             {
                 case MidMovieManagerState.Movie:
-                    if (_menuInputs.press && !_prevPress)
+                    if (_menuInputs.hold && !_prevHold)
                     {
                         LoopPointReached(_videoPlayer);
                     }
                     break;
             }
 
-            _prevPress = _menuInputs.press;
+            _prevHold = _menuInputs.hold;
         }
 
         // ビデオ再生終了時に呼ばれる
