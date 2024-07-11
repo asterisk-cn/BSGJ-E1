@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
+    path: Assets/Scenes/MidMovie.unity
+    guid: 25d9b32c0f18e404eb6e4d16d9f33f78
+  - enabled: 1
     path: Assets/Scenes/Fight.unity
     guid: 95f3ebb7c7cec46548cd23e69d18c6aa
   - enabled: 1
