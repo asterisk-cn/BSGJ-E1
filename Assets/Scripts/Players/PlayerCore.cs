@@ -151,7 +151,7 @@ namespace Players
             {
                 _currentParameters.unionCount = _targetUnionCount;
                 MainGameManager.instance.SetScore(GameTimeManager.instance.GetTime(), _currentParameters.partialHitCount);
-                SceneFadeManager.instance.FadeOut("Fight");
+                SceneFadeManager.instance.FadeOut("MidMovie");
             }
             DestroyPartial();
             GeneratePartial();
