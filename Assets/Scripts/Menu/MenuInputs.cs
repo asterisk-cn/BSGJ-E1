@@ -19,6 +19,7 @@ namespace Menu
         void FixedUpdate()
         {
             press = false;
+            hold = false;
 
             if (useJoycon)
             {
