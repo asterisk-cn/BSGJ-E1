@@ -9,6 +9,10 @@ namespace Menu
     {
         [HideInInspector] public Vector2 navigate;
         public bool press;
+        public bool hold;
+        [SerializeField]
+        private float _holdTime = 2.0f;
+        private float _holdTimer = 0.0f;
 
         [SerializeField] private bool useJoycon = true;
 
@@ -23,8 +27,8 @@ namespace Menu
         }
 
         private List<Joycon> _joycons;
-        private float _minDeadZone = 0.125f;
-        private float _maxDeadZone = 0.925f;
+        [SerializeField] private float _minDeadZone = 0.225f;
+        [SerializeField] private float _maxDeadZone = 0.925f;
 
         void Start()
         {
@@ -41,6 +45,12 @@ namespace Menu
         {
             if (SceneFadeManager.instance.isFade == true) return;
             press = value.isPressed;
+        }
+
+        void OnHold(InputValue value)
+        {
+            if (SceneFadeManager.instance.isFade == true) return;
+            hold = value.isPressed;
         }
 
         void UpdateJoyconInputs()
@@ -66,6 +76,20 @@ namespace Menu
                 else
                 {
                     press = joycon.GetButtonDown(Joycon.Button.DPAD_RIGHT);
+
+                    if (press)
+                    {
+                        _holdTimer += Time.deltaTime;
+                        if (_holdTimer >= _holdTime)
+                        {
+                            hold = true;
+                        }
+                    }
+                    else
+                    {
+                        _holdTimer = 0.0f;
+                        hold = false;
+                    }
                 }
             }
         }

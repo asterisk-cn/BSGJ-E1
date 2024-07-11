@@ -27,6 +27,7 @@ namespace Title
         private VideoPlayer _videoPlayer2;
 
         bool _prevPress = false;
+        bool _prevHold = false;
 
         void Awake()
         {
@@ -49,13 +50,13 @@ namespace Title
                 case TitleManagerState.Title:
                     break;
                 case TitleManagerState.Movie1:
-                    if (_menuInputs.press && !_prevPress)
+                    if (_menuInputs.hold && !_prevHold)
                     {
                         LoopPointReached1(_videoPlayer1);
                     }
                     break;
                 case TitleManagerState.Movie2:
-                    if (_menuInputs.press && !_prevPress)
+                    if (_menuInputs.hold && !_prevHold)
                     {
                         LoopPointReached2(_videoPlayer2);
                     }
@@ -63,6 +64,7 @@ namespace Title
             }
 
             _prevPress = _menuInputs.press;
+            _prevHold = _menuInputs.hold;
         }
 
         public void OnStartButton()
