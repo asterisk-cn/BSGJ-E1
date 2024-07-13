@@ -12,26 +12,28 @@ namespace Title
         enum TitleManagerState
         {
             Title,
-            // Image1,
-            // Image2,
-            Movie
+            Movie1,
+            Movie2
         }
 
         TitleManagerState _titleManagerState = TitleManagerState.Title;
         [SerializeField] Menu.MenuInputs _menuInputs;
 
         [SerializeField] private GameObject _title;
-        // [SerializeField] private GameObject _image1;
-        // [SerializeField] private GameObject _image2;
-        [SerializeField] private GameObject _movie;
+        [SerializeField] private GameObject _movie1;
+        [SerializeField] private GameObject _movie2;
 
-        private VideoPlayer _videoPlayer;
+        private VideoPlayer _videoPlayer1;
+        private VideoPlayer _videoPlayer2;
 
         bool _prevPress = false;
+        bool _prevHold = false;
 
         void Awake()
         {
-            _videoPlayer = _movie.GetComponent<VideoPlayer>();
+            _videoPlayer1 = _movie1.GetComponent<VideoPlayer>();
+            _videoPlayer2 = _movie2.GetComponent<VideoPlayer>();
+
         }
 
         // Start is called before the first frame update
@@ -41,38 +43,34 @@ namespace Title
         }
 
         // Update is called once per frame
-        // void Update()
-        // {
-        //     switch (_titleManagerState)
-        //     {
-        //         case TitleManagerState.Title:
-        //             break;
-        //         // case TitleManagerState.Image1:
-        //         //     if (_menuInputs.press && !_prevPress)
-        //         //     {
-        //         //         TransitionToImage2();
-        //         //     }
-        //         //     break;
-        //         // case TitleManagerState.Image2:
-        //         //     if (_menuInputs.press && !_prevPress)
-        //         //     {
-        //         //         TransitionToMovie();
-        //         //     }
-        //         //     break;
-        //         case TitleManagerState.Movie:
-        //             MainGameManager.instance.LoadScene("Main");
-        //             break;
-        //     }
+        void Update()
+        {
+            switch (_titleManagerState)
+            {
+                case TitleManagerState.Title:
+                    break;
+                case TitleManagerState.Movie1:
+                    if (_menuInputs.hold && !_prevHold)
+                    {
+                        LoopPointReached1(_videoPlayer1);
+                    }
+                    break;
+                case TitleManagerState.Movie2:
+                    if (_menuInputs.hold && !_prevHold)
+                    {
+                        LoopPointReached2(_videoPlayer2);
+                    }
+                    break;
+            }
 
-        //     _prevPress = _menuInputs.press;
-        // }
+            _prevPress = _menuInputs.press;
+            _prevHold = _menuInputs.hold;
+        }
 
         public void OnStartButton()
         {
-            // TransitionToImage1();
-            TransitionToMovie();
+            TransitionToMovie1();
             _prevPress = true;
-            //
             AudioManager.Instance.PlaySE("Button_SE");
             //タイトルを止める
             AudioManager.Instance.StopBGM();
@@ -80,32 +78,32 @@ namespace Title
             AudioManager.Instance.PlayBGM("OP_BGM");
         }
 
-        // void TransitionToImage1()
-        // {
-        //     _title.SetActive(false);
-        //     _image1.SetActive(true);
-        //     _titleManagerState = TitleManagerState.Image1;
-        // }
-
-        // void TransitionToImage2()
-        // {
-        //     _image1.SetActive(false);
-        //     _image2.SetActive(true);
-        //     _titleManagerState = TitleManagerState.Image2;
-        // }
-
-        void TransitionToMovie()
+        void TransitionToMovie1()
         {
-            // _image2.SetActive(false);
             _title.SetActive(false);
-            _movie.SetActive(true);
-            _videoPlayer.Play();
-            _videoPlayer.loopPointReached += LoopPointReached;
-            _titleManagerState = TitleManagerState.Movie;
+            _videoPlayer1.targetTexture.Release();
+            _movie1.SetActive(true);
+            _videoPlayer1.Play();
+            _videoPlayer1.loopPointReached += LoopPointReached1;
+            _titleManagerState = TitleManagerState.Movie1;
         }
 
+        void TransitionToMovie2()
+        {
+            _movie1.SetActive(false);
+            _videoPlayer2.targetTexture.Release();
+            _movie2.SetActive(true);
+            _videoPlayer2.Play();
+            _videoPlayer2.loopPointReached += LoopPointReached2;
+            _titleManagerState = TitleManagerState.Movie2;
+        }
         // ビデオ再生終了時に呼ばれる
-        public void LoopPointReached(VideoPlayer vp)
+        public void LoopPointReached1(VideoPlayer vp)
+        {
+            TransitionToMovie2();
+        }
+
+        public void LoopPointReached2(VideoPlayer vp)
         {
             MainGameManager.instance.LoadScene("Main");
         }

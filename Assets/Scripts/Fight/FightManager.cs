@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameManagers;
 
 public class FightManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class FightManager : MonoBehaviour
     static public void ToResult(bool isClear)
     {
         MainGameManager.instance.isClear = isClear;
+        GameTimeManager.instance.StopTimer();
         SceneFadeManager.instance.FadeOut("Result");
         
     }

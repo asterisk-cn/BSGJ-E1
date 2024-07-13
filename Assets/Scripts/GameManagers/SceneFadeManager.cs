@@ -21,6 +21,8 @@ public class SceneFadeManager : MonoBehaviour
 
     private string afterScene;
 
+    public bool isFade { private set; get; }
+
     
 
     void Awake()
@@ -61,7 +63,7 @@ public class SceneFadeManager : MonoBehaviour
     {
         // フェードアウトのフラグを上げる
         isFadeOut = true;
-
+        isFade = true;
         afterScene = nextScene;
     }
 
@@ -74,6 +76,7 @@ public class SceneFadeManager : MonoBehaviour
             Alpha();
             if (alpha <= 0)
             {
+                isFade = false;
                 Time.timeScale = 1;
                 alpha = 0;
                 isFadeIn = false;

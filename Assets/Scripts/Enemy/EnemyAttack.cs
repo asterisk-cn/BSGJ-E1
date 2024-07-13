@@ -24,8 +24,6 @@ namespace Enemy
     {
         [Header("調整用パラメータ")]
         [Header("敵のパラメータ")]
-        [Header("調整用パラメータ")]
-        [Header("敵のパラメータ")]
         [SerializeField] private AttackParameters _defaultParameters;
         //戻る速度
         [SerializeField][Tooltip("上に上がる速度")] float upSpeed = 0.2f;
@@ -66,13 +64,17 @@ namespace Enemy
         private SkinnedMeshRenderer[] _skinsMesh;
         private TrailRenderer _trailrenderer;
 
-        private bool coruStop;
         private bool isAttack = false;
 
         [SerializeField] GameObject hitEffect;
         [SerializeField] Vector3 effectScale = Vector3.one;
 
         private EnemyCore _enemyCore;
+
+        [SerializeField] Material defaultMaterial;
+        [SerializeField] Material fadeMaterial;
+
+        public virtual void LoadMaterial() { }
 
         private void Awake()
         {
@@ -101,8 +103,10 @@ namespace Enemy
             }
 
             _currentParameters = _defaultParameters;
-            if(_trailrenderer != null)
-            _trailrenderer.enabled = false;
+            if (_trailrenderer != null)
+            {
+                _trailrenderer.enabled = false;
+            }
         }
 
         // Start is called before the first frame update
@@ -172,8 +176,20 @@ namespace Enemy
             //isShake = false;
             isAttacking = true;
             isAttack = true;
-            if (_trailrenderer != null) 
-            _trailrenderer.enabled = true;
+
+            if (_trailrenderer != null)
+            {
+                if (_trailrenderer.transform.position.x > Camera.main.transform.position.x)
+                {
+                    _trailrenderer.transform.localRotation = Quaternion.Euler(0, 90, 0);
+                }
+                else
+                {
+                    _trailrenderer.transform.localRotation = Quaternion.Euler(0, -90, 0);
+                }
+                _trailrenderer.enabled = true;
+            }
+            StartCoroutine(FadeIn(0.5f));
         }
 
         void AttackMove()
@@ -182,30 +198,8 @@ namespace Enemy
             //武器を降ろす
             if (isAttacking&&!_isUp)
             {
-                // transform.position -= _currentParameters.attackSpeed * transform.up;
                 transform.localPosition -= _currentParameters.attackSpeed * transform.up;
-                if (coruStop) return;
-                StartCoroutine(FadeIn(0.5f));
-                coruStop = true;
             }
-
-            //攻撃がステージに到達
-            // if (isAttacking && transform.position.y - transform.localScale.y / 2 <= _stageHeight)
-            // {
-            //     if (_currentParameters.isStay)
-            //     {
-            //         Deactivate();
-            //         StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { DestroyWithFade(); }));
-            //         isAttacking = false;
-            //     }
-            //     else
-            //     {
-            //         _isUp = true;
-            //     }
-            //     //ステージに埋まらないようにする
-            //     float buff = transform.localScale.y / 2;
-            //     transform.position = new Vector3(transform.position.x, _stageHeight + buff, transform.position.z);
-            // }
 
             //元の高さに戻る
             if (_isUp) { transform.position += upSpeed * transform.up; }
@@ -255,6 +249,7 @@ namespace Enemy
 
         IEnumerator FadeIn(float fadeTime)
         {
+            ChangeMaterial(fadeMaterial);
             float alpha = 0.3f;
             float interval = 0.1f;
             while (alpha < 1.0f)
@@ -274,10 +269,25 @@ namespace Enemy
                 }
                 yield return new WaitForSeconds(interval);
             }
+            ChangeMaterial(defaultMaterial);
+        }
+
+        void ChangeMaterial(Material material)
+        {
+            foreach (var meshRenderer in _meshRenderers)
+            {
+                meshRenderer.material = material;
+            }
+
+            foreach (var skinsMesh in _skinsMesh)
+            {
+                skinsMesh.material = material;
+            }
         }
 
         IEnumerator FadeOut(float fadeTime)
         {
+            ChangeMaterial(fadeMaterial);
             float alpha = 1.0f;
             float interval = 0.1f;
             while (alpha > 0.0f)
@@ -340,14 +350,14 @@ namespace Enemy
                 {
                     Deactivate();
                     StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { DestroyWithFade(); }));
-                    PlaySE();
-                    _enemyCore.ShakeCamera();
                     isAttacking = false;
                 }
                 else
                 {
                     _isUp = true;
                 }
+                PlaySE();
+                _enemyCore.ShakeCamera();
             }
         }
 

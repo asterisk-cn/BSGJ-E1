@@ -1832,11 +1832,11 @@ PrefabInstance:
       objectReference: {fileID: 5625115824647577521}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: decreaseUnionCount
-      value: 1
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: increaseUnionCount
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _soulPrefabs.Array.size
@@ -2001,12 +2001,12 @@ MonoBehaviour:
     handRate: 0
   - unionCount: 7
     knifeRate: 3
-    potRate: 1
+    potRate: 2
     handRate: 0
   - unionCount: 10
-    knifeRate: 2
-    potRate: 1
-    handRate: 1
+    knifeRate: 0
+    potRate: 2
+    handRate: 3
   _shakeDuration: 0.3
   _shakePosMagnitude: 0.01
   _shakeRotMagnitude: 0.01

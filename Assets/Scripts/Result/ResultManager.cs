@@ -32,6 +32,14 @@ public class ResultManager : MonoBehaviour
         {
             _gameOverPanel.SetActive(true);
         }
+
+        if(JoyconManager.Instance.j != null)
+        {
+               foreach(var joycon in JoyconManager.Instance.j)
+            {
+                joycon.SetRumble(0, 0, 0.0f, 0);
+            } 
+        }
     }
 
     // Update is called once per frame
@@ -43,15 +51,15 @@ public class ResultManager : MonoBehaviour
     public void OnRetryButton()
     {
         SceneFadeManager.instance.FadeOut("Main");
-        if(!select)AudioManager.Instance.PlaySE("Button_SE");
-        select =true;
+        if (!select) AudioManager.Instance.PlaySE("Button_SE");
+        select = true;
     }
 
     public void OnTitleButton()
     {
         SceneFadeManager.instance.FadeOut("Title");
-       if(!select) AudioManager.Instance.PlaySE("Button_SE");
-       select =true;
+        if (!select) AudioManager.Instance.PlaySE("Button_SE");
+        select = true;
     }
 
     private string TimeToString(float time)

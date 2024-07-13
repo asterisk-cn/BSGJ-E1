@@ -36,12 +36,12 @@ namespace Players
             if (useJoycon)
             {
                 UpdateJoyconInputs();
-                if (leftAccelaration.magnitude > 5f)
+                if (leftAccelaration.magnitude > 2f)
                 {
                     leftAttack = true;
                     leftAttackValue = leftAccelaration.magnitude;
                 }
-                if (rightAccelaration.magnitude > 5f)
+                if (rightAccelaration.magnitude > 2f)
                 {
                     rightAttack = true;
                     rightAttackValue = rightAccelaration.magnitude;
@@ -134,6 +134,7 @@ namespace Players
                 if (joycon.isLeft)
                 {
                     joycon.SetRumble(lowFreq, highFreq, amp, (int)time);
+                    StartCoroutine(StopJoyconRumble(time, joycon));
                 }
             }
 
@@ -147,6 +148,7 @@ namespace Players
                 if (!joycon.isLeft)
                 {
                     joycon.SetRumble(lowFreq, highFreq, amp, (int)time);
+                    StartCoroutine(StopJoyconRumble(time, joycon));
                 }
             }
 
@@ -179,6 +181,12 @@ namespace Players
             yield return new WaitForSecondsRealtime(time);
 
             gamepad.SetMotorSpeeds(0.0f, 0.0f);
+        }
+
+        private IEnumerator StopJoyconRumble(float time, Joycon joycon)
+        {
+            yield return new WaitForSecondsRealtime(time);
+            joycon.SetRumble(0, 0, 0, 0);
         }
     }
 }

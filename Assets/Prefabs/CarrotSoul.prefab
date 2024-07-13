@@ -89,6 +89,14 @@ PrefabInstance:
       value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: 9203997197074302471, guid: d887a3ff42dfe449789f1376ff2bffd5, type: 3}
+      propertyPath: _dustSmoke
+      value: 
+      objectReference: {fileID: 1876081050882714, guid: e5df5caad603c8349ba3481b8ded0927, type: 3}
+    - target: {fileID: 9203997197074302471, guid: d887a3ff42dfe449789f1376ff2bffd5, type: 3}
+      propertyPath: _stareffect
+      value: 
+      objectReference: {fileID: 1500378020736912, guid: 2547a66872ebe45408ace228820a79e1, type: 3}
+    - target: {fileID: 9203997197074302471, guid: d887a3ff42dfe449789f1376ff2bffd5, type: 3}
       propertyPath: _defaultParameters.maxSpeed
       value: 0.01
       objectReference: {fileID: 0}

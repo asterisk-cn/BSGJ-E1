@@ -8,6 +8,7 @@ namespace GameManagers
     {
         Title,
         Main,
+        MidMovie,
         Fight,
         Result
     }
