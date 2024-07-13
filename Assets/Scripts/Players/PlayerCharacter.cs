@@ -71,7 +71,9 @@ namespace Players
         IEnumerator InvincibleTime(float time)
         {
             _hitDamage = true;
+            _animator.SetBool("Invincible", true);
             yield return new WaitForSeconds(time);
+            _animator.SetBool("Invincible", false);
             _hitDamage = false;
         }
 

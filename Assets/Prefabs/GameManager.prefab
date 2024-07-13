@@ -93,7 +93,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameState: 1
   _mainTime: 180
-  _fightTime: 10
+  _fightTime: 30
+  _scoreRankS: 50
+  _scoreRankA: 70
+  _scoreRankB: 100
   isClear: 0
 --- !u!114 &4308786854474834289
 MonoBehaviour:
