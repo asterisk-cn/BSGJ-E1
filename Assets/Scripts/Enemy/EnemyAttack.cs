@@ -104,8 +104,10 @@ namespace Enemy
             }
 
             _currentParameters = _defaultParameters;
-            if(_trailrenderer != null)
-            _trailrenderer.enabled = false;
+            if (_trailrenderer != null)
+            {
+                _trailrenderer.enabled = false;
+            }
         }
 
         // Start is called before the first frame update
@@ -175,8 +177,18 @@ namespace Enemy
             //isShake = false;
             isAttacking = true;
             isAttack = true;
-            if (_trailrenderer != null) 
-            _trailrenderer.enabled = true;
+            if (_trailrenderer != null)
+            {
+                if (_trailrenderer.transform.position.x > Camera.main.transform.position.x)
+                {
+                    _trailrenderer.transform.localRotation = Quaternion.Euler(0, 90, 0);
+                }
+                else
+                {
+                    _trailrenderer.transform.localRotation = Quaternion.Euler(0, -90, 0);
+                }
+                _trailrenderer.enabled = true;
+            }
         }
 
         void AttackMove()
