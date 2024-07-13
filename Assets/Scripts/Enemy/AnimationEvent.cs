@@ -13,6 +13,6 @@ public class AnimationEvent : MonoBehaviour
     }
     public void AnimEve()
     {
-        _enemyCore.Die();
+        _enemyCore.AfterDie();
     }
 }
