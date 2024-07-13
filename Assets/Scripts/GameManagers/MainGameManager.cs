@@ -86,6 +86,14 @@ public class MainGameManager : MonoBehaviour
         }
     }
 
+    void OnSceneUnloaded(Scene scene)
+    {
+        if (scene.name == "Result")
+        {
+            AudioManager.Instance.StopBGM();
+        }
+    }
+
     void OnTitleLoaded()
     {
         gameState = GameState.Title;
