@@ -74,6 +74,8 @@ namespace Players
 
         void OnLeftMove(InputValue value)
         {
+            if (SceneFadeManager.instance.isFade == true) return;
+
             var axis = value.Get<Vector2>();
 
             leftMoveStick = new Vector3(axis.x, 0, axis.y);
@@ -81,6 +83,8 @@ namespace Players
 
         void OnRightMove(InputValue value)
         {
+            if (SceneFadeManager.instance.isFade == true) return;
+
             var axis = value.Get<Vector2>();
 
             rightMoveStick = new Vector3(axis.x, 0, axis.y);
@@ -88,6 +92,7 @@ namespace Players
 
         void OnFireLeft(InputValue value)
         {
+            if (SceneFadeManager.instance.isFade == true) return;
             //デバック用のダメージ(クリック)
             leftAttack = value.isPressed;
             leftAttackValue = 10.0f;
@@ -95,11 +100,16 @@ namespace Players
 
         void OnFireRight(InputValue value)
         {
+            if (SceneFadeManager.instance.isFade == true) return;
+
             rightAttack = value.isPressed;
+            rightAttackValue = 10.0f;
         }
 
         void UpdateJoyconInputs()
         {
+            if (SceneFadeManager.instance.isFade == true) return;
+
             for (int i = 0; i < _joycons.Count; i++)
             {
                 Joycon joycon = _joycons[i];

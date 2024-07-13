@@ -38,6 +38,7 @@ namespace Menu
 
         void OnNavigate(InputValue value)
         {
+            if (SceneFadeManager.instance.isFade == true) return;
             var axis = value.Get<Vector2>();
             navigate = axis;
         }
@@ -56,6 +57,8 @@ namespace Menu
 
         void UpdateJoyconInputs()
         {
+            if (SceneFadeManager.instance.isFade == true) return;
+
             for (int i = 0; i < _joycons.Count; i++)
             {
                 Joycon joycon = _joycons[i];
