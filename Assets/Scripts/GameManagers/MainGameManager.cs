@@ -45,6 +45,7 @@ public class MainGameManager : MonoBehaviour
     void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
         OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
         PlayBGM(gameState);
     }
