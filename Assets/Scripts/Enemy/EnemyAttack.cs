@@ -64,7 +64,6 @@ namespace Enemy
         private SkinnedMeshRenderer[] _skinsMesh;
         private TrailRenderer _trailrenderer;
 
-        private bool coruStop;
         private bool isAttack = false;
 
         [SerializeField] GameObject hitEffect;
@@ -177,6 +176,7 @@ namespace Enemy
             //isShake = false;
             isAttacking = true;
             isAttack = true;
+
             if (_trailrenderer != null)
             {
                 if (_trailrenderer.transform.position.x > Camera.main.transform.position.x)
@@ -189,6 +189,7 @@ namespace Enemy
                 }
                 _trailrenderer.enabled = true;
             }
+            StartCoroutine(FadeIn(0.5f));
         }
 
         void AttackMove()
@@ -197,11 +198,7 @@ namespace Enemy
             //武器を降ろす
             if (isAttacking&&!_isUp)
             {
-                // transform.position -= _currentParameters.attackSpeed * transform.up;
                 transform.localPosition -= _currentParameters.attackSpeed * transform.up;
-                if (coruStop) return;
-                StartCoroutine(FadeIn(0.5f));
-                coruStop = true;
             }
 
             //元の高さに戻る
@@ -353,7 +350,7 @@ namespace Enemy
                 {
                     Deactivate();
                     StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { DestroyWithFade(); }));
-                    
+                    isAttacking = false;
                 }
                 else
                 {
@@ -361,7 +358,6 @@ namespace Enemy
                 }
                 PlaySE();
                 _enemyCore.ShakeCamera();
-                isAttacking = false;
             }
         }
 
