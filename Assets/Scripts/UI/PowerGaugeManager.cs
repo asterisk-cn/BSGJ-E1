@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Players;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditorInternal.ReorderableList;
 
 
 public class PowerGaugeManager : MonoBehaviour
