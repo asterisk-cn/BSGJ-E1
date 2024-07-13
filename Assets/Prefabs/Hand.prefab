@@ -188,7 +188,7 @@ MonoBehaviour:
     moveSpeed: 0.02
     attackSpeed: 0.045
     chaseTime: 0
-    attackTime: 0.8
+    attackTime: 0.9
     remainTime: 0
     isChase: 0
     isStay: 0

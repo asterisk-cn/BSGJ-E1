@@ -3893,10 +3893,6 @@ PrefabInstance:
       value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
-      propertyPath: _conversionRate
-      value: 24
-      objectReference: {fileID: 0}
-    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _generatePosition
       value: 
       objectReference: {fileID: 0}
@@ -4075,10 +4071,6 @@ PrefabInstance:
     - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
       propertyPath: gameState
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
-      propertyPath: _fightTime
-      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
       propertyPath: _move.m_Name

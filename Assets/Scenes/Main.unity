@@ -1831,6 +1831,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5625115824647577521}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _targetUnionCount
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: decreaseUnionCount
       value: 0.6
       objectReference: {fileID: 0}
@@ -1999,14 +2003,14 @@ MonoBehaviour:
     knifeRate: 1
     potRate: 0
     handRate: 0
-  - unionCount: 7
-    knifeRate: 3
-    potRate: 2
+  - unionCount: 8
+    knifeRate: 2
+    potRate: 1
     handRate: 0
-  - unionCount: 10
-    knifeRate: 0
+  - unionCount: 12
+    knifeRate: 1
     potRate: 2
-    handRate: 3
+    handRate: 4
   _shakeDuration: 0.3
   _shakePosMagnitude: 0.01
   _shakeRotMagnitude: 0.01
