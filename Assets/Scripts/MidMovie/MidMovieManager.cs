@@ -33,6 +33,7 @@ namespace MidMovie
         // Start is called before the first frame update
         void Start()
         {
+            _videoPlayer.targetTexture.Release();
             _movie.SetActive(true);
             _videoPlayer.Play();
             _videoPlayer.loopPointReached += LoopPointReached;

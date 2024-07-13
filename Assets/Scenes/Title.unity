@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028373, g: 0.22571398, b: 0.30692294, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -349,8 +349,8 @@ Camera:
   m_GameObject: {fileID: 605428403}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -958,7 +958,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navigate: {x: 0, y: 0}
   press: 0
+  hold: 0
+  _holdTime: 2
   useJoycon: 1
+  _minDeadZone: 0.225
+  _maxDeadZone: 0.925
 --- !u!114 &1264692079
 MonoBehaviour:
   m_ObjectHideFlags: 0
