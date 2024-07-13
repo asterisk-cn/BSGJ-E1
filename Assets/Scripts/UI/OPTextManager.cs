@@ -14,28 +14,28 @@ public class OPTextManager : MonoBehaviour
 
     private void Start()
     {
-        //StartOPText1();
+        // StartOPText1();
     }
 
     private void Update()
     {
         //Aボタンの入力検知に変更する
-        if (Input.anyKeyDown && doneAddText)
-        {
-            doneAddText = false;
-            if (textNum == changeMovie2Num) //動画２へ切り替えるテキストまで進んだら動画２を再生
-            {
-                Debug.Log("movie2");
-                StartOPText2();
-            }
-            else if(textNum >= strings.Length) //全ての文章を表示しているならメインシーンへ
-            {
-                Debug.Log("OP end");
-            } else
-            {
-                StartCoroutine("AddText");
-            }
-        }
+        // if (Input.anyKeyDown && doneAddText)
+        // {
+        //     doneAddText = false;
+        //     if (textNum == changeMovie2Num) //動画２へ切り替えるテキストまで進んだら動画２を再生
+        //     {
+        //         Debug.Log("movie2");
+        //         StartOPText2();
+        //     }
+        //     else if(textNum >= strings.Length) //全ての文章を表示しているならメインシーンへ
+        //     {
+        //         Debug.Log("OP end");
+        //     } else
+        //     {
+        //         StartCoroutine("AddText");
+        //     }
+        // }
     }
 
     //動画1再生終了時、動画を止めてこれを呼ぶ
@@ -52,6 +52,11 @@ public class OPTextManager : MonoBehaviour
         textNum = changeMovie2Num;
 
         StartCoroutine("SetTextBackGround");
+    }
+
+    public void NextText()
+    {
+        StartCoroutine("AddText");
     }
 
     void InitializedOPText()
@@ -82,7 +87,8 @@ public class OPTextManager : MonoBehaviour
     IEnumerator AddText() //テキスト送り
     {
         int i;
-        float interval = 0.02f;
+        float interval = 0.04f;
+        doneAddText = false;
 
         for (i = 1; i <= strings[textNum].Length; i++)
         {
@@ -93,5 +99,10 @@ public class OPTextManager : MonoBehaviour
 
         //クリック判定をオンにする
         doneAddText = true;
+    }
+
+    public bool IsDoneAddText()
+    {
+        return doneAddText;
     }
 }
