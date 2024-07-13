@@ -14,7 +14,7 @@ public class OPTextManager : MonoBehaviour
 
     private void Start()
     {
-        StartOPText1();
+        //StartOPText1();
     }
 
     private void Update()
