@@ -278,7 +278,7 @@ namespace Players
         {
             isAlive = false;
             MainGameManager.instance.isClear = false;
-            MainTimerManager.instance.StopTimer();
+            GameTimeManager.instance.StopTimer();
             SceneFadeManager.instance.FadeOut("Result");
         }
 
