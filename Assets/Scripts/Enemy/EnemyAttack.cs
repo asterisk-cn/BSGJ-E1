@@ -197,7 +197,6 @@ namespace Enemy
             //武器を降ろす
             if (isAttacking&&!_isUp)
             {
-                // transform.position -= _currentParameters.attackSpeed * transform.up;
                 transform.localPosition -= _currentParameters.attackSpeed * transform.up;
                 if (coruStop) return;
                 StartCoroutine(FadeIn(0.5f));
@@ -353,7 +352,7 @@ namespace Enemy
                 {
                     Deactivate();
                     StartCoroutine(DelayCoroutine(_currentParameters.remainTime, () => { DestroyWithFade(); }));
-                    
+                    isAttacking = false;
                 }
                 else
                 {
@@ -361,7 +360,6 @@ namespace Enemy
                 }
                 PlaySE();
                 _enemyCore.ShakeCamera();
-                isAttacking = false;
             }
         }
 
