@@ -116,6 +116,7 @@ namespace Players
             ParticleSystem[] particleSystems = effect.GetComponentsInChildren<ParticleSystem>();
             foreach (var particleSystem in particleSystems)
             {
+                particleSystem.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
                 particleSystem.Play();
             }
         }
