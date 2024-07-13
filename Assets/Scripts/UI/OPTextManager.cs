@@ -9,12 +9,12 @@ public class OPTextManager : MonoBehaviour
     public Image TextBackGround;
     public TextMeshProUGUI OPText;
     [TextArea (1, 2)]public string[] strings;
-    int textNum;
+    int textNum, changeMovie2Num = 1;
     bool doneAddText;
 
     private void Start()
     {
-        StartOPText();
+        StartOPText1();
     }
 
     private void Update()
@@ -22,29 +22,48 @@ public class OPTextManager : MonoBehaviour
         //Aボタンの入力検知に変更する
         if (Input.anyKeyDown && doneAddText)
         {
-            if (textNum < strings.Length)
+            doneAddText = false;
+            if (textNum == changeMovie2Num) //動画２へ切り替えるテキストまで進んだら動画２を再生
+            {
+                Debug.Log("movie2");
+                StartOPText2();
+            }
+            else if(textNum >= strings.Length) //全ての文章を表示しているならメインシーンへ
+            {
+                Debug.Log("OP end");
+            } else
             {
                 StartCoroutine("AddText");
-            }
-            else //全ての文章を表示しているならメインシーンへ
-            {
             }
         }
     }
 
-    //動画再生終了時動画を止めてこれを呼ぶ
-    public void StartOPText()
+    //動画1再生終了時、動画を止めてこれを呼ぶ
+    public void StartOPText1()
     {
-        TextBackGround.color = Color.clear;
         textNum = 0;
-        doneAddText = true;
-        OPText.text = "";
 
         StartCoroutine("SetTextBackGround");
     }
 
+    //動画2再生終了時、動画を止めてこれを呼ぶ
+    public void StartOPText2()
+    {
+        textNum = changeMovie2Num;
+
+        StartCoroutine("SetTextBackGround");
+    }
+
+    void InitializedOPText()
+    {
+        TextBackGround.color = Color.clear;
+        OPText.text = "";
+    }
+
     IEnumerator SetTextBackGround()
     {
+        InitializedOPText();
+
         int i;
         float interval = 0.01f;
         float time = 0.5f;
@@ -62,8 +81,6 @@ public class OPTextManager : MonoBehaviour
 
     IEnumerator AddText() //テキスト送り
     {
-        doneAddText = false;
-
         int i;
         float interval = 0.02f;
 
