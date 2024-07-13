@@ -23,6 +23,7 @@ namespace Players
 
         private Vector3 _velocity = Vector3.zero;
         [SerializeField] GameObject _stareffect;
+        [SerializeField] GameObject _dustSmoke;
 
         public bool isOnFloor = false;
 
@@ -92,7 +93,6 @@ namespace Players
 
         void OnTriggerEnter(Collider other)
         {
-            if (!_characterController.enabled) return;
             if (other.TryGetComponent<PlayerCharacter>(out var player))
             {
                 player.UnitePartial(this);
@@ -112,7 +112,19 @@ namespace Players
         {
             _characterController.enabled = true;
             isOnFloor = true;
+            GameObject effect = Instantiate(_dustSmoke, transform);
+            ParticleSystem[] particleSystems = effect.GetComponentsInChildren<ParticleSystem>();
+            foreach (var particleSystem in particleSystems)
+            {
+                particleSystem.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+                particleSystem.Play();
+            }
+        }
+
+        public void PlaySE()
+        {
             AudioManager.Instance.PlaySE("Main_SoulOnFloor_SE");
         }
+
     }
 }
