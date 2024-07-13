@@ -70,6 +70,11 @@ public class MainGameManager : MonoBehaviour
             OnRunLoaded();
         }
 
+        if (scene.name == "MidMovie")
+        {
+            OnMidMovieLoaded();
+        }
+
         if (scene.name == "Fight")
         {
             OnFightLoaded();
@@ -103,6 +108,12 @@ public class MainGameManager : MonoBehaviour
     {
         if (gameState == GameState.Result) return;
         instance.LoadScene("Result");
+    }
+
+    void OnMidMovieLoaded()
+    {
+        gameState = GameState.MidMovie;
+        PlayBGM(gameState);
     }
 
     /**
@@ -153,6 +164,10 @@ public class MainGameManager : MonoBehaviour
 
             case GameState.Main:
                 AudioManager.Instance.PlayBGM("Main_BGM");
+                break;
+
+            case GameState.MidMovie:
+                AudioManager.Instance.StopBGM();
                 break;
 
             case GameState.Fight:
