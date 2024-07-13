@@ -118,6 +118,7 @@ namespace Title
         void TransitionToMovie1()
         {
             _title.SetActive(false);
+            _videoPlayer1.targetTexture.Release();
             _movie1.SetActive(true);
             _videoPlayer1.Play();
             _videoPlayer1.loopPointReached += LoopPointReached1;
@@ -128,6 +129,7 @@ namespace Title
         {
             _movie1.SetActive(false);
             _text.SetActive(false);
+            _videoPlayer2.targetTexture.Release();
             _movie2.SetActive(true);
             _videoPlayer2.Play();
             _videoPlayer2.loopPointReached += LoopPointReached2;

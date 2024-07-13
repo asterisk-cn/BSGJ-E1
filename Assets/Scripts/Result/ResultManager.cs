@@ -37,7 +37,6 @@ public class ResultManager : MonoBehaviour
         {
                foreach(var joycon in JoyconManager.Instance.j)
             {
-                Debug.Log("hoge");
                 joycon.SetRumble(0, 0, 0.0f, 0);
             } 
         }
@@ -52,15 +51,15 @@ public class ResultManager : MonoBehaviour
     public void OnRetryButton()
     {
         SceneFadeManager.instance.FadeOut("Main");
-        if(!select)AudioManager.Instance.PlaySE("Button_SE");
-        select =true;
+        if (!select) AudioManager.Instance.PlaySE("Button_SE");
+        select = true;
     }
 
     public void OnTitleButton()
     {
         SceneFadeManager.instance.FadeOut("Title");
-       if(!select) AudioManager.Instance.PlaySE("Button_SE");
-       select =true;
+        if (!select) AudioManager.Instance.PlaySE("Button_SE");
+        select = true;
     }
 
     private string TimeToString(float time)

@@ -108,6 +108,7 @@ namespace Players
                     if (_velocity.magnitude <= 0.01f) { _velocity = Vector3.zero; }
                     
                 }
+                _animator.SetTrigger("Idle");
             }
 
             // direction.y = direction.y + (Physics.gravity.y * Time.deltaTime);
