@@ -1792,7 +1792,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5625115824761160549, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _invincibleTime
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5625115824761160549, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _defaultParameters.deceleration
