@@ -214,24 +214,18 @@ namespace Enemy
             _currentHealth -= damage;
             if (_currentHealth <= 0)
             {
+                _animator.SetTrigger("Down");
                 _currentHealth = 0;
-                Die();
+                //!
+                if (isAlive)AudioManager.Instance.PlaySE("Fight_FinishiBlaw_SE");
+                // Die();
             }
         }
 
-        void Die()
+        public void Die()
         {
-            _animator.SetTrigger("Down");
-            if (isAlive)
-            {
-                AudioManager.Instance.PlaySE("Fight_FinishiBlaw_SE");
-            }
             isAlive = false;
             GameTimeManager.instance.StopTimer();
-        }
-
-        public void AfterDie()
-        {
             FightManager.ToResult(true);
         }
 
