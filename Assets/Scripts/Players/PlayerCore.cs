@@ -126,11 +126,11 @@ namespace Players
                 {
                     if (_inputs.UseJoycon)
                     {
-                        _enemy.TakeDamage((int)_inputs.leftAttackValue / _conversionRate);
+                        _enemy.TakeDamage((int)_inputs.leftAttackValue * 10);
                     }
                     else
                     {
-                        _enemy.TakeDamage((int)_inputs.leftAttackValue);
+                        _enemy.TakeDamage((int)_inputs.leftAttackValue * 10 * _conversionRate);
                     }
                     AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
                     _inputs.RumbleLeft(160, 320, 0.8f, 0.6f);
@@ -147,11 +147,11 @@ namespace Players
                 {   
                     if (_inputs.UseJoycon)
                     {
-                        _enemy.TakeDamage((int)_inputs.rightAttackValue / _conversionRate);
+                        _enemy.TakeDamage((int)_inputs.rightAttackValue * 10);
                     }
                     else
                     {
-                        _enemy.TakeDamage((int)_inputs.rightAttackValue);
+                        _enemy.TakeDamage((int)_inputs.rightAttackValue * 10 * _conversionRate);
                     }
                     AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
                     _inputs.RumbleRight(160, 320, 0.8f, 0.6f);

@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a047062546fd45d9a9bb31cdf2e0a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 500
+  health: 15000
   _maxAttackCount: 2
   _attackStartHeight: 4
   _stageLevels: []
@@ -1558,6 +1558,10 @@ PrefabInstance:
     - target: {fileID: 6542183050072965536, guid: 948439418f1304dd0ab29d370e143475, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8224119668883317748, guid: 948439418f1304dd0ab29d370e143475, type: 3}
+      propertyPath: pushPow
+      value: 0.008
       objectReference: {fileID: 0}
     - target: {fileID: 8224119668883317748, guid: 948439418f1304dd0ab29d370e143475, type: 3}
       propertyPath: _enemyCore
@@ -3891,6 +3895,10 @@ PrefabInstance:
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _proportion
       value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _conversionRate
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _generatePosition
