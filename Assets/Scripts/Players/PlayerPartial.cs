@@ -1,3 +1,4 @@
+using Enemy;
 using GameManagers;
 using System.Collections;
 using System.Collections.Generic;
@@ -105,6 +106,15 @@ namespace Players
                         particleSystem.Play();
                     }
                 } 
+            }
+
+            if (!isOnFloor)
+            {
+                if (other.TryGetComponent<EnemyAttack>(out var enemyAttack))
+                {
+                    if(enemyAttack != null)
+                    Destroy(other.gameObject);
+                }
             }
         }
 
