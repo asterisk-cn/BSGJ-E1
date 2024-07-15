@@ -96,6 +96,7 @@ namespace Players
         {
             if (other.TryGetComponent<PlayerCharacter>(out var player))
             {
+                if (!isOnFloor) return;
                 player.UnitePartial(this);
                 if (_stareffect != null)
                 {
