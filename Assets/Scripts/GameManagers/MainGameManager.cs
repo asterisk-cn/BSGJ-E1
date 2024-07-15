@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using GameManagers;
+using TMPro;
 
 public class MainGameManager : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class MainGameManager : MonoBehaviour
     private string _scoreRank;
 
     public bool isClear = false;
+    [SerializeField] private TextMeshProUGUI debugSummary;
+    private bool debugMode = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -48,6 +51,10 @@ public class MainGameManager : MonoBehaviour
         SceneManager.sceneUnloaded += OnSceneUnloaded;
         OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
         PlayBGM(gameState);
+
+#if UNITY_EDITOR
+        debugSummary.gameObject.SetActive(true);
+#endif
     }
 
     // Update is called once per frame
@@ -55,7 +62,14 @@ public class MainGameManager : MonoBehaviour
     {
         if (gameState == GameState.Main)
         {
-
+#if UNITY_EDITOR
+            if(Input.GetKey(KeyCode.Q)&&Input.GetKey(KeyCode.E))
+            {
+                if (debugMode) return;
+                   debugMode = true;
+                LoadScene("Fight");
+            }
+#endif
         }
     }
 
