@@ -43,7 +43,7 @@ namespace Players
         // Update is called once per frame
         void Update()
         {
-
+            if (!isOnFloor) OnEnableCharacterController();
         }
 
         public void Move(Vector3 direction)
@@ -119,8 +119,10 @@ namespace Players
             }
         }
 
+        //アニメーションfallの最後に呼ばれる
         public void OnEnableCharacterController()
         {
+            if (transform.position.y > 1.0f) return;
             _characterController.enabled = true;
             isOnFloor = true;
             GameObject effect = Instantiate(_dustSmoke, transform);
