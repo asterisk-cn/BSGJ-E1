@@ -62,14 +62,14 @@ public class MainGameManager : MonoBehaviour
     {
         if (gameState == GameState.Main)
         {
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
             if(Input.GetKey(KeyCode.Q)&&Input.GetKey(KeyCode.E))
             {
                 if (debugMode) return;
                    debugMode = true;
                 LoadScene("Fight");
             }
-#endif
+//#endif
         }
     }
 
