@@ -60,6 +60,10 @@ MonoBehaviour:
   isActive: 1
   frequency: 20
   amplitude: 0.02
+  hitEffect: {fileID: 0}
+  effectScale: {x: 1, y: 1, z: 1}
+  defaultMaterial: {fileID: 0}
+  fadeMaterial: {fileID: 0}
 --- !u!54 &426629243483575978
 Rigidbody:
   m_ObjectHideFlags: 0

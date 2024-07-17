@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2681954507550455089}
   - component: {fileID: 4933290290799495603}
   - component: {fileID: 292621651774589748}
-  - component: {fileID: 6896240508515160633}
   - component: {fileID: 1483547548702257893}
   m_Layer: 0
   m_Name: PlayerPartial
@@ -54,6 +53,9 @@ MonoBehaviour:
     acceleration: 0.3
     deceleration: 0.8
     health: 0
+  _stareffect: {fileID: 0}
+  _dustSmoke: {fileID: 0}
+  isOnFloor: 0
 --- !u!33 &2681954507550455089
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -129,29 +131,6 @@ CharacterController:
   m_StepOffset: 0
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &6896240508515160633
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5895224362709358197}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.6
-  m_Height: 2
-  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1483547548702257893
 Rigidbody:

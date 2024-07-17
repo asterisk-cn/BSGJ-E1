@@ -326,22 +326,32 @@ namespace Enemy
         {
             if (other.gameObject.tag == "Player" && isAttack && isAttacking)
             {
-                isAttack = false;
-                //エフェクト再生
-                GameObject effect = Instantiate(hitEffect,other.transform);
-                effect.transform.localScale = effectScale;
-                ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
-                if(particleSystem != null)particleSystem.Play();
-                _enemyCore.ShakeCamera();
-                if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
+                if (isAttack && isAttacking)
                 {
-                    isAttacking = false;
-                    player.TakeDamage(1);
-                    Destroy(gameObject);
+                    isAttack = false;
+                    //エフェクト再生
+                    GameObject effect = Instantiate(hitEffect, other.transform);
+                    effect.transform.localScale = effectScale;
+                    ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
+                    if (particleSystem != null) particleSystem.Play();
+                    _enemyCore.ShakeCamera();
+                    if (other.gameObject.TryGetComponent<PlayerCharacter>(out var player))
+                    {
+                        isAttacking = false;
+                        player.TakeDamage(1);
+                        Destroy(gameObject);
+                    }
+                    else if (other.transform.parent != null && other.transform.parent.parent != null && other.transform.parent.parent.TryGetComponent<PlayerPartial>(out var parentPartial))
+                    {
+                        parentPartial.TakeDamage(1);
+                    }
                 }
-                if (other.gameObject.TryGetComponent<PlayerPartial>(out var partial))
+                else
                 {
-                    partial.TakeDamage(1);
+                    if (other.transform.parent != null && other.transform.parent.parent != null && other.transform.parent.parent.TryGetComponent<PlayerPartial>(out var partial) && !partial.isOnFloor)
+                    {
+                        Destroy(gameObject);
+                    }
                 }
             }
             else if (other.gameObject.tag == "Stage" && isAttacking)
@@ -358,6 +368,20 @@ namespace Enemy
                 }
                 PlaySE();
                 _enemyCore.ShakeCamera();
+            }
+        }
+
+        void OnTriggerStay(Collider other)
+        {
+            if (other.gameObject.tag == "Player")
+            {
+                if (!(isAttack && isAttacking))
+                {
+                    if (other.transform.parent != null && other.transform.parent.parent != null && other.transform.parent.parent.TryGetComponent<PlayerPartial>(out var partial) && !partial.isOnFloor)
+                    {
+                        Destroy(gameObject);
+                    }
+                }
             }
         }
 
