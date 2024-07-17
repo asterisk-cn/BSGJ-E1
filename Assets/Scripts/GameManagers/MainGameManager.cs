@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using GameManagers;
+using TMPro;
 
 public class MainGameManager : MonoBehaviour
 {
@@ -48,6 +49,7 @@ public class MainGameManager : MonoBehaviour
         SceneManager.sceneUnloaded += OnSceneUnloaded;
         OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
         PlayBGM(gameState);
+
     }
 
     // Update is called once per frame
@@ -55,7 +57,14 @@ public class MainGameManager : MonoBehaviour
     {
         if (gameState == GameState.Main)
         {
-
+            // Debug Mode
+            //#if UNITY_EDITOR
+            if (Input.GetKey(KeyCode.Q) && Input.GetKey(KeyCode.E))
+            {
+                SetScore(0, 0);
+                LoadScene("Fight");
+            }
+//#endif
         }
     }
 
