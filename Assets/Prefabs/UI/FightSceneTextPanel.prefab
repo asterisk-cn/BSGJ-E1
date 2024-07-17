@@ -252,10 +252,11 @@ MonoBehaviour:
   Fire_Obj: {fileID: 6864848569232770011}
   DefaultSheffHatSize: {x: 0, y: 0, z: 0}
   DiffFromHatToArm: {x: 0, y: 0, z: 0}
-  fightTime: 10
+  fightTime: 30
   imageRate: 0.5
   pushPow: 0.1
   fireTime: 0.2
+  _enemyCore: {fileID: 0}
 --- !u!1 &3409574998929264298
 GameObject:
   m_ObjectHideFlags: 0

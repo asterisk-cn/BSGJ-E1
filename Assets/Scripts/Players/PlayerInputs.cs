@@ -36,12 +36,12 @@ namespace Players
             if (useJoycon)
             {
                 UpdateJoyconInputs();
-                if (leftAccelaration.magnitude > 5f)
+                if (leftAccelaration.magnitude > 2f)
                 {
                     leftAttack = true;
                     leftAttackValue = leftAccelaration.magnitude;
                 }
-                if (rightAccelaration.magnitude > 5f)
+                if (rightAccelaration.magnitude > 2f)
                 {
                     rightAttack = true;
                     rightAttackValue = rightAccelaration.magnitude;
@@ -74,6 +74,8 @@ namespace Players
 
         void OnLeftMove(InputValue value)
         {
+            if (SceneFadeManager.instance.isFade == true) return;
+
             var axis = value.Get<Vector2>();
 
             leftMoveStick = new Vector3(axis.x, 0, axis.y);
@@ -81,6 +83,8 @@ namespace Players
 
         void OnRightMove(InputValue value)
         {
+            if (SceneFadeManager.instance.isFade == true) return;
+
             var axis = value.Get<Vector2>();
 
             rightMoveStick = new Vector3(axis.x, 0, axis.y);
@@ -88,6 +92,7 @@ namespace Players
 
         void OnFireLeft(InputValue value)
         {
+            if (SceneFadeManager.instance.isFade == true) return;
             //デバック用のダメージ(クリック)
             leftAttack = value.isPressed;
             leftAttackValue = 10.0f;
@@ -95,11 +100,16 @@ namespace Players
 
         void OnFireRight(InputValue value)
         {
+            if (SceneFadeManager.instance.isFade == true) return;
+
             rightAttack = value.isPressed;
+            rightAttackValue = 10.0f;
         }
 
         void UpdateJoyconInputs()
         {
+            if (SceneFadeManager.instance.isFade == true) return;
+
             for (int i = 0; i < _joycons.Count; i++)
             {
                 Joycon joycon = _joycons[i];
@@ -134,6 +144,7 @@ namespace Players
                 if (joycon.isLeft)
                 {
                     joycon.SetRumble(lowFreq, highFreq, amp, (int)time);
+                    StartCoroutine(StopJoyconRumble(time, joycon));
                 }
             }
 
@@ -147,6 +158,7 @@ namespace Players
                 if (!joycon.isLeft)
                 {
                     joycon.SetRumble(lowFreq, highFreq, amp, (int)time);
+                    StartCoroutine(StopJoyconRumble(time, joycon));
                 }
             }
 
@@ -179,6 +191,12 @@ namespace Players
             yield return new WaitForSecondsRealtime(time);
 
             gamepad.SetMotorSpeeds(0.0f, 0.0f);
+        }
+
+        private IEnumerator StopJoyconRumble(float time, Joycon joycon)
+        {
+            yield return new WaitForSecondsRealtime(time);
+            joycon.SetRumble(0, 0, 0, 0);
         }
     }
 }

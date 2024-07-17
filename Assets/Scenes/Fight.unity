@@ -172,7 +172,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &17001294
 RectTransform:
   m_ObjectHideFlags: 0
@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a047062546fd45d9a9bb31cdf2e0a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 220
+  health: 500
   _maxAttackCount: 2
   _attackStartHeight: 4
   _stageLevels: []
@@ -3798,7 +3798,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1224636696862454542, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: useJoycon
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1275858894720041000, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: m_IsActive
@@ -3889,12 +3889,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2106303191}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _proportion
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _generatePosition
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _defaultParameters.health
-      value: 1000000
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _partialPrefabs.Array.size
@@ -4067,10 +4071,6 @@ PrefabInstance:
     - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
       propertyPath: gameState
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
-      propertyPath: _fightTime
-      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 348265188698559393, guid: d3a35c132e896487eaee6369faa12165, type: 3}
       propertyPath: _move.m_Name

@@ -28,6 +28,9 @@ namespace Players
         [SerializeField][Tooltip("減少量")] private float decreaseUnionCount;
         [SerializeField][Tooltip("目標値")] private float _targetUnionCount = 10;
 
+        [Header("変換割合")]
+        [SerializeField] private int _conversionRate;
+
         [Header("-----------------------------")]
         [Space(10)]
 
@@ -121,7 +124,14 @@ namespace Players
                 }
                 if (_enemy.isAlive)
                 {
-                    _enemy.TakeDamage((int)_inputs.leftAttackValue);
+                    if (_inputs.UseJoycon)
+                    {
+                        _enemy.TakeDamage((int)_inputs.leftAttackValue / _conversionRate);
+                    }
+                    else
+                    {
+                        _enemy.TakeDamage((int)_inputs.leftAttackValue);
+                    }
                     AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
                     _inputs.RumbleLeft(160, 320, 0.8f, 0.6f);
                 }
@@ -134,8 +144,15 @@ namespace Players
                     _animator.speed = _inputs.rightAttackValue;
                 }
                 if (_enemy.isAlive)
-                {
-                    _enemy.TakeDamage((int)_inputs.rightAttackValue);
+                {   
+                    if (_inputs.UseJoycon)
+                    {
+                        _enemy.TakeDamage((int)_inputs.rightAttackValue / _conversionRate);
+                    }
+                    else
+                    {
+                        _enemy.TakeDamage((int)_inputs.rightAttackValue);
+                    }
                     AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
                     _inputs.RumbleRight(160, 320, 0.8f, 0.6f);
                 }
@@ -151,7 +168,7 @@ namespace Players
             {
                 _currentParameters.unionCount = _targetUnionCount;
                 MainGameManager.instance.SetScore(GameTimeManager.instance.GetTime(), _currentParameters.partialHitCount);
-                SceneFadeManager.instance.FadeOut("Fight");
+                SceneFadeManager.instance.FadeOut("MidMovie");
             }
             DestroyPartial();
             GeneratePartial();
@@ -211,6 +228,11 @@ namespace Players
         //ダメージ処理用の呼び出し関数
         public void TakeDamage(int damage)
         {
+            if (_targetUnionCount <= _currentParameters.unionCount)
+            {
+                return;
+            }
+
             _currentParameters.health -= damage;
 
             AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
@@ -224,6 +246,11 @@ namespace Players
 
         public void TakePartialDamage(int damage)
         {
+            if (_targetUnionCount <= _currentParameters.unionCount)
+            {
+                return;
+            }
+
             _currentParameters.partialHitCount++;
             _currentParameters.unionCount -= decreaseUnionCount;
             if (_currentParameters.unionCount < 0)
@@ -251,6 +278,7 @@ namespace Players
         {
             isAlive = false;
             MainGameManager.instance.isClear = false;
+            GameTimeManager.instance.StopTimer();
             SceneFadeManager.instance.FadeOut("Result");
         }
 

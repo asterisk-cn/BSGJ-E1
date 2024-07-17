@@ -225,6 +225,7 @@ namespace Enemy
         public void Die()
         {
             isAlive = false;
+            GameTimeManager.instance.StopTimer();
             FightManager.ToResult(true);
         }
 

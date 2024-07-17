@@ -12,9 +12,13 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
+    path: Assets/Scenes/MidMovie.unity
+    guid: 25d9b32c0f18e404eb6e4d16d9f33f78
+  - enabled: 1
     path: Assets/Scenes/Fight.unity
     guid: 95f3ebb7c7cec46548cd23e69d18c6aa
   - enabled: 1
     path: Assets/Scenes/Result.unity
     guid: 29febce140ed93e449cc5238ff4bd10c
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: ed47c9d19f65e444ea8a8aab22c61fc7, type: 2}

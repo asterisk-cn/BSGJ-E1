@@ -54,6 +54,7 @@ MonoBehaviour:
   increaseUnionCount: 0
   decreaseUnionCount: 0
   _targetUnionCount: 10
+  _conversionRate: 24
   isAlive: 0
   character: {fileID: 0}
   partial: {fileID: 0}
@@ -68,6 +69,7 @@ MonoBehaviour:
   - {fileID: 9203997197074302471, guid: d887a3ff42dfe449789f1376ff2bffd5, type: 3}
   - {fileID: 9203997197074302471, guid: d887a3ff42dfe449789f1376ff2bffd5, type: 3}
   - {fileID: 9203997197074302471, guid: d887a3ff42dfe449789f1376ff2bffd5, type: 3}
+  _soulPrefabs: []
   _generatePositions:
   - {fileID: 0}
   - {fileID: 0}
