@@ -8,6 +8,7 @@ public class OPTextManager : MonoBehaviour
 {
     public Image TextBackGround;
     public TextMeshProUGUI OPText;
+    public GameObject ScendTextImage;
     [TextArea (1, 2)]public string[] strings;
     int textNum, changeMovie2Num = 1;
     bool doneAddText;
@@ -63,6 +64,7 @@ public class OPTextManager : MonoBehaviour
     {
         TextBackGround.color = Color.clear;
         OPText.text = "";
+        ScendTextImage.SetActive(false);
     }
 
     IEnumerator SetTextBackGround()
@@ -99,6 +101,7 @@ public class OPTextManager : MonoBehaviour
 
         //クリック判定をオンにする
         doneAddText = true;
+        ScendTextImage.SetActive(true);
     }
 
     public bool IsDoneAddText()

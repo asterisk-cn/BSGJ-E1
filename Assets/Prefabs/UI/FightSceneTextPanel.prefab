@@ -254,7 +254,8 @@ MonoBehaviour:
   DiffFromHatToArm: {x: 0, y: 0, z: 0}
   fightTime: 30
   imageRate: 0.5
-  pushPow: 0.1
+  pushPow: 0.05
+  repushPow: 10
   fireTime: 0.2
   _enemyCore: {fileID: 0}
 --- !u!1 &3409574998929264298

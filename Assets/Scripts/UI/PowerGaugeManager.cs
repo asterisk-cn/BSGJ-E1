@@ -32,7 +32,7 @@ public class PowerGaugeManager : MonoBehaviour
 
     private void Update()
     {
-        currentPower = _playerCore.GetCurrentUnionCount() / _playerCore.GetTargetUnionCount();
+        currentPower = 0.9f * _playerCore.GetCurrentUnionCount() / _playerCore.GetTargetUnionCount();
         if (currentPower != beforePower)
         {
             StartChangePowerGaugeCoroutine(currentPower);
@@ -63,6 +63,12 @@ public class PowerGaugeManager : MonoBehaviour
 
     IEnumerator ChangePowerGauge(float newPower)
     {
+        //Max調整
+        if (_playerCore.GetCurrentUnionCount() >= _playerCore.GetTargetUnionCount())
+        {
+            newPower = 1f;
+        }
+
         float nowPower = PowerGauge.fillAmount;
         float ChangeNum = newPower - nowPower;
         int i;
