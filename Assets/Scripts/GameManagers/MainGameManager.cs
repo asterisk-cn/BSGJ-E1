@@ -117,8 +117,10 @@ public class MainGameManager : MonoBehaviour
     {
         gameState = GameState.Main;
         // GameTimeManager.instance.AddListenerOnTimeUp(() => ForceEnd());
+        GameTimeManager.instance.ResetTimer();
         GameTimeManager.instance.StartTimer(_mainTime, true);
         PlayBGM(gameState);
+        
         Reset();
     }
 
