@@ -81,11 +81,9 @@ namespace Menu
                 {
                     press = joycon.GetButton(Joycon.Button.DPAD_RIGHT);
 
-                    Debug.Log(press);
                     if (press)
                     {
                         _holdTimer += Time.deltaTime;
-                        Debug.Log(_holdTimer);
                         if (_holdTimer >= _holdTime)
                         {
                             hold = true;

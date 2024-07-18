@@ -8,6 +8,7 @@ public class FightUIManager : MonoBehaviour
     public Image SheffFace_Image;
     public Sprite SheffFaceBatsuIcon;
     public GameObject SheffHat_Obj, Arm_Obj, Fire_Obj;
+    public GameObject ShakeText, PushButtonText;
     Transform SheffHat_Trans, Arm_Trans, Fire_Trans;
     int sheffHP, sheffMaxHP, attackCounter;
     bool first;
@@ -18,6 +19,7 @@ public class FightUIManager : MonoBehaviour
     int nowHP;
 
     [SerializeField] private Enemy.EnemyCore _enemyCore;
+    [SerializeField] private Players.PlayerInputs _playerInput;
 
     private void Start()
     {
@@ -32,6 +34,17 @@ public class FightUIManager : MonoBehaviour
 
         time = fightTime; //ファイトシーンの制限時間
         Fire_Obj.SetActive(false);
+
+        if (_playerInput.UseJoycon)
+        {
+            ShakeText.SetActive(true);
+            PushButtonText.SetActive(false);
+        }
+        else
+        {
+            ShakeText.SetActive(false);
+            PushButtonText.SetActive(true);
+        }
     }
 
     private void Update()
