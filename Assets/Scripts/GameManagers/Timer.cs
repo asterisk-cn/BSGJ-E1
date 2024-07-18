@@ -79,7 +79,7 @@ namespace GameManagers
             _isInterrupted = false;
         }
 
-        void ResetTimer()
+        public void ResetTimer()
         {
             _time = 0;
             _duration = 0;
