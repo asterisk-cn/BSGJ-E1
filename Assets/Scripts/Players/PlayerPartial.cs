@@ -1,3 +1,4 @@
+using Enemy;
 using GameManagers;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace Players
         [SerializeField] GameObject _dustSmoke;
 
         public bool isOnFloor = false;
+        private bool isFallEnd = false;
 
         void Awake()
         {
@@ -42,7 +44,10 @@ namespace Players
         // Update is called once per frame
         void Update()
         {
-
+            if (!isOnFloor)
+            {
+                // OnEnableCharacterController();
+            }
         }
 
         public void Move(Vector3 direction)
@@ -93,25 +98,38 @@ namespace Players
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent<PlayerCharacter>(out var player))
+            if (other.TryGetComponent<PlayerCharacter>(out var player) && isOnFloor)
             {
                 player.UnitePartial(this);
                 if (_stareffect != null)
                 {
-                    GameObject effect =Instantiate(_stareffect,other.transform);
+                    GameObject effect = Instantiate(_stareffect, other.transform);
                     ParticleSystem[] particleSystems = effect.GetComponentsInChildren<ParticleSystem>();
-                    foreach(var particleSystem in particleSystems)
+                    foreach (var particleSystem in particleSystems)
                     {
                         particleSystem.Play();
                     }
-                } 
+                }
+            }
+
+            if (other.gameObject.tag == "Stage")
+            {
+                isOnFloor = true;
             }
         }
 
-        public void OnEnableCharacterController()
+        void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.tag == "Stage")
+            {
+                isOnFloor = false;
+            }
+        }
+
+        //アニメーションfallの最後に呼ばれる
+        public void OnFallEnd()
         {
             _characterController.enabled = true;
-            isOnFloor = true;
             GameObject effect = Instantiate(_dustSmoke, transform);
             ParticleSystem[] particleSystems = effect.GetComponentsInChildren<ParticleSystem>();
             foreach (var particleSystem in particleSystems)
@@ -119,6 +137,11 @@ namespace Players
                 particleSystem.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
                 particleSystem.Play();
             }
+        }
+
+        void OnFloor()
+        {
+
         }
 
         public void PlaySE()
