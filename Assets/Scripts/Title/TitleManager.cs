@@ -27,6 +27,8 @@ namespace Title
         [SerializeField] private GameObject _movie2;
         [SerializeField] private GameObject _text;
 
+        [SerializeField] private GameObject _skipText;
+
         private VideoPlayer _videoPlayer1;
         private VideoPlayer _videoPlayer2;
 
@@ -73,7 +75,8 @@ namespace Title
                 case TitleManagerState.Movie2:
                     if (_menuInputs.hold && !_prevHold)
                     {
-                        LoopPointReached2(_videoPlayer2);
+                        JumpToLastFrame(_videoPlayer2);
+                        // LoopPointReached2(_videoPlayer2);
                     }
                     break;
                 case TitleManagerState.Text2_1:
@@ -120,6 +123,7 @@ namespace Title
             _title.SetActive(false);
             _videoPlayer1.targetTexture.Release();
             _movie1.SetActive(true);
+            _skipText.SetActive(true);
             _videoPlayer1.Play();
             _videoPlayer1.loopPointReached += LoopPointReached1;
             _titleManagerState = TitleManagerState.Movie1;
@@ -131,6 +135,7 @@ namespace Title
             _text.SetActive(false);
             _videoPlayer2.targetTexture.Release();
             _movie2.SetActive(true);
+            _skipText.SetActive(true);
             _videoPlayer2.Play();
             _videoPlayer2.loopPointReached += LoopPointReached2;
             _titleManagerState = TitleManagerState.Movie2;
@@ -139,6 +144,7 @@ namespace Title
         public void LoopPointReached1(VideoPlayer vp)
         {
             // TransitionToMovie2();
+            _skipText.SetActive(false);
             _text.SetActive(true);
             _textManager.StartOPText1();
             _titleManagerState = TitleManagerState.Text1;
@@ -147,6 +153,7 @@ namespace Title
         public void LoopPointReached2(VideoPlayer vp)
         {
             // MainGameManager.instance.LoadScene("Main");
+            _skipText.SetActive(false);
             _text.SetActive(true);
             _textManager.StartOPText2();
             _titleManagerState = TitleManagerState.Text2_1;
