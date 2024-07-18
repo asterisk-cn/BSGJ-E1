@@ -11,7 +11,7 @@ public class OPTextManager : MonoBehaviour
     public GameObject ScendTextImage;
     [TextArea (1, 2)]public string[] strings;
     int textNum, changeMovie2Num = 1;
-    bool doneAddText;
+    bool doneAddText, startAddText;
 
     private void Start()
     {
@@ -65,6 +65,7 @@ public class OPTextManager : MonoBehaviour
         TextBackGround.color = Color.clear;
         OPText.text = "";
         ScendTextImage.SetActive(false);
+        doneAddText = false;
     }
 
     IEnumerator SetTextBackGround()
@@ -83,25 +84,30 @@ public class OPTextManager : MonoBehaviour
         }
         TextBackGround.color = Color.white;
 
+        startAddText = true;
         StartCoroutine("AddText");
     }
 
     IEnumerator AddText() //テキスト送り
     {
-        int i;
-        float interval = 0.04f;
-        doneAddText = false;
-
-        for (i = 1; i <= strings[textNum].Length; i++)
+        if (doneAddText || startAddText)
         {
-            OPText.text = strings[textNum].Substring(0, i);
-            yield return new WaitForSecondsRealtime(interval);
-        }
-        textNum++;
+            int i;
+            float interval = 0.04f;
+            doneAddText = false;
+            startAddText = false;
 
-        //クリック判定をオンにする
-        doneAddText = true;
-        ScendTextImage.SetActive(true);
+            for (i = 1; i <= strings[textNum].Length; i++)
+            {
+                OPText.text = strings[textNum].Substring(0, i);
+                yield return new WaitForSecondsRealtime(interval);
+            }
+            textNum++;
+
+            //クリック判定をオンにする
+            doneAddText = true;
+            ScendTextImage.SetActive(true);
+        }
     }
 
     public bool IsDoneAddText()
