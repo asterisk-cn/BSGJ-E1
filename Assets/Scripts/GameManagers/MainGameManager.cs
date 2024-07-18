@@ -55,17 +55,40 @@ public class MainGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameState == GameState.Main)
+        // Debug Mode
+        //#if UNITY_EDITOR
+        if (Input.GetKey(KeyCode.Q) && Input.GetKey(KeyCode.T))
         {
-            // Debug Mode
-            //#if UNITY_EDITOR
-            if (Input.GetKey(KeyCode.Q) && Input.GetKey(KeyCode.E))
-            {
-                SetScore(0, 0);
-                LoadScene("Fight");
-            }
-//#endif
+            LoadScene("Title");
         }
+
+        if (Input.GetKey(KeyCode.Q) && Input.GetKey(KeyCode.R))
+        {
+            LoadScene("Main");
+        }
+
+        if (Input.GetKey(KeyCode.Q) && Input.GetKey(KeyCode.F))
+        {
+            SetScore(20, 0);
+            LoadScene("MidMovie");
+        }
+
+        if (Input.GetKey(KeyCode.Q) && Input.GetKey(KeyCode.G))
+        {
+            SetScore(0, 0);
+            isClear = false;
+            LoadScene("Result");
+        }
+
+        if (Input.GetKey(KeyCode.Q) && Input.GetKey(KeyCode.C))
+        {
+            SetScore(20, 0);
+            isClear = true;
+            LoadScene("Result");
+        }
+
+
+        //#endif
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
