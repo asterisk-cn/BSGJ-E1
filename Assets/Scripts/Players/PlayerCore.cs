@@ -28,8 +28,9 @@ namespace Players
         [SerializeField][Tooltip("減少量")] private float decreaseUnionCount;
         [SerializeField][Tooltip("目標値")] private float _targetUnionCount = 10;
 
-        [Header("変換割合")]
-        [SerializeField] private int _conversionRate;
+        [Header("攻撃力")]
+        [SerializeField] private int _joyconRate;
+        [SerializeField] private int _controllerRate;
 
         [Header("-----------------------------")]
         [Space(10)]
@@ -51,6 +52,8 @@ namespace Players
         private EnemyCore _enemy;
 
         private bool _isAttacked = false;
+        private bool _canAttack = true;
+        private bool _leftAttacked = false;
 
         private Animator _animator;
 
@@ -115,48 +118,60 @@ namespace Players
         {
             if (MainGameManager.instance.gameState != GameState.Fight) return;
             if (_enemy.GetCurrentHealth() <= 0) return;
-            if (_inputs.leftAttack)
+            if (_inputs.leftAttack && _canAttack && !_leftAttacked)
             {
                 _animator.SetTrigger("LeftPunch");
-                if (_inputs.UseJoycon)
-                {
-                    _animator.speed = _inputs.leftAttackValue;
-                }
+                // if (_inputs.UseJoycon)
+                // {
+                //     _animator.speed = _inputs.leftAttackValue;
+                // }
                 if (_enemy.isAlive)
                 {
                     if (_inputs.UseJoycon)
                     {
-                        _enemy.TakeDamage((int)_inputs.leftAttackValue * 10);
+                        _enemy.TakeDamage((int)_inputs.leftAttackValue * _joyconRate);
                     }
                     else
                     {
-                        _enemy.TakeDamage((int)_inputs.leftAttackValue * 10 * _conversionRate);
+                        _enemy.TakeDamage((int)_inputs.leftAttackValue * _controllerRate);
                     }
                     AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
                     _inputs.RumbleLeft(160, 320, 0.8f, 0.6f);
                 }
+                if (_inputs.UseJoycon) StartCoroutine(CoolTime());
+                _leftAttacked = true;
             }
-            if (_inputs.rightAttack)
+            if (_inputs.rightAttack && _canAttack && _leftAttacked)
             {
                 _animator.SetTrigger("RightPunch");
-                if (_inputs.UseJoycon)
-                {
-                    _animator.speed = _inputs.rightAttackValue;
-                }
+                // if (_inputs.UseJoycon)
+                // {
+                //     _animator.speed = _inputs.rightAttackValue;
+                // }
                 if (_enemy.isAlive)
                 {   
                     if (_inputs.UseJoycon)
                     {
-                        _enemy.TakeDamage((int)_inputs.rightAttackValue * 10);
+                        _enemy.TakeDamage((int)_inputs.rightAttackValue * _joyconRate);
                     }
                     else
                     {
-                        _enemy.TakeDamage((int)_inputs.rightAttackValue * 10 * _conversionRate);
+                        _enemy.TakeDamage((int)_inputs.rightAttackValue * _controllerRate);
                     }
                     AudioManager.Instance.PlaySE("Fight_Punchi&Main_Hit_SE");
                     _inputs.RumbleRight(160, 320, 0.8f, 0.6f);
                 }
+                if (_inputs.UseJoycon) StartCoroutine(CoolTime());
+                _leftAttacked = false;
             }
+
+        }
+
+        IEnumerator CoolTime()
+        {
+            _canAttack = false;
+            yield return new WaitForSeconds(0.05f);
+            _canAttack = true;
         }
 
         public void UnitePartial()

@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a047062546fd45d9a9bb31cdf2e0a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 15000
+  health: 8000
   _maxAttackCount: 2
   _attackStartHeight: 4
   _stageLevels: []
@@ -1561,7 +1561,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8224119668883317748, guid: 948439418f1304dd0ab29d370e143475, type: 3}
       propertyPath: pushPow
-      value: 0.008
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 8224119668883317748, guid: 948439418f1304dd0ab29d370e143475, type: 3}
       propertyPath: _enemyCore
@@ -3802,7 +3802,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1224636696862454542, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: useJoycon
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1275858894720041000, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: m_IsActive
@@ -3893,12 +3893,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2106303191}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _joyconRate
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _proportion
       value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
+      propertyPath: _controllerRate
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _conversionRate
-      value: 12
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6906140506761372923, guid: 74705e37bed2b4542b2fdb448db3d0b3, type: 3}
       propertyPath: _generatePosition
