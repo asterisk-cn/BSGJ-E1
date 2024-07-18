@@ -66,6 +66,7 @@ namespace Menu
                 if (joycon.isLeft)
                 {
                     Vector2 _tmp = new Vector2(joycon.GetStick()[0], joycon.GetStick()[1]);
+                    Debug.Log(_tmp);
                     if (_tmp.magnitude < _minDeadZone)
                     {
                         _tmp = Vector2.zero;
@@ -79,7 +80,7 @@ namespace Menu
                 }
                 else
                 {
-                    press = joycon.GetButtonDown(Joycon.Button.DPAD_RIGHT);
+                    press = joycon.GetButton(Joycon.Button.DPAD_RIGHT);
 
                     if (press)
                     {

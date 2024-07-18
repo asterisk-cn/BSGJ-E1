@@ -8,16 +8,18 @@ public class FightUIManager : MonoBehaviour
     public Image SheffFace_Image;
     public Sprite SheffFaceBatsuIcon;
     public GameObject SheffHat_Obj, Arm_Obj, Fire_Obj;
+    public GameObject ShakeText, PushButtonText;
     Transform SheffHat_Trans, Arm_Trans, Fire_Trans;
-    int sheffHP, sheffMaxHP;
+    int sheffHP, sheffMaxHP, attackCounter;
     bool first;
-    float dt, fireCount, time, pushRate;
+    float dt, fireCount, time, pushRate, backRate;
     public Vector3 DefaultSheffHatSize, DiffFromHatToArm;
 
-    public float fightTime, imageRate, pushPow, fireTime;
+    public float fightTime, imageRate, pushPow, repushPow, fireTime;
     int nowHP;
 
     [SerializeField] private Enemy.EnemyCore _enemyCore;
+    [SerializeField] private Players.PlayerInputs _playerInput;
 
     private void Start()
     {
@@ -26,11 +28,23 @@ public class FightUIManager : MonoBehaviour
         Fire_Trans = Fire_Obj.GetComponent<Transform>();
         DefaultSheffHatSize = SheffHat_Trans.localScale;
         DiffFromHatToArm = Arm_Trans.position - SheffHat_Trans.position;
+        backRate = repushPow / 2f;
 
         first = true; //終了判定用
 
         time = fightTime; //ファイトシーンの制限時間
         Fire_Obj.SetActive(false);
+
+        if (_playerInput.UseJoycon)
+        {
+            ShakeText.SetActive(true);
+            PushButtonText.SetActive(false);
+        }
+        else
+        {
+            ShakeText.SetActive(false);
+            PushButtonText.SetActive(true);
+        }
     }
 
     private void Update()
@@ -39,6 +53,9 @@ public class FightUIManager : MonoBehaviour
 
         if(sheffHP > 0)
         {
+            if (nowHP == 0) //初回
+                sheffMaxHP = sheffHP;
+
             dt = Time.deltaTime;
             if (time > 0)
             {
@@ -47,15 +64,21 @@ public class FightUIManager : MonoBehaviour
 
                 //押し返されている割合が大きいほど押し返す力を下げる
                 //残り時間が少ないほど押し返す力を上げる
-                pushRate = (1 - imageRate) / (time / fightTime);
+                pushRate = backRate * (1 - imageRate) / (time / fightTime);
 
-                imageRate += Random.Range(0f, 2f) * pushRate * dt / fightTime;
+                imageRate += backRate * pushRate * dt / fightTime;
 
                 if (sheffHP != nowHP)
                 {
                     imageRate -= pushPow * imageRate; //パンチで体力が減ったら押す
                     Fire_Obj.SetActive(true);
                     fireCount = 0;
+                    attackCounter++;
+                    if(attackCounter >= 10) //攻撃10回ごとに押し返す力を変更
+                    {
+                        attackCounter = 0;
+                        backRate = repushPow * Random.Range(0f, (float)sheffHP / (float)sheffMaxHP); //残り体力が低いほど押し返す力の乱数範囲を下げる
+                    }
                 }
                 nowHP = sheffHP;
                 UpdateUI(imageRate);
@@ -97,11 +120,6 @@ public class FightUIManager : MonoBehaviour
             float dist = (SheffHat_Trans.position.x + rate * DiffFromHatToArm.x) - Arm_Trans.position.x;
             Arm_Trans.Translate(dist, 0, 0);
             Fire_Trans.Translate(0, -dist, 0);
-        }
-        else
-        {
-            SheffFace_Image.sprite = SheffFaceBatsuIcon;
-            SheffHat_Obj.SetActive(false);
         }
     }
 

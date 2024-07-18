@@ -28,20 +28,20 @@ namespace Menu
         // Update is called once per frame
         void Update()
         {
-            if (_menuInputs.navigate.x > 0)
+            if (_menuInputs.navigate.x < 0)
             {
                 if (_prevStickState == StickState.None || _prevStickState == StickState.Down)
                 {
-                    _selectedButtonIndex = (_selectedButtonIndex - 1 + _buttons.Count) % _buttons.Count;
+                    _selectedButtonIndex = Mathf.Max(0, _selectedButtonIndex - 1);
                     _buttons[_selectedButtonIndex].Select();
                     _prevStickState = StickState.Up;
                 }
             }
-            else if (_menuInputs.navigate.x < 0)
+            else if (_menuInputs.navigate.x > 0)
             {
                 if (_prevStickState == StickState.None || _prevStickState == StickState.Up)
                 {
-                    _selectedButtonIndex = (_selectedButtonIndex + 1) % _buttons.Count;
+                    _selectedButtonIndex = Mathf.Min(_buttons.Count - 1, _selectedButtonIndex + 1);
                     _buttons[_selectedButtonIndex].Select();
                     _prevStickState = StickState.Down;
                 }
