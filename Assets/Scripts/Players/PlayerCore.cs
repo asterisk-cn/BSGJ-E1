@@ -57,6 +57,12 @@ namespace Players
 
         private Animator _animator;
 
+        [SerializeField] Vector3 effectScale = Vector3.one;
+
+        [SerializeField] private GameObject _hitEffect;
+        [SerializeField] private Transform _generateLeftPos;
+        [SerializeField] private Transform _generateRightPos;
+
         void Awake()
         {
             _inputs = GetComponent<PlayerInputs>();
@@ -120,6 +126,10 @@ namespace Players
             if (_enemy.GetCurrentHealth() <= 0) return;
             if (_inputs.leftAttack && _canAttack && !_leftAttacked)
             {
+                GameObject effect = Instantiate(_hitEffect, _generateLeftPos.transform);
+                effect.transform.localScale = effectScale;
+                ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
+                if (particleSystem != null) particleSystem.Play();
                 _animator.SetTrigger("LeftPunch");
                 // if (_inputs.UseJoycon)
                 // {
@@ -143,6 +153,10 @@ namespace Players
             }
             if (_inputs.rightAttack && _canAttack && _leftAttacked)
             {
+                GameObject effect = Instantiate(_hitEffect, _generateRightPos.transform);
+                effect.transform.localScale = effectScale;
+                ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
+                if (particleSystem != null) particleSystem.Play();
                 _animator.SetTrigger("RightPunch");
                 // if (_inputs.UseJoycon)
                 // {
